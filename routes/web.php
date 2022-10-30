@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Teacher\TeacherController;
+use App\Http\Controllers\Admin\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,7 +18,25 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('front/welcome');
+});
+Route::middleware(['student'])->prefix('/student')->name('student.')->group(function () {
+    Route::namespace('Student')->group(function () {
+        Route::get('/','StudentController@index')->name('home');
+
+    });
+});
+Route::middleware(['teacher'])->prefix('/teacher')->name('teacher.')->group(function () {
+    Route::namespace('Teacher')->group(function () {
+        Route::get('/','TeacherController@index')->name('home');
+
+    });
+});
+Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function () {
+    Route::namespace('Admin')->group(function () {
+        Route::get('/','AdminController@index')->name('home');
+
+    });
 });
 
 Auth::routes();

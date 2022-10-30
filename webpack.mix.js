@@ -1,4 +1,6 @@
 const mix = require('laravel-mix');
+const { exec } = require('child_process');
+const path = require('path');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +13,37 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+mix.webpackConfig({
+  resolve: {
+    alias: {
+      ziggy: path.resolve('vendor/tightenco/ziggy/dist'),
+    },
+  },
+});
+
+mix
+  .extend('ziggy', function() {
+    if (mix.inProduction()) return;
+
+    const command = () => exec(
+      'php artisan ziggy:generate resources/js/ziggy.js',
+      (error, stdout, stderr) => console.log(stdout)
+    );
+
+    command();
+
+    if (Mix.isWatching()) {
+      ((require('chokidar')).watch(['routes/**/*.php', 'config/ziggy.php']))
+        .on('change', (path) => {
+          console.log(`${path} changed...`);
+          command();
+        });
+    }
+  })
+  .options({
+    processCssUrls: false,
+  })
+  .ziggy()
+  .js('resources/js/app.js', 'public/js')
+  .sass('resources/sass/front/front.scss', 'public/css/front.css')
+  .sass('resources/sass/admin/admin.scss', 'public/css/admin.css');

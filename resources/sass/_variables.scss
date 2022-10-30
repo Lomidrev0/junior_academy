@@ -1,19 +1,18 @@
-// Body
-$body-bg: #f8fafc;
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300&display=swap');
 
 // Typography
-$font-family-sans-serif: 'Nunito', sans-serif;
+$family:'Ubuntu', sans-serif;
+$font-family: 'Ubuntu', sans-serif;
+$font-family-main: 'Ubuntu', sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
-// Colors
-$blue: #3490dc;
-$indigo: #6574cd;
-$purple: #9561e2;
-$pink: #f66d9b;
-$red: #e3342f;
-$orange: #f6993f;
-$yellow: #ffed4a;
-$green: #38c172;
-$teal: #4dc0b5;
-$cyan: #6cb2eb;
+// custom colors
+
+//nain colors
+$main-blue: #1dcdfe;
+$main-dark-green: #21d0b2;
+$main-light-green: #34f5c5;
+$main-dark-bg: #2f455c;
+$main-light-bg: #f5f5f5;
+$gradient: linear-gradient(270deg, $main-blue 0%, $main-dark-green 35%, $main-light-green 100%);

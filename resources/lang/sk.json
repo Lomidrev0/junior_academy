@@ -1,0 +1,17 @@
+{
+  "Name": "Meno",
+  "Name and surname": "Meno a priezvisko",
+  "Email address": "Emailová adresa",
+  "Password": "Heslo",
+  "Confirm password": "Potvrdiť heslo",
+  "Register": "Registrácia",
+  "Login": "Prihlásenie",
+  "School": "Škola",
+  "Class": "Trieda",
+  "Home": "Domov",
+  "Course management": "Správa kurzov",
+  "List of registered": "Zoznam zaregistrovaných",
+  "Front page text": "Text na úvodnej stránke",
+  "Add admin": "Pridať administrátora",
+  "Change password": "Zmena hesla"
+}
