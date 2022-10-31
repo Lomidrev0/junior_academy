@@ -10,37 +10,37 @@
       <li>
         <a :href="route('admin.home')">
           <i class="bi bi-house-fill"></i>
-          <span>{{i18n('Home')}}</span>
+          <span v-show="show">{{i18n('Home')}}</span>
         </a>
       </li>
       <li>
         <a :href="route('admin.course')">
           <i class="bi bi-wrench"></i>
-          <span>{{i18n('Course management')}}</span>
+          <span v-show="show">{{i18n('Course management')}}</span>
         </a>
       </li>
       <li>
         <a href="">
           <i class="bi bi-person-lines-fill"></i>
-          <span>{{ i18n('List of registered')}}</span>
+          <span v-show="show">{{ i18n('List of registered')}}</span>
         </a>
       </li>
       <li>
         <a href="">
           <i class="bi bi-chat-square-text-fill"></i>
-         <span> {{i18n('Front page text')}}</span>
+         <span v-show="show"> {{i18n('Front page text')}}</span>
         </a>
       </li>
       <li>
         <a href="">
           <i class="bi bi-person-plus-fill"></i>
-          <span>{{i18n('Add admin')}}</span>
+          <span v-show="show">{{i18n('Add admin')}}</span>
         </a>
       </li>
       <li>
         <a href="">
           <i class="bi bi-lock-fill"></i>
-          <span>{{i18n('Change password')}}</span>
+          <span v-show="show">{{i18n('Change password')}}</span>
         </a>
       </li>
     </ul>
@@ -55,16 +55,6 @@ export default {
       show: true,
     }
   },
-  methods: {
-    openNav() {
-      document.getElementsByClassName("side-nav").style.width = "250px";
-    },
-
-    closeNav() {
-      document.getElementsByClassName("side-nav").style.width = "0";
-    }
-  },
-
 }
 </script>
 

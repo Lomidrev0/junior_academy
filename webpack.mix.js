@@ -45,5 +45,6 @@ mix
   })
   .ziggy()
   .js('resources/js/app.js', 'public/js')
+  .js('resources/js/front/front.js', 'public/js/front.js')
   .sass('resources/sass/front/front.scss', 'public/css/front.css')
   .sass('resources/sass/admin/admin.scss', 'public/css/admin.css');

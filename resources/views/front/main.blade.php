@@ -9,6 +9,9 @@
         @include('shared/footer')
     </div>
 @endsection
+@section('scripts')
+    <script src="{{ asset('js/front.js') }}"></script>
+@endsection
 
 
 
