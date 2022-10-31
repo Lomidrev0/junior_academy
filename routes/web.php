@@ -18,7 +18,7 @@ use App\Http\Controllers\Admin\AdminController;
 */
 
 Route::get('/', function () {
-    return view('front/welcome');
+    return view('front/main');
 });
 Route::middleware(['student'])->prefix('/student')->name('student.')->group(function () {
     Route::namespace('Student')->group(function () {
@@ -34,7 +34,8 @@ Route::middleware(['teacher'])->prefix('/teacher')->name('teacher.')->group(func
 });
 Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function () {
     Route::namespace('Admin')->group(function () {
-        Route::get('/','AdminController@index')->name('home');
+        Route::get('/home','AdminController@index')->name('home');
+        Route::get('/course','AdminController@index2')->name('course');
 
     });
 });

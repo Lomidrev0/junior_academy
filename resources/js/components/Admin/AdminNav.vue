@@ -2,48 +2,45 @@
   <nav class="side-nav">
     <ul>
       <li>
-        <div class="open-nav d-flex justify-content-end">
-          <button class="btn" @click="show = true" >
-            <i class="bi bi-caret-left-fill" v-if="show===false"></i>
-            <i class="bi bi-caret-right-fill" v-else></i>
-          </button>
-          {{show}}
+        <div class="open-nav d-flex justify-content-center" @click="show = !show">
+              <i class="bi bi-x-lg" v-if="show"></i>
+              <i class="bi bi-caret-right-fill" v-else></i>
         </div>
       </li>
       <li>
-        <a href="">
+        <a :href="route('admin.home')">
           <i class="bi bi-house-fill"></i>
-          {{i18n('Home')}}
+          <span>{{i18n('Home')}}</span>
         </a>
       </li>
       <li>
-        <a href="">
+        <a :href="route('admin.course')">
           <i class="bi bi-wrench"></i>
-          {{i18n('Course Management')}}
+          <span>{{i18n('Course management')}}</span>
         </a>
       </li>
       <li>
         <a href="">
           <i class="bi bi-person-lines-fill"></i>
-          {{ i18n('List of registered')}}
+          <span>{{ i18n('List of registered')}}</span>
         </a>
       </li>
       <li>
         <a href="">
           <i class="bi bi-chat-square-text-fill"></i>
-          {{i18n('Front page text')}}
+         <span> {{i18n('Front page text')}}</span>
         </a>
       </li>
       <li>
         <a href="">
           <i class="bi bi-person-plus-fill"></i>
-          {{i18n('Add admin')}}
+          <span>{{i18n('Add admin')}}</span>
         </a>
       </li>
       <li>
         <a href="">
           <i class="bi bi-lock-fill"></i>
-         {{i18n('Change password')}}
+          <span>{{i18n('Change password')}}</span>
         </a>
       </li>
     </ul>
@@ -55,7 +52,16 @@ export default {
 
   data() {
     return {
-      show: false,
+      show: true,
+    }
+  },
+  methods: {
+    openNav() {
+      document.getElementsByClassName("side-nav").style.width = "250px";
+    },
+
+    closeNav() {
+      document.getElementsByClassName("side-nav").style.width = "0";
     }
   },
 

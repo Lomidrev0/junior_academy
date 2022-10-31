@@ -10,4 +10,8 @@ class AdminController
     {
         return view('admin/home');
     }
+    public function index2()
+    {
+        return view('admin/home');
+    }
 }
