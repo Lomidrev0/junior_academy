@@ -27,11 +27,15 @@
             </div>
         </nav>
         <div class="d-flex" id="admin-nav">
-            <admin-nav></admin-nav>
+{{--            <admin-nav></admin-nav>--}}
+            @include('admin/sidenav')
         </div>
+
+
         <div>
             @yield('adminContent')
         </div>
     </div>
 @endsection
+
 
