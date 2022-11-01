@@ -28,6 +28,7 @@
         </nav>
         <div class="d-flex" id="admin-nav">
 {{--            <admin-nav></admin-nav>--}}
+            @include('admin/sidenav')
         </div>
         <div class="container">
             @yield('adminContent')
