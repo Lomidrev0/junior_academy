@@ -27,9 +27,9 @@
             </div>
         </nav>
         <div class="d-flex" id="admin-nav">
-            <admin-nav></admin-nav>
+{{--            <admin-nav></admin-nav>--}}
         </div>
-        <div>
+        <div class="container">
             @yield('adminContent')
         </div>
     </div>

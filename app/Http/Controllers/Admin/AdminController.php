@@ -10,8 +10,8 @@ class AdminController
     {
         return view('admin/home');
     }
-    public function index2()
+    public function course()
     {
-        return view('admin/home');
+        return view('admin/course');
     }
 }

@@ -35,7 +35,7 @@ Route::middleware(['teacher'])->prefix('/teacher')->name('teacher.')->group(func
 Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function () {
     Route::namespace('Admin')->group(function () {
         Route::get('/home','AdminController@index')->name('home');
-        Route::get('/course','AdminController@index2')->name('course');
+        Route::get('/course','AdminController@course')->name('course');
 
     });
 });
