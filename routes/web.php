@@ -34,8 +34,11 @@ Route::middleware(['teacher'])->prefix('/teacher')->name('teacher.')->group(func
 });
 Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function () {
     Route::namespace('Admin')->group(function () {
+        Route::get('/','AdminController@index')->name('home');
         Route::get('/home','AdminController@index')->name('home');
-        Route::get('/course','AdminController@course')->name('course');
+        Route::get('/courses','AdminController@courses')->name('courses');
+        Route::get('/members','AdminController@members')->name('members');
+        Route::get('/reset_password','AdminController@password')->name('password');
 
     });
 });

@@ -1,6 +1,6 @@
-@extends('admin.main')
+@extends('layouts.main')
 
-@section('adminContent')
+@section('authContent')
     <div>
         <h1> Správa kurzov</h1>
         <hr>

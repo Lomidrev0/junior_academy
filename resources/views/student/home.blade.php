@@ -1,5 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.main')
 
-@section('content')
+@section('authContent')
    <p>student</p>
 @endsection

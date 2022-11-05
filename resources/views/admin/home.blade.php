@@ -1,5 +1,5 @@
-@extends('admin.main')
+@extends('layouts.main')
 
-@section('adminContent')
+@section('authContent')
    <p>admin admin admin admin admin admin admin admin admin admin admin</p>
 @endsection

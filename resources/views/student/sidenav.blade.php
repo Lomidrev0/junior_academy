@@ -6,31 +6,7 @@
         </a>
     </li>
     <li>
-        <a href="{{route('admin.courses')}}">
-            <i class="bi bi-wrench"></i>
-            <span>{{__('Course management')}}</span>
-        </a>
-    </li>
-    <li>
-        <a href="{{route('admin.members')}}">
-            <i class="bi bi-person-lines-fill"></i>
-            <span>{{ __('List of registered')}}</span>
-        </a>
-    </li>
-    <li>
         <a href="">
-            <i class="bi bi-chat-square-text-fill"></i>
-            <span> {{__('Front page text')}}</span>
-        </a>
-    </li>
-    <li>
-        <a href="">
-            <i class="bi bi-person-plus-fill"></i>
-            <span>{{__('Add admin')}}</span>
-        </a>
-    </li>
-    <li>
-        <a href="{{route('admin.password')}}">
             <i class="bi bi-lock-fill"></i>
             <span>{{__('Change password')}}</span>
         </a>

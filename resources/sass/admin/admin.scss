@@ -1,1 +1,67 @@
 @import "resources/sass/app";
+.navbar {
+  background: $gradient;
+}
+/* ---------------------------------------------------
+    Members subpage styles
+----------------------------------------------------- */
+.table-header {
+  border: 1px solid $main-light-green;
+  cursor: pointer;
+
+  ul {
+    list-style-type: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding-right: 10px;
+      padding-left: 10px;
+
+      p {
+        margin: 7px;
+      }
+    }
+    .unactive-course:hover{
+      transition: $tr-short;
+      background-color: $main-light-green;
+      color: $main-dark-bg;
+    }
+    .active-course {
+      background-color: $main-dark-bg;
+      color: $main-light-bg;
+    }
+  }
+  table {
+    margin: 0;
+    width: 100%;
+  }
+
+  th, td {
+    text-align: left;
+    padding: 8px;
+    border: 0;
+  }
+
+  tr:nth-child(even) {
+    background-color: $main-light-green-bg;
+  }
+
+  thead {
+    background-color: $main-dark-bg;
+    color: $main-light-bg;
+  }
+}
+
+@media (max-width: 768px) {
+  .table-header{
+    ul{
+      display: block;
+      li{
+        padding-top: 10px;
+        padding-bottom: 10px;
+      }
+    }
+  }
+}

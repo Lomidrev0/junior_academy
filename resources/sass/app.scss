@@ -7,7 +7,19 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
-//custom
+//Custom
 @import 'front/nav';
 @import 'admin/sidebar';
 
+//Global styles
+html,body,#app{
+  font-family: $family;
+  font-style: normal;
+  font-weight: $font-size-base;
+  background-color: $main-light-bg;
+  height: 100%;
+}
+
+.content-margin {
+  margin: 4%;
+}

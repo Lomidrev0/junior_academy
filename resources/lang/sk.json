@@ -14,5 +14,8 @@
   "Front page text": "Text na úvodnej stránke",
   "Add admin": "Pridať administrátora",
   "Change password": "Zmena hesla",
-  "Close": "Zatvoriť"
+  "Close": "Zatvoriť",
+  "Registration date": "Dátum registrácie",
+  "List of registered": "Zoznam zaregistrovaných",
+  "List of registered students": "Tu je zoznam všetkých zaregistrovaných žiakov rozdelených podľa kurzov."
 }

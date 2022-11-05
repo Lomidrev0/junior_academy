@@ -113,18 +113,6 @@ Vue.mixin({
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
-
-/*
-* Vue.mixin({
-  methods: {
-    isApp,
-    route,
-    i18n,
-    ...
-  }
-});
-* */
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -134,9 +122,16 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const components = {
     'example-component2': require('./components/ExampleComponent2').default,
     'admin-nav': require('./components/Admin/AdminNav').default,
+    'member-list': require('./components/Admin/MemberList').default,
 };
 
 new Vue({
     el: '#app',
     components
+});
+
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+    });
 });
