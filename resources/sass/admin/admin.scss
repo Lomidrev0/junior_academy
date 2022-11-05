@@ -1,4 +1,7 @@
 @import "resources/sass/app";
+
+
+
 .navbar {
   background: $gradient;
 }
@@ -6,7 +9,7 @@
     Members subpage styles
 ----------------------------------------------------- */
 .table-header {
-  border: 1px solid $main-light-green;
+  border: 1px solid $green;
   cursor: pointer;
 
   ul {
@@ -25,12 +28,12 @@
     }
     .unactive-course:hover{
       transition: $tr-short;
-      background-color: $main-light-green;
-      color: $main-dark-bg;
+      background-color: $green;
+      color: $dd-green;
     }
     .active-course {
-      background-color: $main-dark-bg;
-      color: $main-light-bg;
+      background-color: $dd-green;
+      color: $green;
     }
   }
   table {
@@ -45,12 +48,12 @@
   }
 
   tr:nth-child(even) {
-    background-color: $main-light-green-bg;
+    background-color: $green;
   }
 
   thead {
-    background-color: $main-dark-bg;
-    color: $main-light-bg;
+    background-color: $dd-green;
+    color: $white;
   }
 }
 

@@ -1,19 +1,11 @@
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 footer{
-    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: $main-dark-bg;
+    background: $dd-green;
     height: auto;
-    width: 100vw;
-
     padding-top: 40px;
-    color:$main-light-bg;
+    color:$white;
 }
 .footer-content{
     display: flex;
@@ -26,12 +18,11 @@ footer{
     font-size: 2.1rem;
     font-weight: 500;
     text-transform: capitalize;
-    line-height: 3rem;
 }
 .footer-content p{
     max-width: 500px;
     line-height: 28px;
-    color: $main-light-bg;
+    color: $white;
 }
 .socials{
     list-style: none;
@@ -43,23 +34,8 @@ footer{
 .socials li{
     margin: 0 10px;
 }
-.socials a{
-    text-decoration: none;
-    color: $main-light-bg;
-    border: 1.1px $main-light-bg;
-    padding: 5px;
-
-    border-radius: 50%;
-
-}
-.socials a i{
-    font-size: 1.1rem;
-    width: 20px;
-    transition: color .4s ease;
-}
 .footer-bottom{
-    background: #243445;
-    width: 100vw;
+    background: $ddd-green;
     padding: 20px;
     padding-bottom: 40px;
     text-align: center;
@@ -69,12 +45,6 @@ footer{
     font-size: 14px;
     word-spacing: 2px;
     text-transform: capitalize;
-}
-
-.footer-bottom span{
-    text-transform: uppercase;
-    opacity: .4;
-    font-weight: 200;
 }
 
 @media (max-width:500px) {

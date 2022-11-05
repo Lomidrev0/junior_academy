@@ -4,29 +4,24 @@
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  background-color: $main-dark-bg;
+  background-color: $dd-green;
   transition: $tr-short;
   height: 100%;
-
   ul{
-
     padding: 0;
     margin: 0;
     list-style-type: none;
-
     li {
-
       a {
-
         padding: 12px 20px 12px 20px;
         text-decoration: none;
-        color: $main-light-bg;
+        color: $white;
         display: block;
 
         &:hover {
           transition: $tr-short;
-          background-color: $main-light-green;
-          color: $main-dark-bg;
+          background-color: $green;
+          color: $dd-green;
         }
       }
     }
@@ -35,6 +30,8 @@
 
 #sidebar.active {
     margin-left: -250px;
+  -webkit-box-shadow: none;
+  box-shadow:none;
 }
 /* ---------------------------------------------------
     MEDIAQUERIES

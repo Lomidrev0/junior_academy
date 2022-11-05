@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="h-100">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white z-index-4 shaddow">
             <div class="container">
                 <div>
                     <button type="button" id="sidebarCollapse" class="btn">
@@ -21,9 +21,9 @@
                 </div>
             </div>
         </nav>
-        <div class="d-flex flex-row h-100">
-            <div class="h-100">
-                <nav id="sidebar">
+        <div class="d-flex h-100 flex-row">
+            <div class=" z-index-3">
+                <nav id="sidebar" class="shaddow">
                     @if(Auth::user()->role == 2)
                         @include('admin.sidenav')
                     @elseif(Auth::user()->role == 1)
@@ -33,13 +33,16 @@
                     @endif
                 </nav>
             </div>
-            <div class="w-100">
+            <div class="w-100 d-sm-grid">
                 <div class="container-fluid">
                     <div class="content-margin">
                         @yield('authContent')
                     </div>
                 </div>
-                @include('shared/footer')
+                <div class="d-grid align-self-end">
+                    @include('shared/footer')
+                </div>
+
             </div>
         </div>
     </div>
