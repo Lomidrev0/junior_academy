@@ -7,6 +7,10 @@ namespace App\Http\Controllers\Admin;
 use App\Course;
 use App\User;
 use App\UserCourse;
+use http\Env\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController
 {
@@ -32,4 +36,30 @@ class AdminController
     {
         return view('admin/password');
     }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param  array  $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+    }
+
+    public function passReset(){
+        $update = array();
+
+       // \request('password');
+        $user = User::where('id',Auth::user()->id)->first();
+        //dd($user->password);
+
+        //dd( Hash::check(\request('password'), $user->password));
+
+    }
+
 }

@@ -11,15 +11,21 @@ $line-height-base: 1.6;
 
 //main colors
 $blue: #1dcdfe;
-$l-green: #baf7e8;
+$d1-blue: #101ee3;
+$l1-green: #baf7e8;
 $green: #34f5c5;
-$d-green: #21d0b2;
-$dd-green: #2f455c;
-$ddd-green:#243445;
+$d1-green: #21d0b2;
+$d2-green: #2f455c;
+$d3-green:#243445;
 $white: #f5f5f5;
-$gradient: linear-gradient(270deg, $blue 0%, $d-green 35%, $green 100%);
+$gradient: linear-gradient(270deg, $blue 0%, $d1-green 35%, $green 100%);
 
 //transitions time
 $tr-short: all 0.3s;
 $tr-normal: all 0.5s;
 $tr-long: all 1s;
+
+//radius
+$sm-radius: 6px;
+$md-radius: 12px;
+$lg-radius: 20px;

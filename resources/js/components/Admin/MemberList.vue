@@ -1,7 +1,8 @@
 <template>
-    <div class="table-header">
-      <div>
-        <input type="text" v-model="search" plaeholder="Search">
+    <div class="table-wrapper">
+      <div class="search-bar d-flex ">
+        <div class="search-icon"> <i class="bi bi-search"></i> </div>
+        <input type="text" v-model="search" placeholder="Search...">
       </div>
       <ul>
         <li :class=" (select === index) ? 'active-course':'unactive-course'" v-for="(course, index) in courses" @click="select = index">
@@ -27,7 +28,7 @@
                 <td>{{JSON.parse(user.student_info).school}}</td>
                 <td>{{ JSON.parse(user.student_info).class}}</td>
                 <td><a :href="'mailto:'+user.email">{{ user.email }}</a></td>
-                <td>{{ user.created_at }}</td>
+                <td>{{ formatDate(user.created_at, 'H:mm - dd.MM.yyyyy') }}</td>
               </template>
             </tr>
           </template>
@@ -75,19 +76,20 @@ export default {
       return json.class;
     },
 
-    formatDates(date) {
-      _.map(this.dataCourses, (course) => {
+    formatDates() {
+      this.dataCourses = _.map(this.dataCourses, (course) => {
         return {
           ...course,
           users: [
               ..._.map(course.users, (user) => {
-                return parseISO(user.created_at)
+                return {
+                  ...user,
+                  created_at: parseISO(user.created_at)
+                }
               })
           ]
         }
-
       });
-      //console.log(this.dataCourses)
     },
   },
   created() {

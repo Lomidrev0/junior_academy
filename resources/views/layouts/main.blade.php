@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-    <div class="h-100">
+    <div class="vh-mh-100">
         <nav class="navbar navbar-expand-md navbar-light bg-white z-index-4 shaddow">
             <div class="container">
                 <div>
@@ -21,7 +21,7 @@
                 </div>
             </div>
         </nav>
-        <div class="d-flex h-100 flex-row">
+        <div class="d-flex vh-mh-100 flex-row">
             <div class=" z-index-3">
                 <nav id="sidebar" class="shaddow">
                     @if(Auth::user()->role == 2)

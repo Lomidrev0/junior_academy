@@ -4,7 +4,7 @@
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  background-color: $dd-green;
+  background-color: $d2-green;
   transition: $tr-short;
   height: 100%;
   ul{
@@ -21,7 +21,7 @@
         &:hover {
           transition: $tr-short;
           background-color: $green;
-          color: $dd-green;
+          color: $d2-green;
         }
       }
     }

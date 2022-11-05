@@ -1,22 +1,39 @@
 @import "resources/sass/app";
-
-
-
 .navbar {
   background: $gradient;
 }
 /* ---------------------------------------------------
     Members subpage styles
 ----------------------------------------------------- */
-.table-header {
-  border: 1px solid $green;
+.table-wrapper {
   cursor: pointer;
+  border-radius: $md-radius;
+
+  .search-bar{
+    border-radius: $md-radius $md-radius 0 0 ;
+    background-color: $d2-green;
+    padding: 5px;
+
+    input{
+      border-radius: 0 $md-radius $md-radius 0;
+      background-color: $l1-green;
+      border: none;
+
+    }
+    .search-icon{
+      border-radius: $md-radius 0 0 $md-radius;
+      display: inline-block;
+      background-color: $l1-green;
+      padding: 5px;
+    }
+  }
 
   ul {
     list-style-type: none;
     display: flex;
     margin: 0;
     padding: 0;
+    background-color: $l1-green;
 
     li {
       padding-right: 10px;
@@ -29,36 +46,50 @@
     .unactive-course:hover{
       transition: $tr-short;
       background-color: $green;
-      color: $dd-green;
+      color: $d2-green;
     }
     .active-course {
-      background-color: $dd-green;
+      background-color: $d2-green;
       color: $green;
     }
   }
   table {
     margin: 0;
     width: 100%;
+    border-radius: $md-radius;
+    background-color: $l1-green;
   }
+  tbody{
+    tr {
+      &:hover {
+        border-radius: 5px;
+        background-color: $green;
+
+      }
+    }
+  }
+
 
   th, td {
     text-align: left;
     padding: 8px;
-    border: 0;
+    //border: none;
+
+    a {
+      color: $d1-blue;
+    }
   }
 
-  tr:nth-child(even) {
-    background-color: $green;
-  }
+
 
   thead {
-    background-color: $dd-green;
+    background-color: $d2-green;
     color: $white;
   }
 }
 
 @media (max-width: 768px) {
-  .table-header{
+  .table-wrapper{
     ul{
       display: block;
       li{
