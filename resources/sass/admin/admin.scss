@@ -11,19 +11,19 @@
 
   .search-bar{
     border-radius: $md-radius $md-radius 0 0 ;
-    background-color: $d2-green;
+    background-color: $green;
     padding: 5px;
 
     input{
       border-radius: 0 $md-radius $md-radius 0;
-      background-color: $l1-green;
+      background-color: $white;
       border: none;
 
     }
     .search-icon{
       border-radius: $md-radius 0 0 $md-radius;
       display: inline-block;
-      background-color: $l1-green;
+      background-color: $white;
       padding: 5px;
     }
   }
@@ -33,7 +33,7 @@
     display: flex;
     margin: 0;
     padding: 0;
-    background-color: $l1-green;
+
 
     li {
       padding-right: 10px;
@@ -45,26 +45,22 @@
     }
     .unactive-course:hover{
       transition: $tr-short;
-      background-color: $green;
-      color: $d2-green;
+      background-color: $d1-green;
     }
     .active-course {
-      background-color: $d2-green;
-      color: $green;
+      background-color: $green;
+      color: $d2-green;
     }
   }
   table {
     margin: 0;
     width: 100%;
     border-radius: $md-radius;
-    background-color: $l1-green;
   }
   tbody{
     tr {
       &:hover {
-        border-radius: 5px;
-        background-color: $green;
-
+        background-color: $d1-green;
       }
     }
   }
@@ -83,8 +79,8 @@
 
 
   thead {
-    background-color: $d2-green;
-    color: $white;
+    background-color: $green;
+    color: $d2-green;
   }
 }
 

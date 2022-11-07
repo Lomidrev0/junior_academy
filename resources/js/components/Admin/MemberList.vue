@@ -1,5 +1,5 @@
 <template>
-    <div class="table-wrapper">
+    <div class="table-wrapper shadow">
       <div class="search-bar d-flex ">
         <div class="search-icon"> <i class="bi bi-search"></i> </div>
         <input type="text" v-model="search" placeholder="Search...">

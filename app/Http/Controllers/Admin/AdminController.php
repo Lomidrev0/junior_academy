@@ -56,7 +56,7 @@ class AdminController
 
        // \request('password');
         $user = User::where('id',Auth::user()->id)->first();
-        //dd($user->password);
+        dd($user->password);
 
         //dd( Hash::check(\request('password'), $user->password));
 

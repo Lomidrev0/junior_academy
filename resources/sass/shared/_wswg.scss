@@ -1,0 +1,48 @@
+.wswg-editor {
+  border-radius: $md-radius;
+  background-color: $white;
+}
+
+.menubar {
+  overflow: hidden;
+  padding: 3px;
+  background: $green;
+  border-radius: $md-radius $md-radius 0 0;
+
+  &__group {
+    float: left;
+    overflow: hidden;
+    padding-right: 15px;
+
+
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+  &__button {
+    padding: 2px 7px;
+    border: none;
+    background: $green;
+    min-width: 24px;
+    font-size: 1.2rem;
+    float: left;
+    color: $d3-green;
+    border-radius: $md-radius;
+
+    i{
+      margin: 0;
+    }
+
+    &:hover {
+      background: $d1-green ;
+    }
+
+    &.is-active {
+      background-color: $blue;
+      color: $white;
+    }
+  }
+}
+
+

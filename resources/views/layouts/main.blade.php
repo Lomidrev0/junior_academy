@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="vh-mh-100">
-        <nav class="navbar navbar-expand-md navbar-light bg-white z-index-4 shaddow">
+        <nav class="navbar navbar-expand-md navbar-light bg-white z-index-4 shadow">
             <div class="container">
                 <div>
                     <button type="button" id="sidebarCollapse" class="btn">
@@ -23,7 +23,7 @@
         </nav>
         <div class="d-flex vh-mh-100 flex-row">
             <div class=" z-index-3">
-                <nav id="sidebar" class="shaddow">
+                <nav id="sidebar" class="shadow">
                     @if(Auth::user()->role == 2)
                         @include('admin.sidenav')
                     @elseif(Auth::user()->role == 1)

@@ -123,6 +123,7 @@ const components = {
     'example-component2': require('./components/ExampleComponent2').default,
     'admin-nav': require('./components/Admin/AdminNav').default,
     'member-list': require('./components/Admin/MemberList').default,
+    'wswg-editor': require('./components/WswgEditor').default,
 };
 
 new Vue({

@@ -26,6 +26,8 @@
     "dependencies": {
         "@popperjs/core": "^2.11.6",
         "bootstrap-icons": "^1.9.1",
-        "date-fns": "^2.29.3"
+        "date-fns": "^2.29.3",
+        "tiptap": "^1.32.2",
+        "tiptap-extensions": "^1.35.2"
     }
 }
