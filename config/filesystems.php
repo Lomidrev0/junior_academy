@@ -69,6 +69,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'logo' => [
+            'driver' => 'local',
+            'root' =>  storage_path('app/public/courses/logo'),
+            'url' => env('APP_URL').'/storage/courses/logo',
+            'visibility' => 'public',
+        ],
+
+        'bg-photo' => [
+            'driver' => 'local',
+            'root' =>  storage_path('app/public/courses/bg-photo'),
+            'url' => env('APP_URL').'/storage/courses/bg-photo',
+            'visibility' => 'public',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

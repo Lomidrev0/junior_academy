@@ -39,8 +39,10 @@ Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function (
         Route::get('/courses','AdminController@courses')->name('courses');
         Route::get('/members','AdminController@members')->name('members');
         Route::get('/reset_password','AdminController@password')->name('password');
-        Route::post('/reset_password/reset','AdminController@passReset')->name('reset');
-
+        Route::get('/add_user_form','AdminController@getUsers')->name('add_user');
+        Route::post('/reset_password','AdminController@passReset')->name('reset');
+        Route::post('/add_user','AdminController@addUser')->name('add');
+        Route::post('/store_course', 'AdminController@storeCourse')->name('store');
     });
 });
 

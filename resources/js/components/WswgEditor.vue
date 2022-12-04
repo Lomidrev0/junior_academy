@@ -1,190 +1,225 @@
 <template>
   <div class="wswg-editor shadow">
-    <editor-menu-bar :editor="editor" v-slot="{ commands, getMarkAttrs, isActive }">
+
       <div class="menubar">
         <div class="overflow-hidden">
 
-          <div class="menubar__group">
+          <div class="_group">
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.paragraph() }"
-                @click="commands.paragraph"
+                class="_button"
+                :class="{'is-active': editor.isActive('paragraph') || editor.isActive('bulletList') || editor.isActive('orderedList')}"
+                @click="editor.chain().focus().setParagraph().run()"
             >
               <i class="bi bi-paragraph"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.heading({ level: 2 }) }"
-                @click="commands.heading({ level: 2 })"
+                class="_button"
+                :class="{'is-active': editor.isActive('heading', {level: 2})}"
+                @click="editor.chain().focus().toggleHeading({level: 2}).run()"
             >
-              <span><b>H2</b></span>
+              <span>H2</span>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.heading({ level: 3 }) }"
-                @click="commands.heading({ level: 3 })"
+                class="_button"
+                :class="{'is-active': editor.isActive('heading', {level: 3})}"
+                @click="editor.chain().focus().toggleHeading({level: 3}).run()"
             >
-              <span><b>H3</b></span>
+              <span>H3</span>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.heading({ level: 4 }) }"
-                @click="commands.heading({ level: 4 })"
+                class="_button"
+                :class="{'is-active': editor.isActive('heading', {level: 4})}"
+                @click="editor.chain().focus().toggleHeading({level: 4}).run()"
             >
-              <span><b>H4</b></span>
+              <span>H4</span>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.heading({ level: 5 }) }"
-                @click="commands.heading({ level: 5 })"
+                class="_button"
+                :class="{'is-active': editor.isActive('heading', {level: 5})}"
+                @click="editor.chain().focus().toggleHeading({level: 5}).run()"
             >
-              <span><b>H5</b></span>
+              <span>H5</span>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.heading({ level: 6 }) }"
-                @click="commands.heading({ level: 6 })"
+                class="_button"
+                :class="{'is-active': editor.isActive('heading', {level: 6})}"
+                @click="editor.chain().focus().toggleHeading({level: 6}).run()"
             >
-              <span><b>H6</b></span>
+              <span>H6</span>
             </button>
 
           </div>
-
-          <div class="menubar__group">
+          <div class="_group">
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.bold() }"
-                @click="commands.bold"
+                class="_button"
+                :class="{'is-active': colorPanel}"
+                @click="colorPanel = true"
+            >
+              <i class="bi bi-palette-fill"></i>
+            </button>
+          </div>
+
+          <div class="_group">
+
+            <button
+                type="button"
+                class="_button"
+                :class="{'is-active': editor.isActive('bold')}"
+                @click="editor.chain().focus().toggleBold().run()"
             >
               <i class="bi bi-type-bold"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.italic() }"
-                @click="commands.italic"
+                class="_button"
+                :class="{'is-active': editor.isActive('italic')}"
+                @click="editor.chain().focus().toggleItalic().run()"
             >
               <i class="bi bi-type-italic"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.strike() }"
-                @click="commands.strike"
+                class="_button"
+                :class="{'is-active': editor.isActive('strike')}"
+                @click="editor.chain().focus().toggleStrike().run()"
             >
               <i class="bi bi-type-strikethrough"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.underline() }"
-                @click="commands.underline"
+                class="_button"
+                :class="{'is-active': editor.isActive('underline')}"
+                @click="editor.chain().focus().toggleUnderline().run()"
             >
               <i class="bi bi-type-underline"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.blockquote() }"
-                @click="commands.blockquote"
+                class="_button"
+                :class="{'is-active': editor.isActive('blockquote')}"
+                @click="editor.chain().focus().toggleBlockquote().run()"
             >
               <i class="bi bi-quote"></i>
             </button>
 
           </div>
 
-          <div class="menubar__group">
+          <div class="_group">
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.bullet_list() }"
-                @click="commands.bullet_list"
+                class="_button"
+                :class="{'is-active': editor.isActive('bulletList')}"
+                @click="editor.chain().focus().unsetBlockquote().toggleBulletList().run()"
             >
               <i class="bi bi-list-ul"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.ordered_list() }"
-                @click="commands.ordered_list"
+                class="_button"
+                :class="{'is-active': editor.isActive('orderedList')}"
+                @click="editor.chain().focus().unsetBlockquote().toggleOrderedList().run()"
             >
               <i class="bi bi-list-ol"></i>
             </button>
 
-          </div>
-
-          <div class="menubar__group">
+            <button
+                type="button"
+                class="_button"
+                :class="{'pe-disabled o-20': !editor.can().liftListItem('listItem')}"
+                @click="editor.chain().focus().liftListItem('listItem').run()"
+            >
+              <i class="bi bi-caret-left-fill"></i>
+            </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.link() }"
-                @click="showLinkPrompt(getMarkAttrs('link'), commands.link)"
+                class="_button"
+                :class="{'pe-disabled o-20': !editor.can().sinkListItem('listItem')}"
+                @click="editor.chain().focus().sinkListItem('listItem').run()"
+            >
+              <i class="bi bi-caret-right-fill"></i>
+            </button>
+
+          </div>
+
+          <div class="_group">
+
+            <button
+                type="button"
+                class="_button"
+                :class="{'is-active': editor.isActive('link')}"
+                @click="setLink"
             >
               <i class="bi bi-link"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                :class="{ 'is-active': isActive.image() }"
-                @click="showImagePrompt(commands.image)"
+                class="_button"
+                :class="{'is-active': editor.isActive('image')}"
+                @click="addImage"
             >
-              <i class="bi bi-card-image"></i>
+              <i class="bi bi-image-fill"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.createTable({rowsCount: 1, colsCount: 3, withHeaderRow: false})"
-            >
-              <i class="bi bi-table"></i>
-            </button>
-
-            <button
-                type="button"
-                class="menubar__button"
-                @click="commands.horizontal_rule"
+                class="_button"
+                :class="{'is-active': editor.isActive('horizontalRule')}"
+                @click="editor.chain().focus().setHorizontalRule().run()"
             >
               <i class="bi bi-hr"></i>
             </button>
 
           </div>
 
-          <div class="menubar__group">
+          <div class="_group">
 
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.undo"
+                class="_button"
+                :class="{'is-active': editor.isActive('table')}"
+                @click="editor.chain().focus().insertTable({ rows: 1, cols: 3, withHeaderRow: false }).run()"
+            >
+              <i class="bi bi-table"></i>
+            </button>
+
+          </div>
+
+          <div class="_group">
+
+            <button
+                type="button"
+                class="_button"
+                @click="editor.chain().focus().undo().run()"
             >
               <i class="bi bi-arrow-90deg-left"></i>
             </button>
 
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.redo"
+                class="_button"
+                @click="editor.chain().focus().redo().run()"
             >
               <i class="bi bi-arrow-90deg-right"></i>
             </button>
@@ -193,170 +228,347 @@
 
         </div>
 
-        <div class="overflow-hidden" v-if="isActive.table()">
+        <div class="overflow-hidden" v-if="editor.isActive('table')">
 
-          <div class="menubar__group xdddddd">
+          <div class="_group">
 
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.deleteTable"
+                class="_button"
+                @click="editor.chain().focus().deleteTable().run()"
             >
               <i class="bi bi-trash3-fill"></i>
             </button>
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.addColumnBefore"
+                class="_button"
+                @click="editor.chain().focus().addColumnBefore().run()"
             >
-              <b>+</b><i class="bi bi-border-middle"></i>
+              +<i class="bi bi-border-middle"></i>
             </button>
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.addColumnAfter"
+                class="_button"
+                @click="editor.chain().focus().addColumnAfter().run()"
             >
-              <i class="bi bi-border-middle"></i><b>+</b>
+              <i class="bi bi-border-middle"></i>+
             </button>
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.deleteColumn"
+                class="_button"
+                @click="editor.chain().focus().deleteColumn().run()"
             >
-              <i class="bi bi-border-middle"></i><b>-</b>
+              <i class="bi bi-border-middle"></i>-
             </button>
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.addRowBefore"
+                class="_button"
+                @click="editor.chain().focus().addRowBefore().run()"
             >
-              <b>	˄</b><i class="bi bi-border-center"></i>
+              +<i class="bi bi-border-center"></i>
             </button>
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.addRowAfter"
+                class="_button"
+                @click="editor.chain().focus().addRowAfter().run()"
             >
-              <i class="bi bi-border-center"></i><b>˅</b>
+              <i class="bi bi-border-center"></i>+
             </button>
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.deleteRow"
+                class="_button"
+                @click="editor.chain().focus().deleteRow().run()"
             >
-              <i class="bi bi-border-center"></i><b>-</b>
+              <i class="bi bi-border-center"></i>-
             </button>
             <button
                 type="button"
-                class="menubar__button"
-                @click="commands.toggleCellMerge"
+                class="_button"
+                @click="editor.chain().focus().mergeCells().run()"
             >
               <i class="bi bi-view-stacked"></i>+<i class="bi bi-view-stacked"></i>
             </button>
-
+            <button
+                type="button"
+                class="_button"
+                @click="editor.chain().focus().toggleHeaderCell().run()"
+            >
+              <i class="bi bi-card-heading"></i>
+            </button>
           </div>
-
         </div>
 
+
+
+        <div class="overflow-hidden" v-if="colorPanel">
+
+          <div class="_group">
+
+            <button
+                type="button"
+                class="_button"
+                @click="colorPanel = false"
+            >
+              <i class="bi bi-x-lg"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#FF0000', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-1-square-fill"></i>
+            </button>
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#FF0000', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-2-square-fill"></i>
+            </button>
+          </div>
+            <div class="_group">
+
+            <input
+                type="color"
+                class="color-picker"
+                @click="colorPanel = true"
+                @input="editor.chain().focus().setColor($event.target.value).run()"
+                :value="editor.getAttributes('textStyle').color"
+            >
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#FF0000', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#FF0000;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#00FFFF', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#00FFFF;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#0000FF', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#0000FF;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#00008B', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#00008B;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#ADD8E6', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#ADD8E6;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#800080', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#800080;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#FFFF00', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#FFFF00;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#00FF00', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#00FF00;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#FF00FF', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#FF00FF;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#FFC0CB', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#FFC0CB;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#FFFFFF', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#FFFFFF;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#808080', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#808080;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#000000', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#000000;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#FFA500', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#FFA500;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#800000', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#800000;"></i>
+            </button>
+
+            <button
+                type="button"
+                class="_button"
+                @click="selectedColor = '#008000', editor.chain().focus().setColor(selectedColor).run()"
+            >
+              <i class="bi bi-square-fill" style="color:#008000;"></i>
+            </button>
+          </div>
+        </div>
       </div>
-    </editor-menu-bar>
     <editor-content :editor="editor" />
   </div>
 </template>
 
 <script>
-import {Editor, EditorContent, EditorMenuBar} from 'tiptap';
-import {
-  Blockquote,
-  HardBreak,
-  Heading,
-  HorizontalRule,
-  OrderedList,
-  BulletList,
-  ListItem,
-  TodoItem,
-  TodoList,
-  Bold,
-  Italic,
-  Link,
-  Strike,
-  Underline,
-  History,
-  Image,
-  Table,
-  TableHeader,
-  TableCell,
-  TableRow,
-} from 'tiptap-extensions';
+import {Editor, EditorContent} from '@tiptap/vue-2';
+import StarterKit from '@tiptap/starter-kit';
+import Underline from '@tiptap/extension-underline';
+import Link from '@tiptap/extension-link';
+import Image from '@tiptap/extension-image';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableCell from '@tiptap/extension-table-cell';
+import TableHeader from '@tiptap/extension-table-header';
+import TextStyle from '@tiptap/extension-text-style';
+import { Color } from '@tiptap/extension-color';
+import Highlight from '@tiptap/extension-highlight'
 import {i18n} from "../app";
 
 export default {
-  components: {EditorMenuBar, EditorContent},
+  //components: {EditorMenuBar, EditorContent},
+  components: {EditorContent},
   props: ['value'],
   data() {
     return {
+      colorPanel:false,
+      color1:'',
+      color2:'',
+
       editor: new Editor({
         content: this.value,
         extensions: [
-          new Blockquote(),
-          new BulletList(),
-          new HardBreak(),
-          new Heading({levels: [2, 3, 4, 5, 6]}),
-          new HorizontalRule(),
-          new ListItem(),
-          new OrderedList(),
-          new TodoItem(),
-          new TodoList(),
-          new Link({
+          StarterKit.configure({
+            heading: {
+              levels: [2, 3, 4, 5, 6],
+            },
+          }),
+          Underline,
+          Link.configure({
             openOnClick: false,
+            HTMLAttributes: {
+              target: '_self',
+              rel: ''
+            },
           }),
-          new Bold(),
-          new Italic(),
-          new Strike(),
-          new Underline(),
-          new History(),
-          new Image(),
-          new Table({
-            resizable: true,
-          }),
-          new TableHeader(),
-          new TableCell(),
-          new TableRow(),
+          Image,
+          Table,
+          TableRow,
+          TableHeader,
+          TableCell,
+          TextStyle,
+          Color,
+          Highlight.configure({ multicolor: true }),
         ],
-        onUpdate: ({getHTML, getJSON}) => {
-          this.update(getHTML(), getJSON());
+        onCreate: () => {
+          this.update();
+        },
+        onUpdate: () => {
+          this.update();
         },
       }),
     };
   },
   watch: {
     value(current) {
+      console.log(current);
       if (current !== this.editor.getHTML()) {
-        this.editor.setContent(current);
+        if (current === ''){
+          this.editor.commands.clearContent(true);
+        }
+        else {
+          this.editor.setContent(current);
+        }
+
       }
     },
   },
   methods: {
-    update(html, json) {
-      json = json.content;
-      if (Array.isArray(json) && json.length === 1 && !json[0].hasOwnProperty('content')) {
-        html = '';
-      }
+    getHTML() {
+      const html = this.editor.getHTML();
+      return html === '<p></p>' ? '' : html;
+    },
+    update() {
+      let html = this.getHTML();
+      html = _.replace(html, new RegExp(this.Laravel('appUrl'), 'g'), '');
+      $(".ProseMirror video").prop('muted', true);
       this.$emit('input', html);
     },
-    showLinkPrompt({href}, command) {
-      const linkUrl = prompt(i18n("Enter link URL:"), href);
-      command({href: linkUrl});
-    },
-    showImagePrompt(command) {
-      const src = prompt(i18n("Enter image URL:"));
-      if (src !== null) {
-        command({ src });
+    setLink() {
+      const current = this.editor.getAttributes('link').href;
+      const href = prompt('Zadajte URL na prelink:', current || '');
+      if (href !== null) {
+        this.editor.chain().focus().extendMarkRange('link').setLink({href}).run();
       }
     },
-  },
-  mounted() {
-    this.update(this.editor.getHTML(), this.editor.getJSON());
+    addImage() {
+      const current = this.editor.getAttributes('image').src;
+      const src = prompt('Zadajte URL obrázku:', current || '');
+      if (src) {
+        this.editor.chain().focus().setImage({src}).run();
+      }
+    },
+
   },
   beforeDestroy() {
     this.editor.destroy();
@@ -366,88 +578,5 @@ export default {
 
 <style lang="scss" scoped>
 @import 'resources/sass/variables';
-::v-deep .ProseMirror {
-  min-height: 50vh;
-  max-width: 160vh;
-  outline: none;
-  padding: 12px 15px;
 
-  ::selection {
-    background-color: $blue;
-    color: $white;
-    opacity: 0 !important;
-  }
-
-  table {
-    width: 100%;
-    table-layout: fixed;
-
-    td {
-      min-width: 1em;
-      padding: 6px;
-      border: 1px solid black;
-      vertical-align: top;
-      position: relative;
-      > * {
-        margin-bottom: 0;
-      }
-    }
-
-    .selectedCell {
-      background-color: $blue;
-      border: 0.5px solid $white;
-      color: $white;
-    }
-
-    .column-resize-handle {
-      position: absolute;
-      right: -2px; top: 0; bottom: 0;
-      width: 4px;
-      z-index: 20;
-      background-color: var(--main);
-      pointer-events: none;
-    }
-  }
-
-  blockquote {
-    border-left: 3px solid var(--background-3);
-    color: var(--text-2);
-    padding-left: 0.8rem;
-    font-style: italic;
-
-    p {
-      margin: 0;
-    }
-  }
-
-  .tableWrapper {
-    margin: 1em 0;
-    overflow-x: auto;
-  }
-
-  p, h2, h3, h4, h5, h6, ul, ol {
-    margin-top: 0;
-    margin-bottom: 1rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-
-  &.resize-cursor {
-    //cursor: ew-resize;
-    cursor: col-resize;
-  }
-
-  img {
-    max-width: 100%;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-  }
-
-  hr {
-    background-color: var(--text);
-  }
-}
 </style>

@@ -1,6 +1,14 @@
 @extends('layouts.main')
 
 @section('authContent')
-   <p>admin admin admin admin admin admin admin admin admin admin admin</p>
-   <wswg-editor></wswg-editor>
+   <div>
+      <div class="mb-5">
+         <h1>daco</h1>
+         <hr>
+         <p>admin admin admin admin admin admin admin admin admin admin admin</p>
+      </div>
+      <div class="container">
+         <wswg-editor></wswg-editor>
+      </div>
+   </div>
 @endsection

@@ -8,6 +8,8 @@ $font-size-base: 0.9rem;
 $line-height-base: 1.6;
 
 // custom colors
+$red: #ff0000;
+$palette-gradient: linear-gradient(to right, #FF0000 0%, #FFC814 25%, #FFFF00 50%, #40FF19 75%, #0FFFF7 50%, #0A28F0 100%);
 
 //main colors
 $blue: #1dcdfe;
@@ -29,3 +31,7 @@ $tr-long: all 1s;
 $sm-radius: 6px;
 $md-radius: 12px;
 $lg-radius: 20px;
+
+//shadow
+$w-b-s: 0px 0px 14px 1px rgba(0,0,0,0.6);
+$b-s: 0px 0px 14px 1px rgba(0,0,0,0.6);

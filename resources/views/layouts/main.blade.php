@@ -18,10 +18,17 @@
                 </div>
                 <div>
                     {{ Auth::user()->name }}
+                    @if(Auth::user()->role == 2)
+                        <i class="bi bi-shield-shaded p-3"></i>
+                    @elseif(Auth::user()->role == 1)
+                        <i class="bi bi-book-half" p-3></i>
+                    @else
+                        <i class="bi bi-person-fill p-3"></i>
+                    @endif
                 </div>
             </div>
         </nav>
-        <div class="d-flex vh-mh-100 flex-row">
+        <div id="admin-container" class="d-flex vh-mh-100 flex-row">
             <div class=" z-index-3">
                 <nav id="sidebar" class="shadow">
                     @if(Auth::user()->role == 2)
@@ -46,5 +53,9 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script src="{{ asset('js/admin.js') }}"></script>
 @endsection
 

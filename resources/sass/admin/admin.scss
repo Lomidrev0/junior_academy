@@ -2,6 +2,30 @@
 .navbar {
   background: $gradient;
 }
+.active-item {
+  background-color: $blue;
+}
+.confirmation{
+  left: 0;
+  position: absolute;
+  background-color: blueviolet;
+  width: 100%;
+  z-index: 6;
+  height: 100%;
+  top: 0;
+  display: none;
+}
+.confirm-password{
+  background-color: aqua;
+  z-index: 6;
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+
 /* ---------------------------------------------------
     Members subpage styles
 ----------------------------------------------------- */
@@ -75,9 +99,6 @@
       color: $d1-blue;
     }
   }
-
-
-
   thead {
     background-color: $green;
     color: $d2-green;
@@ -94,4 +115,86 @@
       }
     }
   }
+}
+
+/* ---------------------------------------------------
+    Courses subpage styles
+----------------------------------------------------- */
+
+.course-wrapper {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  border-radius: $md-radius;
+}
+
+.course-card {
+  -ms-flex: 33.2%; /* IE10 */
+  flex: 33.2%;
+  max-width: 33.2%;
+  padding: 10px;
+  .course-item-body {
+    img {
+      margin-top: 10px;
+      vertical-align: middle;
+      width: 100%;
+    }
+  }
+
+
+  .course-item-head {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .course-card {
+    -ms-flex:50%;
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .course-card {
+    -ms-flex: 100%;
+    flex: 100%;
+    max-width: 100%;
+  }
+}
+
+/* ---------------------------------------------------
+    Alerts
+----------------------------------------------------- */
+.toast-default{
+  background-color: $d1-green;
+  color: $white;
+  text-align: center;
+  border-radius: 5px;
+  padding: 16px;
+  position: fixed;
+  z-index: 15;
+  bottom: 30px;
+  left: 0;
+  margin: 20px;
+
+  i{
+    margin-left: 7px;
+    cursor: pointer;
+  }
+}
+#message{
+  display: none;
+  position: fixed;
+  z-index: 5;
+  bottom: 0;
+  left: 3%;
+  cursor: pointer;
+  animation: fadein 2s;
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }

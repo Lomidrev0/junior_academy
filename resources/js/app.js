@@ -80,7 +80,7 @@ export const route = (name, params, absolute) => {
 /**
  * Import Bootstrap-icons
  */
-
+import {BootstrapVue} from 'bootstrap-vue';
 import "bootstrap-icons/font/bootstrap-icons.css"
 
 
@@ -88,7 +88,7 @@ import "bootstrap-icons/font/bootstrap-icons.css"
  * Import Vue
  */
 window.Vue = require('vue');
-
+Vue.use(BootstrapVue);
 Vue.mixin({
     methods: {
         route,
@@ -124,15 +124,37 @@ const components = {
     'admin-nav': require('./components/Admin/AdminNav').default,
     'member-list': require('./components/Admin/MemberList').default,
     'wswg-editor': require('./components/WswgEditor').default,
+    'CourseWrapper': require('./components/Admin/CourseWrapper').default,
+    'AddUser': require('./components/Admin/AddUser').default,
 };
 
 new Vue({
     el: '#app',
     components
-});
+})
 
-$(document).ready(function () {
-    $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').toggleClass('active');
-    });
-});
+
+/**
+ *
+ * CUSTOM ↓ ↓ ↓ ↓ ↓
+ *
+ */
+
+
+/**
+ *
+ * Show password
+ *
+ */
+
+$(document).ready(function(){
+    $('.showPass').on('click', function(){
+        var passInput=$(".pass");
+        if(passInput.attr('type')==='password')
+        {
+            passInput.attr('type','text');
+        }else{
+            passInput.attr('type','password');
+        }
+    })
+})

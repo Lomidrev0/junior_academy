@@ -69,13 +69,18 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $student_info = [
-            'school' => $data['school'],
-            'class' => $data['class'],
-        ];
+        if ($data['school'] == null || $data['class'] == null) {
+            $student_info = null;
+        }
+        else {
+            $student_info = [
+                'school' => $data['school'],
+                'class' => $data['class'],
+            ];
+        }
         $user = User::create([
             'name' => $data['name'],
-            'student_info' => json_encode($student_info),
+            'student_info' =>$student_info,
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
