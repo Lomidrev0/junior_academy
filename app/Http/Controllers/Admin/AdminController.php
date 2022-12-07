@@ -46,29 +46,36 @@ class AdminController
 
 
     public function passReset(Request $request) {
-        $user = User::where('id',Auth::user()->id)->first();
-        $update = array();
-        $validatedData = $request->validate(
-            [
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        if (Hash::check($request->old_password,Auth::user()->password)) {
 
-        if (Hash::check($request->password, $user->password)) {
-           // dd(json_encode([false, __('New password matches old')]));
-            return redirect()->back()->with('message', false);
+            $user = User::where('id',Auth::user()->id)->first();
+            $update = array();
+            $validatedData = $request->validate(
+                [
+                    'password' => ['required', 'string', 'min:8', 'confirmed'],
+                ]);
 
-        } else {
-            $user->fill([
-                'password' => Hash::make($request->password)
-            ])->save();
-            return redirect()->back()->with('message', true);
+            if (Hash::check($request->password, $user->password)) {
+                // dd(json_encode([false, __('New password matches old')]));
+                return redirect()->back()->with('message', 1);
+
+            } else {
+                $user->fill([
+                    'password' => Hash::make($request->password)
+                ])->save();
+                return redirect()->back()->with('message', 0);
+            }
         }
+        else {
+            return redirect()->back()->with('message', 2);
+        }
+
     }
 
     public function getUsers() {
 
         return view('admin/admin',[
-            'courses'=> Course::get(['id','name'])
+            'courses'=> Course::where('active', true)->get(['id','name'])
         ]);
     }
 
@@ -88,13 +95,12 @@ class AdminController
                     $student_info = null;
                 }
                 else {
-                    $student_info = [
+                    $student_info = collect([
                         'school' => $request->newUser['school'],
                         'class' => $request->newUser['class'],
-                    ];
+                    ]);
                 }
-
-
+                //dd($student_info);
                 $user = User::create([
                     'name' => $request->newUser['name'],
                     'email' => $request->newUser['email'],
@@ -102,13 +108,13 @@ class AdminController
                     'password' => Hash::make($data['password']),
                     'role' => $request->newUser['role'],
                 ]);
+                //dd("som tu");
                 if(isset($request->newUser['course'])) {
                     $userCourse = $request->newUser['course'];
                     try{
                         $user->courses()->attach($userCourse);
                     }catch (\Throwable $exception){
                         dd($exception);
-
                         report($exception);
                     }
                 }
@@ -128,19 +134,28 @@ class AdminController
 
     public function storeCourse(Request $request) {
 
-        //dd($request->isActive);
-        $newCourse = new Course;
-        $newCourse->fill([
+        //dd($request->teachers);
+        $newCourse = Course::create([
             'name'=> $request->name,
             'about'=> $request-> content,
             'description'=> $request->description,
             'active' => $request->isActive === 'true'? true: false,
-        ])->save();
+        ]);
+        try{
+            $newCourse->users()->attach(json_decode($request->teachers));
+        }catch (\Throwable $exception){
+            report($exception);
+        }
+        //TODO posielanie vlastneho mail templatu pre ucitela ze bol pridany ku kurzu
+//        try{
+//            //mail boli ste priradeny ku kurzu...
+//        //Mail::to($request->newUser['email'])->send(new WelcomeMail($data));
+//        } catch(\Exception $e){
+//          //  Log::critical('Welcome email was not send: ' . $e);
+//
+//        }
         $newCourse->addMedia($request->file('logo'))->toMediaCollection('logo', 'logo');
         $newCourse->addMedia($request->file('bgImg'))->toMediaCollection('main_photo', 'bg-photo');
-       // dd(Course::first()->getMedia('logo')[0]->getUrl());
-        //$xd = Course::with('media')->get();
-       // dd($xd[0]->media[0]->getUrl());
         return Course::with('media')->get(['id','name','about','description','active','created_at','updated_at']);
     }
 }

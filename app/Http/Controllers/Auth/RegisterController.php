@@ -73,10 +73,10 @@ class RegisterController extends Controller
             $student_info = null;
         }
         else {
-            $student_info = [
+            $student_info = collect([
                 'school' => $data['school'],
                 'class' => $data['class'],
-            ];
+            ]);
         }
         $user = User::create([
             'name' => $data['name'],

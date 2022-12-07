@@ -120,6 +120,40 @@
 /* ---------------------------------------------------
     Courses subpage styles
 ----------------------------------------------------- */
+.imgUp {
+  width: 30%;
+  margin-right: 5%;
+  cursor: pointer;
+  label{
+    background-color: #fff;
+    text-align: center;
+  }
+  .clear-file{
+    background-color: $danger;
+    text-align: center;
+    color: $white;
+   }
+}
+.imagePreview {
+  width: 95%;
+  margin: 2.5%;
+  height: 220px;
+  background-color:#fff;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: inline-block;
+  border-style: dashed;
+  border-width: 1px;
+}
+
+.custom-file-input {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+
 
 .course-wrapper {
   display: -ms-flexbox; /* IE10 */
@@ -127,6 +161,10 @@
   -ms-flex-wrap: wrap; /* IE10 */
   flex-wrap: wrap;
   border-radius: $md-radius;
+  justify-content: space-between;
+  cursor: pointer;
+  padding-top: 2%;
+  padding-bottom: 2%;
 }
 
 .course-card {
@@ -134,21 +172,30 @@
   flex: 33.2%;
   max-width: 33.2%;
   padding: 10px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.5s;
   .course-item-body {
+    display: flex;
+    justify-content: center;
     img {
-      margin-top: 10px;
-      vertical-align: middle;
-      width: 100%;
+      width:  18rem;
+      height: 18rem;
+      object-fit: cover;
     }
   }
-
+  &:hover {
+    background-color: $d1-green;
+  }
 
   .course-item-head {
     text-align: center;
+    margin-bottom: 2%;
+    margin-top: 2%;
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1300px) {
   .course-card {
     -ms-flex:50%;
     flex: 50%;
@@ -156,7 +203,7 @@
   }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
   .course-card {
     -ms-flex: 100%;
     flex: 100%;

@@ -8,14 +8,18 @@
             <p>{{ __('You can change your password here') }}</p>
 
             @if(session()->has('message'))
-                @if(session()->get('message') == false)
+                @if(session()->get('message') == 1)
                     <div id="message" class="alert alert-danger">
                         {{ __('New password matches old') }}
                     </div>
-                @else
+                @elseif(session()->get('message') == 0)
                 <div id="message" class="alert alert-success">
                     {{  __('Password has been changed successfully') }}
                 </div>
+                @else
+                    <div id="message" class="alert alert-danger">
+                        {{  __('Incorrect password') }}
+                    </div>
                 @endif
             @endif
         </div>
@@ -42,10 +46,18 @@
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm password') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password-confirm" type="password" class="form-control pass" name="password_confirmation" required autocomplete="new-password">
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm by password') }}</label>
+
+                                    <div class="col-md-6">
+                                        <input id="password-confirm" type="password" class="form-control pass" name="old_password" required autocomplete="new-password">
                                     </div>
                                 </div>
 
@@ -55,6 +67,11 @@
                                             {{ __('Reset Password') }}
                                         </button>
                                         <input type="checkbox" class="showPass">Show Password
+                                        @if (Route::has('password.request'))
+                                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        @endif
                                     </div>
                                 </div>
                             </form>
