@@ -111,8 +111,32 @@ Vue.mixin({
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+//Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
+
+/**
+ * Toast
+ */
+
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+Vue.use(Toast, {
+    transition: "Vue-Toastification__fade",
+    maxToasts: 3,
+    newestOnTop: true,
+    position: "bottom-center",
+    timeout: 3010,
+    closeOnClick: true,
+    pauseOnFocusLoss: true,
+    pauseOnHover: true,
+    draggable: false,
+    draggablePercent: 1.44,
+    showCloseButtonOnHover: false,
+    hideProgressBar: false,
+    closeButton: false,
+    icon: false,
+    rtl: false
+});
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -120,12 +144,11 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const components = {
-    'example-component2': require('./components/ExampleComponent2').default,
-    'admin-nav': require('./components/Admin/AdminNav').default,
     'member-list': require('./components/Admin/MemberList').default,
     'wswg-editor': require('./components/WswgEditor').default,
     'CourseWrapper': require('./components/Admin/CourseWrapper').default,
     'AddUser': require('./components/Admin/AddUser').default,
+    'CourseDetail': require('./components/Admin/CourseDetail').default,
 };
 
 new Vue({
@@ -158,30 +181,5 @@ $(document).ready(function(){
         }
     })
 })
-
-/**
- *
- * Upload img
- *
- */
-
-$(function() {
-    $(document).on("change",".uploadFile", function()
-    {
-        var uploadFile = $(this);
-        var files = !!this.files ? this.files : [];
-        if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
-
-        if (/^image/.test( files[0].type)){ // only image file
-            var reader = new FileReader(); // instance of the FileReader
-            reader.readAsDataURL(files[0]); // read the local file
-
-            reader.onloadend = function(){ // set image data as background of div
-                uploadFile.closest(".imgUp").find('.imagePreview').css("background-image", "url("+this.result+")");
-            }
-        }
-
-    });
-});
 
 

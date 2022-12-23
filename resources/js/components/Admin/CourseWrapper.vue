@@ -1,10 +1,11 @@
 <template>
 <div>
-<button>
-  <i class="bi bi-plus-lg"></i> add
+<button class="btn btn-primary" @click="show = !show">
+  <i class="bi bi-plus-lg"></i>
+  {{i18n('Add')}}
 </button>
-  <div>
-    <form key="saveCourse">
+  <div v-show="show">
+    <form key="saveCourse" class="add-course-form">
       <div>
         <input :type="'text'" class="form-control" :name="'name'" :placeholder="i18n('Course name') + ' *'" v-model="newCourse.name">
       </div>
@@ -12,31 +13,31 @@
         <textarea class="form-control" rows="3" :name="'description'" :placeholder="i18n('Short course description')" v-model="newCourse.description"></textarea>
       </div>
 
-      <div class="d-flex w-100">
+      <div class="d-flex justify-content-evenly">
         <div class="imgUp">
           <label class="w-100">
-          <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="onLogoSelected" class="uploadFile img custom-file-input" >
+            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="onLogoSelected" class="uploadFile img custom-file-input" >
             {{ getLogoName() }}
-            <div id="logo" class="imagePreview d-flex align-items-center">
-              <div class="d-flex flex-column align-items-center w-100">
-                <i class="bi bi-plus-circle-dotted"></i>
+            <div  class="imagePreview d-flex align-items-center">
+              <div id="logo" class="d-flex flex-column align-items-center w-100 ">
+                <i class="bi bi-plus-circle-dotted add-logo-icon"></i>
               </div>
             </div>
           </label>
-          <div class="clear-file" @click="clearLogo()">clear</div>
+          <div class="clear-file" @click="clearLogo()">{{i18n('Remove')}}</div>
         </div>
 
         <div class="imgUp">
           <label class="w-100">
             <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="onBgImgSelected" class="uploadFile img custom-file-input">
             {{ getBgImgName() }}
-            <div id="bgImg" class="imagePreview d-flex align-items-center">
-              <div class="d-flex flex-column align-items-center w-100">
-                <i class="bi bi-plus-circle-dotted"></i>
+            <div  class="imagePreview d-flex align-items-center">
+              <div id="bgImg" class="d-flex flex-column align-items-center w-100 ">
+                <i class="bi bi-plus-circle-dotted add-bg-img-icon"></i>
               </div>
             </div>
           </label>
-          <div class="clear-file" @click="clearBgImg()">clear</div>
+          <div class="clear-file" @click="clearBgImg()">{{i18n('Remove')}}</div>
         </div>
       </div>
 
@@ -70,16 +71,46 @@
         </button>
       </div>
     </form>
+    <template v-if="error.length > 0">
+      <div class="alert alert-danger my-3 mx-4" role="alert">
+        {{ error }}
+        <div @click="error = ''" class="d-md-inline">
+          <i class="bi bi-x-lg"></i>
+        </div>
+      </div>
+    </template>
   </div>
   <div class="w-100">
     <div class="course-wrapper shadow">
-      <div class="course-card" v-for="(course) in coursesList">
-        <div class="course-item-head">
-          {{course.name}}
-        </div>
-        <div class="course-item-body">
-          <img :src="course.media[0].original_url" alt="logo">
-        </div>
+      <div class="course-card" v-for="(course, key) in coursesList">
+          <div class="course-item">
+            <div class="course-bg" :style="'background-image: url('+course.media[1].original_url+')'"></div>
+            <div class="course-card-body">
+              <div class="course-item-head d-flex justify-content-between">
+                <a :href="route('admin.detail', {slug: course.slug})">
+                  <div>
+                    <strong>{{course.name}}</strong>
+                  </div>
+                </a>
+                <div>
+                  <label class="switch">
+                    <input type="checkbox" class="course-toggle" v-model="course.active" @click="updateCourse(course, key, $event)">
+                    <span class="slider round"></span>
+                  </label>
+                  <i class="bi bi-x-lg" @click="deleteCourse(course.id,course.name)"></i>
+                </div>
+              </div>
+              <a class="disabled" :href="route('admin.detail', {slug: course.slug})">
+                <div class="course-item-body">
+                  <img :src="course.media[0].original_url" alt="logo">
+                </div>
+                <div class="course-item-footer d-flex justify-content-around">
+                  <span>{{course.admin.name}}</span>
+                  <span>{{ formatDate(course.updated_at, 'H:mm - dd.MM.yyyy') }}</span>
+                </div>
+              </a>
+            </div>
+          </div>
       </div>
     </div>
   </div>
@@ -89,14 +120,20 @@
 <script>
 import WswgEditor from "../WswgEditor";
 import {i18n} from "../../app";
+import courseFormMixin from "./courseFormMixin";
+import {parseISO} from 'date-fns';
+
 export default {
+  mixins:[courseFormMixin],
   components: {WswgEditor},
   props: ['courses','users'],
   data(){
     return {
+      show: false,
       coursesList: this.courses ? (this.courses.length > 0 ? this.courses : null) : null,
       addTeacher: false,
       saving: false,
+      error: '',
       newCourse: {
         isActive: false,
         name: '',
@@ -108,36 +145,66 @@ export default {
         logo: null,
         bgImg: null,
       }
-
     }
   },
   methods: {
     saveCourse(){
-      const formData = new FormData();
-      formData.append('logo',this.files.logo, this.files.logo.name);
-      formData.append('bgImg',this.files.bgImg, this.files.bgImg.name);
-      formData.append('name', this.newCourse.name);
-      formData.append('description', this.newCourse.description);
-      formData.append('content', this.newCourse.content);
-      formData.append('isActive', this.newCourse.isActive);
-      formData.append('teachers', this.teachers === [] ? null : JSON.stringify(this.newCourse.teachers));
-      console.log(this.newCourse.teachers);
-      axios
-      .post(this.route('admin.store'), formData)
-      .then((response) => {
-        this.coursesList = response.data;
-        this.saving = !this.saving;
-        this.reset();
+      if (this.newCourse.name.length === 0 || this.newCourse.description.length === 0 || this.removeHTML(this.newCourse.content).length === 0 || this.files.logo === null || this.files.bgImg === null){
+        this.error = i18n('You have not filled in all required fields');
+       } else if (this.newCourse.name.length > 60){
+        this.error = i18n('The name is too long!');
+      } else if (this.newCourse.description.length > 1000){
+        this.error = i18n('Description is too long!');
+      } else if (_.find(this.coursesList, (course) => { return course.name === this.newCourse.name })){
+        this.error = i18n('There is already course with this name');
+      } else {
+        const formData = new FormData();
+        formData.append('logo',this.files.logo, this.files.logo.name);
+        formData.append('bgImg',this.files.bgImg, this.files.bgImg.name);
+        formData.append('name', this.newCourse.name);
+        formData.append('description', this.newCourse.description);
+        formData.append('about', this.newCourse.content);
+        formData.append('isActive', this.newCourse.isActive);
+        formData.append('teachers', this.teachers === [] ? null : JSON.stringify(this.newCourse.teachers));
+        axios
+            .post(this.route('admin.store'), formData)
+            .then((response) => {
+              this.reset();
+              this.coursesList = response.data;
+              this.formatDates();
+              this.saving = false;
+              this.$toast.success(i18n('Course has been sucessfully created'));
+            })
+      }
+    },
+    deleteCourse(id,name) {
+      if (confirm(i18n('Are you sure you want to delete course: ') + ' "' + name + '"?' )) {
+        axios
+            .post(this.route('admin.delete'), {id: id})
+            .then((response) => {
+              this.coursesList = response.data;
+              this.formatDates();
+              this.$toast.success(i18n('Course has been successfully deleted'));
+            })
+      }
+    },
+    updateCourse(course, key, event){
+       if (confirm( i18n('Are you sure you want to change status of the course: ') + ' "' + course.name + '"?' )) {
+         axios
+             .post(this.route('admin.update-active'), {id: course.id, value: !course.active})
+             .then((response) => {
+               let data =response.data
+               data.updated_at = parseISO(data.updated_at);
+               this.$set(this.coursesList, key, data);
+               this.$toast.success(i18n('Course has been sucessfully updated'));
+             })
+       }
+       else {
+         event.preventDefault();
+         event.stopPropagation();
 
-      })
+       }
     },
-    onLogoSelected(event) {
-      this.files.logo = event.target.files[0];
-    },
-    onBgImgSelected(event) {
-      this.files.bgImg = event.target.files[0];
-    },
-
     reset() {
       this.newCourse.isActive = false;
       this.newCourse.name = '';
@@ -145,36 +212,28 @@ export default {
       this.newCourse.content = '';
       this.clearLogo();
       this.clearBgImg();
+      this.newCourse.teachers = [];
+    },
+    formatDates() {
+      this.coursesList = _.map(this.coursesList, (course) => {
+        return {
+          ...course,
+          updated_at: parseISO(course.updated_at)
+        }
+      });
+    },
+  },
 
-    },
-    addUser(id) {
-      this.teachers.add(id);
-    },
-    getLogoName() {
-      if (this.files.logo !== null){
-        return this.files.logo.name;
+  created() {
+    window.addEventListener( "pageshow", function ( event ) {
+      var historyTraversal = event.persisted ||
+          ( typeof window.performance != "undefined" &&
+              window.performance.navigation.type === 2 );
+      if ( historyTraversal ) {
+        window.location.reload();
       }
-      else {
-        return i18n('Choose image');
-      }
-
-    },
-    getBgImgName() {
-      if (this.files.bgImg !== null){
-        return this.files.bgImg.name;
-      }
-      else {
-        return i18n('Choose image');
-      }
-    },
-    clearLogo() {
-      this.files.logo = null;
-      $("#logo").css("background-image", "none");
-    },
-    clearBgImg() {
-      this.files.bgImg = null;
-      $("#bgImg").css("background-image", "none");
-    }
+    });
+    this.formatDates();
   }
 }
 </script>

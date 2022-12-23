@@ -93,7 +93,6 @@
   th, td {
     text-align: left;
     padding: 8px;
-    //border: none;
 
     a {
       color: $d1-blue;
@@ -121,8 +120,7 @@
     Courses subpage styles
 ----------------------------------------------------- */
 .imgUp {
-  width: 30%;
-  margin-right: 5%;
+  width: 40vh;
   cursor: pointer;
   label{
     background-color: #fff;
@@ -134,10 +132,15 @@
     color: $white;
    }
 }
+.dynamic-logo,.dynamic-bg {
+  width: 20vh;
+  height: 20vh;
+  object-fit: cover;
+}
 .imagePreview {
   width: 95%;
   margin: 2.5%;
-  height: 220px;
+ height: 25vh;
   background-color:#fff;
   background-position: center;
   background-repeat: no-repeat;
@@ -161,41 +164,170 @@
   -ms-flex-wrap: wrap; /* IE10 */
   flex-wrap: wrap;
   border-radius: $md-radius;
-  justify-content: space-between;
   cursor: pointer;
   padding-top: 2%;
   padding-bottom: 2%;
+
+  a{
+    text-decoration: none;
+  }
 }
 
 .course-card {
-  -ms-flex: 33.2%; /* IE10 */
-  flex: 33.2%;
-  max-width: 33.2%;
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  transition: 0.5s;
-  .course-item-body {
-    display: flex;
-    justify-content: center;
-    img {
-      width:  18rem;
-      height: 18rem;
-      object-fit: cover;
+  transition: 0.3s;
+
+  .course-item {
+    position: relative;
+    overflow: hidden;
+
+    .course-card-body {
+      position: relative;
+      z-index: 4;
+
+      .course-item-body {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 3vh;
+        padding-top: 3vh;
+        img {
+          width:  10rem;
+          height: 10rem;
+          object-fit: cover;
+        }
+      }
+      .course-item-head {
+        background-color: $green;
+        color: $d2-green;
+        text-align: center;
+        padding: 1vh;
+        a{
+          text-decoration: none;
+          color: $d2-green;
+        }
+        i{
+          margin: 0;
+        }
+      }
+      .course-item-footer {
+        padding-top: 1vh;
+        padding-bottom: 1vh;
+        color: $d2-green;
+        background-color: $green;
+      }
+    }
+    .course-bg {
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: all 0.5s;
+      position: absolute;
+      z-index: 1;
+    }
+    &:hover {
+      .course-bg {
+        transform: scale(1.2);
+      }
+      .course-item-head,.course-item-footer {
+        background-color: $d1-green;
+      }
     }
   }
-  &:hover {
-    background-color: $d1-green;
-  }
 
-  .course-item-head {
-    text-align: center;
-    margin-bottom: 2%;
-    margin-top: 2%;
+}
+.teacher-wrapper {
+  flex-direction: row;
+  .checkbox-item{
+    background-color: $white;
+    -webkit-box-shadow: $w-b-s;
+    box-shadow: $b-s;
+    margin-right: 1.5%;
+    margin-left: 1.5%;
+    padding: 1vh;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    border-radius: $md-radius;
+  }
+  .active-teacher{
+    background-color: $green;
   }
 }
 
-@media screen and (max-width: 1300px) {
+/**switch**/
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 18px;
+  left: 25%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  .slider {
+    border-radius: 34px;
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:$red;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 2.3px;
+    bottom: 1.4px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+  }
+}
+
+input:checked + .slider {
+  background-color: $d1-green;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(21.25px);
+  -ms-transform: translateX(21.25px);
+  transform: translateX(21.25px);
+}
+
+/* Rounded sliders */
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+@media screen and (max-width: 1500px) {
+  .course-card {
+    -ms-flex:33.3%;
+    flex: 33.3%;
+    max-width: 33.3%;
+  }
+}
+@media screen and (max-width: 1200px) {
   .course-card {
     -ms-flex:50%;
     flex: 50%;
@@ -203,13 +335,16 @@
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 765px) {
   .course-card {
     -ms-flex: 100%;
     flex: 100%;
     max-width: 100%;
   }
 }
+/*************************************************/
+
+/*************************************************/
 
 /* ---------------------------------------------------
     Alerts

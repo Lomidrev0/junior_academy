@@ -102,18 +102,12 @@
         </div>
       </div>
     </template>
-    <div v-show="showToast" class="toast-default">
-      <div class="d-md-inline">{{i18n('User has been successfully added')}}</div>
-      <div @click="showToast = !showToast" class="d-md-inline">
-        <i class="bi bi-x-lg"></i>
-      </div>
-    </div>
   </div>
 </template>
 
 <script>
+import {i18n} from "../../app";
 export default {
-
   props:['courses'],
 
   data() {
@@ -122,7 +116,6 @@ export default {
       addCourse:false,
       saving: false,
       error: '',
-      showToast: '',
       password:'',
       newUser: {
         name: '',
@@ -164,7 +157,7 @@ export default {
             .then((response) => {
               this.saving = !this.saving;
               if (response.data === 0) {
-                this.setShowToast();
+                this.$toast.success(i18n('User has been successfully added'));
                 this.resetForm();
               } else if(response.data === 1) {
                 this.error = this.i18n('Incorrect password');
@@ -185,10 +178,6 @@ export default {
               console.log(error);
           });
       }
-    },
-    setShowToast() {
-      this.showToast = true;
-      setTimeout(() => this.showToast = false, 5000)
     },
     resetForm() {
       this.newUser.name = '';

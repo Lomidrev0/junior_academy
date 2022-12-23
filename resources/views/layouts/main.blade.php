@@ -41,10 +41,8 @@
                 </nav>
             </div>
             <div class="w-100 d-sm-grid">
-                <div class="container-fluid">
-                    <div class="content-margin">
-                        @yield('authContent')
-                    </div>
+                <div class="content-margin">
+                    @yield('authContent')
                 </div>
                 <div class="d-grid align-self-end">
                     @include('shared/footer')

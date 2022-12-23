@@ -28,7 +28,7 @@
                 <td>{{JSON.parse(user.student_info).school}}</td>
                 <td>{{ JSON.parse(user.student_info).class}}</td>
                 <td><a :href="'mailto:'+user.email">{{ user.email }}</a></td>
-                <td>{{ formatDate(user.created_at, 'H:mm - dd.MM.yyyyy') }}</td>
+                <td>{{ formatDate(user.created_at, 'H:mm - dd.MM.yyyy') }}</td>
               </template>
             </tr>
           </template>

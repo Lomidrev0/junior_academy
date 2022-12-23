@@ -8,7 +8,6 @@
          <p>admin admin admin admin admin admin admin admin admin admin admin</p>
       </div>
       <div class="container">
-         <wswg-editor></wswg-editor>
       </div>
    </div>
 @endsection

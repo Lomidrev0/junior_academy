@@ -35,11 +35,19 @@
   "Invalid email address": "Neplatná emailová adresa",
   "The name is too long!": "The name is too long!",
   "Email is too long!":"Email is too long!",
+  "Description is too long!":"Description is too long!",
   "Incorrect password": "Incorect password",
   "User has been successfully added": "User has been successfully added",
   "The address is taken": "The address is taken",
   "Form has not been processed": "Form has not been processed",
   "Add student": "Add Student",
   "You have not filled in all required fields": "You have not filled in all required fields",
-  "Choose image": "Choose image"
+  "Choose image": "Choose image",
+  "Are you sure you want to delete course: ": "Are you sure you want to delete course: ",
+  "Are you sure you want to change status of the course: ": "Are you sure you want to change status of the course: ",
+  "Back": "Back",
+  "Active": "Active",
+  "Add": "Add",
+  "Remove": "Remove",
+  "There is already course with this name": "There is already course with this name"
 }

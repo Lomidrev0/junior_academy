@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Ramsey\Uuid\Type\Integer;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use function Composer\Autoload\includeFile;
 
 class AdminController
@@ -24,13 +25,37 @@ class AdminController
     public function index() {
         return view('admin/home');
     }
+    public function getForCoursesUI(){
+        $courses = new Course();
+        $courses = Course::with(['media', 'admin' => function ($query) {
+            $query->select('id', 'name');
+        }])->get(['id','name','about','description','active','slug','user_id','created_at','updated_at']);
+
+        $courses = $courses->map(function($course) {
+            unset($course['user_id']);
+            $course['active'] = $course['active'] == 1 ? true : false;
+            return $course;
+        });
+        return $courses;
+    }
+
+    public function getForCourseUI($id){
+        $course =  Course::with(['users' => function ($query) {
+            $query->select('id', 'name');},
+            'media','admin'=> function ($query) {
+                $query->select('id', 'name');
+            }])->where('id',$id)->first();
+        unset($course['user_id']);
+        return $course;
+    }
+
     public function courses() {
-        //dd(Course::get(['id','name','about','description','active','created_at','updated_at']));
         return view('admin/courses',[
-            'courses' => Course::with('media')->get(['id','name','about','description','active','created_at','updated_at']),
+            'courses' => $this->getForCoursesUI(),
             'users' => User::where('role', 1)->get(['id','name'])
         ]);
     }
+
     public function members() {
         $courses=Course::with(['users' => function ($query) {
             $query->select('id', 'name','email','created_at','student_info')->where('role', 0);
@@ -40,23 +65,20 @@ class AdminController
             'courses' => $courses
         ]);
     }
+
     public function password() {
         return view('admin/password');
     }
 
-
     public function passReset(Request $request) {
         if (Hash::check($request->old_password,Auth::user()->password)) {
-
             $user = User::where('id',Auth::user()->id)->first();
             $update = array();
             $validatedData = $request->validate(
                 [
                     'password' => ['required', 'string', 'min:8', 'confirmed'],
                 ]);
-
             if (Hash::check($request->password, $user->password)) {
-                // dd(json_encode([false, __('New password matches old')]));
                 return redirect()->back()->with('message', 1);
 
             } else {
@@ -69,11 +91,9 @@ class AdminController
         else {
             return redirect()->back()->with('message', 2);
         }
-
     }
 
     public function getUsers() {
-
         return view('admin/admin',[
             'courses'=> Course::where('active', true)->get(['id','name'])
         ]);
@@ -100,7 +120,6 @@ class AdminController
                         'class' => $request->newUser['class'],
                     ]);
                 }
-                //dd($student_info);
                 $user = User::create([
                     'name' => $request->newUser['name'],
                     'email' => $request->newUser['email'],
@@ -108,13 +127,11 @@ class AdminController
                     'password' => Hash::make($data['password']),
                     'role' => $request->newUser['role'],
                 ]);
-                //dd("som tu");
                 if(isset($request->newUser['course'])) {
                     $userCourse = $request->newUser['course'];
                     try{
                         $user->courses()->attach($userCourse);
                     }catch (\Throwable $exception){
-                        dd($exception);
                         report($exception);
                     }
                 }
@@ -133,13 +150,13 @@ class AdminController
     }
 
     public function storeCourse(Request $request) {
-
-        //dd($request->teachers);
         $newCourse = Course::create([
             'name'=> $request->name,
-            'about'=> $request-> content,
+            'about'=> $request->about,
             'description'=> $request->description,
             'active' => $request->isActive === 'true'? true: false,
+            'slug' => Str::slug($request->name),
+            'user_id' => Auth::user()->id,
         ]);
         try{
             $newCourse->users()->attach(json_decode($request->teachers));
@@ -154,8 +171,85 @@ class AdminController
 //          //  Log::critical('Welcome email was not send: ' . $e);
 //
 //        }
-        $newCourse->addMedia($request->file('logo'))->toMediaCollection('logo', 'logo');
-        $newCourse->addMedia($request->file('bgImg'))->toMediaCollection('main_photo', 'bg-photo');
-        return Course::with('media')->get(['id','name','about','description','active','created_at','updated_at']);
+        $newCourse->addMedia($request->file('logo'))->toMediaCollection('logo-collect', 'logo');
+        $newCourse->addMedia($request->file('bgImg'))->toMediaCollection('bg-photo-collect', 'bg-photo');
+
+        return $this->getForCoursesUI();
+    }
+
+    public function courseDetail(Request $request) {
+        $course = new Course();
+        $course = Course::with(['users' => function ($query) {
+            $query->select('id', 'name');
+        }, 'media','admin'=> function ($query) {
+            $query->select('id', 'name');
+        }])->where('slug',$request->segment(3))->first();
+        unset($course['user_id']);
+
+        return view('admin/detail', [
+            'course' => $course,
+            'users' => User::where('role', 1)->get(['id','name'])
+        ]);
+    }
+    public function updateCourse(Request $request) {
+
+        $redireect = false;
+        $course = Course::find($request->id);
+        if(isset($request->name)) {
+            $course->fill([
+                'name' => $request->name,
+                'slug' => Str::slug($request->name),
+                'description' => $request->description,
+                'about' => $request->about,
+                'active' => $request->isActive === 'true'? true : false,
+                'user_id' => Auth::user()->id
+            ])->save();
+            try{
+                $course->users()->sync(json_decode($request->teachers));
+            }catch (\Throwable $exception){
+                report($exception);
+            }
+            return $course->first(['slug']);
+        }
+        else {
+            $course->fill([
+                'description' => $request->description,
+                'about' => $request->about,
+                'active' => $request->isActive === 'true' ? true : false,
+                'user_id' => Auth::user()->id
+            ])->save();
+            try{
+                $course->users()->sync(json_decode($request->teachers));
+            }catch (\Throwable $exception){
+                report($exception);
+            }
+            if ($request->logo) {
+                $course->clearMediaCollection('logo-collect');
+                $course->addMedia($request->logo)->toMediaCollection('logo-collect','logo');
+            }
+            if ($request->bgImg) {
+                $course->clearMediaCollection('bg-photo-collect');
+                $course->addMedia($request->bgImg)->toMediaCollection('bg-photo-collect', 'bg-photo');
+            }
+            return [
+                $this->getForCourseUI($request->id),
+                User::where('role', 1)->get(['id','name'])
+            ] ;
+        }
+    }
+    public function deleteCourse(Request $request) {
+        $course = Course::find($request->id);
+        $course['user_id'] = Auth::user()->id;
+        $course->delete();
+        return Course::with(['media', 'admin' => function ($query) {
+            $query->select('id', 'name');
+        }])->get(['id','name','about','description','active','slug','user_id','created_at','updated_at']);
+
+    }
+
+    public function updateActive(Request $request) {
+        $course =  Course::find($request->id);
+        $course->update(['user_id' => Auth::user()->id, 'active'=> $request->value]);
+        return $this->getForCourseUI($request->id);
     }
 }
