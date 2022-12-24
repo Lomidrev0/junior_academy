@@ -49,5 +49,9 @@
   "Active": "Active",
   "Add": "Add",
   "Remove": "Remove",
-  "There is already course with this name": "There is already course with this name"
+  "There is already course with this name": "There is already course with this name",
+  "Course has been sucessfully deleted": "Course has been sucessfully deleted",
+  "Course has been sucessfully updated": "Course has been sucessfully updated",
+  "Course has been sucessfully created": "Course has been sucessfully created",
+  "A change is required for save": "A change is required for save"
 }
