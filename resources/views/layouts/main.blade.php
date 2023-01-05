@@ -34,7 +34,7 @@
                     @if(Auth::user()->role == 2)
                         @include('admin.sidenav')
                     @elseif(Auth::user()->role == 1)
-                        {{--      ucitel     --}}
+                        @include('teacher.sidenav' , ['courses' => Auth::user()->courses])
                     @else
                         @include('student.sidenav')
                     @endif

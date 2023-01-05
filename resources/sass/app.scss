@@ -8,19 +8,21 @@
 @import '~bootstrap/scss/bootstrap';
 
 //Custom
-@import 'front/nav';
-@import 'admin/sidebar';
 @import 'shared/footer';
-@import 'shared/wswg';
-
 
 //Global styles
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 html,body,#app{
   font-family: $family;
   font-style: normal;
   font-weight: $font-size-base;
   background-color: $white;
-  //height: 100%;
+  min-height: 100vh;
+  scroll-behavior: smooth;
 }
 
 .content-margin {
@@ -132,4 +134,10 @@ p,h1{
          -webkit-transform: scaleY(1.0);
        }
   }
+}
+.modal-backdrop{
+  background-color:#00000057;
+}
+.modal-open{
+  overflow: hidden;
 }

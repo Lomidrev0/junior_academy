@@ -1,4 +1,9 @@
 @import "resources/sass/app";
+@import 'sidebar';
+@import 'wswg';
+
+@import 'resources/sass/teacher/teacher';
+
 .navbar {
   background: $gradient;
 }

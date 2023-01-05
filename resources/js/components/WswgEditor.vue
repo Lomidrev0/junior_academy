@@ -578,5 +578,4 @@ export default {
 
 <style lang="scss" scoped>
 @import 'resources/sass/variables';
-
 </style>

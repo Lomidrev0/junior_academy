@@ -122,9 +122,10 @@ import WswgEditor from "../WswgEditor";
 import {i18n} from "../../app";
 import courseFormMixin from "./courseFormMixin";
 import {parseISO} from 'date-fns';
+import formatDatesMixin from "../formatDatesMixin";
 
 export default {
-  mixins:[courseFormMixin],
+  mixins:[courseFormMixin, formatDatesMixin],
   components: {WswgEditor},
   props: ['courses','users'],
   data(){
@@ -214,14 +215,6 @@ export default {
       this.clearBgImg();
       this.newCourse.teachers = [];
     },
-    formatDates() {
-      this.coursesList = _.map(this.coursesList, (course) => {
-        return {
-          ...course,
-          updated_at: parseISO(course.updated_at)
-        }
-      });
-    },
   },
 
   created() {
@@ -233,7 +226,7 @@ export default {
         window.location.reload();
       }
     });
-    this.formatDates();
+    this.coursesList = this.formatDates(this.coursesList);
   }
 }
 </script>

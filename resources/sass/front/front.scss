@@ -1,1 +1,16 @@
 @import "resources/sass/app";
+@import 'nav';
+
+.front-bg {
+  background-image: url("https://juniorakademia.spse-po.sk/img/main_bg.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  height: 90vh;
+  display: flex;
+  align-items: center;
+  div{
+    color: $white;
+  }
+
+}

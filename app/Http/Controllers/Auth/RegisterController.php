@@ -76,6 +76,8 @@ class RegisterController extends Controller
             $student_info = collect([
                 'school' => $data['school'],
                 'class' => $data['class'],
+                'active' => false,
+                'notes' => '',
             ]);
         }
         $user = User::create([

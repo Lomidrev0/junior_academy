@@ -17,21 +17,33 @@ use App\Http\Controllers\Admin\AdminController;
 |
 */
 
-Route::get('/', function () {
-    return view('front/main');
+
+Route::namespace('Front')->group(function () {
+    Route::get('/', 'FrontController@index');
 });
+
 Route::middleware(['student'])->prefix('/student')->name('student.')->group(function () {
     Route::namespace('Student')->group(function () {
         Route::get('/','StudentController@index')->name('home');
 
     });
 });
+/*teacher routes*/
+
 Route::middleware(['teacher'])->prefix('/teacher')->name('teacher.')->group(function () {
     Route::namespace('Teacher')->group(function () {
         Route::get('/','TeacherController@index')->name('home');
+        Route::get('/reset_password','TeacherController@password')->name('password');
+        Route::get('/members','TeacherController@members')->name('members');
+        Route::post('/update_active_member', 'TeacherController@updateActive')->name('update-active-member');
+        Route::post('/delete_member', 'TeacherController@deleteMember')->name('delete-member');
+        Route::post('/set_note', 'TeacherController@setNote')->name('set-note');
 
     });
 });
+
+/*admin routes*/
+
 Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function () {
     Route::namespace('Admin')->group(function () {
         Route::get('/','AdminController@index')->name('home');
@@ -41,13 +53,17 @@ Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function (
         Route::get('/reset_password','AdminController@password')->name('password');
         Route::get('/add_user_form','AdminController@getUsers')->name('add_user');
         Route::get('/detail/{slug?}', 'AdminController@courseDetail' )->name('detail');
-        Route::post('/reset_password','AdminController@passReset')->name('reset');
         Route::post('/add_user','AdminController@addUser')->name('add');
         Route::post('/store_course', 'AdminController@storeCourse')->name('store');
         Route::post('/update_course', 'AdminController@updateCourse')->name('update');
         Route::post('/update_delete', 'AdminController@deleteCourse')->name('delete');
         Route::post('/update_active', 'AdminController@updateActive')->name('update-active');
     });
+});
+
+Route::namespace('Shared')->group(function () {
+    Route::post('/reset_password','ResetPassword@passReset')->name('reset');
+    Route::post('/change_course','CourseController@changeCourse')->name('change-course');
 });
 
 Auth::routes();

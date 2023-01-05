@@ -149,12 +149,42 @@ const components = {
     'CourseWrapper': require('./components/Admin/CourseWrapper').default,
     'AddUser': require('./components/Admin/AddUser').default,
     'CourseDetail': require('./components/Admin/CourseDetail').default,
+    'CourseList': require('./components/Front/CourseList').default,
 };
 
 new Vue({
     el: '#app',
     components
 })
+
+
+/**
+ *
+ * local storage
+ *
+ */
+
+
+export const getFromLS = (key, dflt=null) => {
+    if (_.has(localStorage, key)) {
+        let value = localStorage[key];
+        if (value === 'null' || value === 'undefined') {
+            return dflt;
+        } else if (value === 'false') {
+            return false;
+        }
+        return value;
+    }
+    return dflt;
+}
+
+export const saveToLS = (key, value) => {
+    localStorage[key] = value;
+};
+
+export const removeFromLS = (key) => {
+    localStorage.removeItem(key);
+};
 
 
 /**

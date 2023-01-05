@@ -61,37 +61,16 @@ class AdminController
             $query->select('id', 'name','email','created_at','student_info')->where('role', 0);
         }])->get(['id','name']);
 
-        return view('admin/members',[
+        return view('shared/members',[
             'courses' => $courses
         ]);
     }
 
     public function password() {
-        return view('admin/password');
+        return view('shared/password');
     }
 
-    public function passReset(Request $request) {
-        if (Hash::check($request->old_password,Auth::user()->password)) {
-            $user = User::where('id',Auth::user()->id)->first();
-            $update = array();
-            $validatedData = $request->validate(
-                [
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
-                ]);
-            if (Hash::check($request->password, $user->password)) {
-                return redirect()->back()->with('message', 1);
 
-            } else {
-                $user->fill([
-                    'password' => Hash::make($request->password)
-                ])->save();
-                return redirect()->back()->with('message', 0);
-            }
-        }
-        else {
-            return redirect()->back()->with('message', 2);
-        }
-    }
 
     public function getUsers() {
         return view('admin/admin',[
@@ -118,6 +97,8 @@ class AdminController
                     $student_info = collect([
                         'school' => $request->newUser['school'],
                         'class' => $request->newUser['class'],
+                        'active' => false,
+                        'notes' => '',
                     ]);
                 }
                 $user = User::create([
@@ -244,7 +225,6 @@ class AdminController
         return Course::with(['media', 'admin' => function ($query) {
             $query->select('id', 'name');
         }])->get(['id','name','about','description','active','slug','user_id','created_at','updated_at']);
-
     }
 
     public function updateActive(Request $request) {
