@@ -86,7 +86,7 @@
 
 <script>
 import {parseISO} from 'date-fns';
-import {i18n} from "../../app";
+import {i18n} from "../app";
 export default {
   props:['courses', 'admin'],
   data (){

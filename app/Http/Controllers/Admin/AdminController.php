@@ -39,12 +39,12 @@ class AdminController
         return $courses;
     }
 
-    public function getForCourseUI($id){
+    public function getForCourseUI($column, $value){
         $course =  Course::with(['users' => function ($query) {
             $query->select('id', 'name');},
             'media','admin'=> function ($query) {
                 $query->select('id', 'name');
-            }])->where('id',$id)->first();
+            }])->where($column,$value)->first();
         unset($course['user_id']);
         return $course;
     }
@@ -159,16 +159,8 @@ class AdminController
     }
 
     public function courseDetail(Request $request) {
-        $course = new Course();
-        $course = Course::with(['users' => function ($query) {
-            $query->select('id', 'name');
-        }, 'media','admin'=> function ($query) {
-            $query->select('id', 'name');
-        }])->where('slug',$request->segment(3))->first();
-        unset($course['user_id']);
-
         return view('admin/detail', [
-            'course' => $course,
+            'course' => $this->getForCourseUI('slug',$request->segment(3)),
             'users' => User::where('role', 1)->get(['id','name'])
         ]);
     }
@@ -213,7 +205,7 @@ class AdminController
                 $course->addMedia($request->bgImg)->toMediaCollection('bg-photo-collect', 'bg-photo');
             }
             return [
-                $this->getForCourseUI($request->id),
+                $this->getForCourseUI('id',$request->id),
                 User::where('role', 1)->get(['id','name'])
             ] ;
         }
@@ -222,14 +214,12 @@ class AdminController
         $course = Course::find($request->id);
         $course['user_id'] = Auth::user()->id;
         $course->delete();
-        return Course::with(['media', 'admin' => function ($query) {
-            $query->select('id', 'name');
-        }])->get(['id','name','about','description','active','slug','user_id','created_at','updated_at']);
+        return $this->getForCoursesUI();
     }
 
     public function updateActive(Request $request) {
         $course =  Course::find($request->id);
         $course->update(['user_id' => Auth::user()->id, 'active'=> $request->value]);
-        return $this->getForCourseUI($request->id);
+        return $this->getForCourseUI('id',$request->id);
     }
 }

@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@fancyapps/ui": "^4.0.31",
         "@popperjs/core": "^2.11.6",
         "@tiptap/core": "^2.0.0-beta.202",
         "@tiptap/extension-color": "^2.0.0-beta.202",

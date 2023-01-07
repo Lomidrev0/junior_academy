@@ -12,5 +12,12 @@ export default {
       });
       return values;
     },
+    formatObjectDates(value){
+      return {
+        ...value,
+        updated_at: parseISO(value.updated_at),
+        created_at: parseISO(value.created_at)
+      }
+    }
   }
 }

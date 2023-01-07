@@ -14,30 +14,17 @@
       </div>
 
       <div class="d-flex justify-content-evenly">
-        <div class="imgUp">
+        <div class="imgUp" v-for="(file,key) in files">
           <label class="w-100">
-            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="onLogoSelected" class="uploadFile img custom-file-input" >
-            {{ getLogoName() }}
+            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key)" class="uploadFile img custom-file-input" >
+            {{ file ? file.name : i18n('Choose image') }}
             <div  class="imagePreview d-flex align-items-center">
-              <div id="logo" class="d-flex flex-column align-items-center w-100 ">
-                <i class="bi bi-plus-circle-dotted add-logo-icon"></i>
+              <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
+                <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
               </div>
             </div>
           </label>
-          <div class="clear-file" @click="clearLogo()">{{i18n('Remove')}}</div>
-        </div>
-
-        <div class="imgUp">
-          <label class="w-100">
-            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="onBgImgSelected" class="uploadFile img custom-file-input">
-            {{ getBgImgName() }}
-            <div  class="imagePreview d-flex align-items-center">
-              <div id="bgImg" class="d-flex flex-column align-items-center w-100 ">
-                <i class="bi bi-plus-circle-dotted add-bg-img-icon"></i>
-              </div>
-            </div>
-          </label>
-          <div class="clear-file" @click="clearBgImg()">{{i18n('Remove')}}</div>
+          <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
         </div>
       </div>
 
@@ -89,7 +76,7 @@
               <div class="course-item-head d-flex justify-content-between">
                 <a :href="route('admin.detail', {slug: course.slug})">
                   <div>
-                    <strong>{{course.name}}</strong>
+                    <strong v-b-tooltip.hover :title="course.name">{{ truncateContent(course.name, 30) }}</strong>
                   </div>
                 </a>
                 <div>
@@ -105,7 +92,7 @@
                   <img :src="course.media[0].original_url" alt="logo">
                 </div>
                 <div class="course-item-footer d-flex justify-content-around">
-                  <span>{{course.admin.name}}</span>
+                  <span v-b-tooltip.hover :title="course.admin.name">{{truncateContent(course.admin.name, 15)}}</span>
                   <span>{{ formatDate(course.updated_at, 'H:mm - dd.MM.yyyy') }}</span>
                 </div>
               </a>
@@ -120,18 +107,19 @@
 <script>
 import WswgEditor from "../WswgEditor";
 import {i18n} from "../../app";
-import courseFormMixin from "./courseFormMixin";
+import courseFormMixin from "../courseFormMixin";
 import {parseISO} from 'date-fns';
 import formatDatesMixin from "../formatDatesMixin";
+import truncateMixin from "../truncateMixin";
 
 export default {
-  mixins:[courseFormMixin, formatDatesMixin],
+  mixins:[courseFormMixin, formatDatesMixin, truncateMixin],
   components: {WswgEditor},
   props: ['courses','users'],
   data(){
     return {
       show: false,
-      coursesList: this.courses ? (this.courses.length > 0 ? this.courses : null) : null,
+      coursesList: this.courses ? (this.courses.length > 0 ? _.cloneDeep(this.courses) : null) : null,
       addTeacher: false,
       saving: false,
       error: '',
@@ -167,12 +155,12 @@ export default {
         formData.append('about', this.newCourse.content);
         formData.append('isActive', this.newCourse.isActive);
         formData.append('teachers', this.teachers === [] ? null : JSON.stringify(this.newCourse.teachers));
+        this.saving = true;
         axios
             .post(this.route('admin.store'), formData)
             .then((response) => {
               this.reset();
-              this.coursesList = response.data;
-              this.formatDates();
+              this.coursesList = this.formatDates(response.data);
               this.saving = false;
               this.$toast.success(i18n('Course has been sucessfully created'));
             })
@@ -183,8 +171,7 @@ export default {
         axios
             .post(this.route('admin.delete'), {id: id})
             .then((response) => {
-              this.coursesList = response.data;
-              this.formatDates();
+              this.coursesList = this.formatDates(response.data);
               this.$toast.success(i18n('Course has been successfully deleted'));
             })
       }
@@ -194,9 +181,7 @@ export default {
          axios
              .post(this.route('admin.update-active'), {id: course.id, value: !course.active})
              .then((response) => {
-               let data =response.data
-               data.updated_at = parseISO(data.updated_at);
-               this.$set(this.coursesList, key, data);
+               this.$set(this.coursesList, key, this.formatObjectDates(response.data));
                this.$toast.success(i18n('Course has been sucessfully updated'));
              })
        }
@@ -211,8 +196,7 @@ export default {
       this.newCourse.name = '';
       this.newCourse.description = '';
       this.newCourse.content = '';
-      this.clearLogo();
-      this.clearBgImg();
+      this.clearFile();
       this.newCourse.teachers = [];
     },
   },

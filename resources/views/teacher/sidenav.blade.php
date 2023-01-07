@@ -27,6 +27,12 @@
         </a>
     </li>
     <li>
+        <a href="{{route('teacher.gallery')}}" {!! (Str::contains(url()->current(), 'gallery') ? 'class=active-item' : '') !!}>
+            <i class="bi bi-image-fill"></i>
+            <span>{{ __('Gallery')}}</span>
+        </a>
+    </li>
+    <li>
         <a href="{{route('teacher.password')}}">
             <i class="bi bi-lock-fill"></i>
             <span>{{__('Change password')}}</span>

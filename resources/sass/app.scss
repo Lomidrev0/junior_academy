@@ -141,3 +141,17 @@ p,h1{
 .modal-open{
   overflow: hidden;
 }
+.tooltip{
+  opacity: 1;
+}
+.arrow {
+  position: absolute;
+  width: 0.8rem;
+  height: 0.4rem;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 0.4rem 0.4rem 0;
+  border-top-color: #000;
+  bottom: 1px;
+  left: 45%;
+}

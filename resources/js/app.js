@@ -144,12 +144,14 @@ Vue.use(Toast, {
  */
 
 const components = {
-    'member-list': require('./components/Admin/MemberList').default,
+    'member-list': require('./components/MemberList').default,
     'wswg-editor': require('./components/WswgEditor').default,
     'CourseWrapper': require('./components/Admin/CourseWrapper').default,
     'AddUser': require('./components/Admin/AddUser').default,
     'CourseDetail': require('./components/Admin/CourseDetail').default,
     'CourseList': require('./components/Front/CourseList').default,
+    'AlbumWrapper': require('./components/Teacher/AlbumWrapper').default,
+    'ImageWrapper': require('./components/Teacher/ImageWrapper').default,
 };
 
 new Vue({

@@ -16,30 +16,17 @@
       </div>
 
       <div class="d-flex justify-content-evenly">
-        <div class="imgUp">
+        <div class="imgUp" v-for="(file,key) in files">
           <label class="w-100">
-            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="onLogoSelected" class="uploadFile img custom-file-input" >
-            {{ files.logo === null ? editCourse.media[0].file_name  : getLogoName() }}
+            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key)" class="uploadFile img custom-file-input" >
+            {{ file ? file.name : i18n('Choose image') }}
             <div  class="imagePreview d-flex align-items-center">
-              <div id="logo" class="d-flex flex-column align-items-center w-100 ">
-                <i class="bi bi-plus-circle-dotted add-logo-icon"></i>
+              <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
+                <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
               </div>
             </div>
           </label>
-          <div class="clear-file" @click="clearLogo()">{{i18n('Remove')}}</div>
-        </div>
-
-        <div class="imgUp">
-          <label class="w-100">
-            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="onBgImgSelected" class="uploadFile img custom-file-input">
-            {{ files.logo === null ? editCourse.media[1].file_name : getBgImgName() }}
-            <div  class="imagePreview d-flex align-items-center">
-              <div id="bgImg" class="d-flex flex-column align-items-center w-100 ">
-                <i class="bi bi-plus-circle-dotted add-bg-img-icon"></i>
-              </div>
-            </div>
-          </label>
-          <div class="clear-file" @click="clearBgImg()">{{i18n('Remove')}}</div>
+          <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
         </div>
       </div>
 
@@ -62,7 +49,6 @@
                   {{user.name}}
                 </div>
               </label>
-
             </template>
           </template>
           <template v-else>
@@ -93,7 +79,7 @@
 <script>
 import WswgEditor from "../WswgEditor";
 import {i18n, route} from "../../app";
-import courseFormMixin from "./courseFormMixin";
+import courseFormMixin from "../courseFormMixin";
 
 export default {
   mixins:[courseFormMixin],
@@ -167,7 +153,8 @@ export default {
     }
   },
   mounted() {
-    this.setImg(_.find(this.editCourse.media, {'disk':'logo'}).original_url, _.find(this.editCourse.media, {'disk':'bg-photo'}).original_url);
+    /*, _.find(this.editCourse.media, {'disk':'bg-photo'}).original_url*/
+    this.setExistingImg(this.editCourse.media, _.keys(this.files));
   },
 }
 </script>

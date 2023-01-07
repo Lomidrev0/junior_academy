@@ -53,6 +53,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Course::class, 'user_courses','user_id','course_id');
     }
 
+    public function directories()
+    {
+        return $this->hasMany(Directory::class);
+    }
+
     public function setSelectedCourse(Course $course) {
         $this->selectedCourse = $course;
         session(['selected-course' => $this->selectedCourse]);
