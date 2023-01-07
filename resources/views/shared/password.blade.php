@@ -29,7 +29,7 @@
                     <div class="card">
                         <div class="card-header">{{ __('Reset Password') }}</div>
                         <div class="card-body">
-                            <form method="POST" action="{{ route('admin.reset') }}">
+                            <form method="POST" action="{{ route('reset') }}">
                                 @csrf
                                 <div class="row mb-3">
                                     <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>

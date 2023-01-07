@@ -2,7 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Course;
 use Closure;
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,6 +28,13 @@ class Teacher
         }
 
         if (Auth::user()->role == 1) {
+            if (!(Session::has('selected-course'))){
+                Auth::user()->setSelectedCourse(
+                    Course::with(['users' => function ($query) {
+                        $query->select('id', 'name');
+                    }])->first()
+                );
+            }
             return $next($request);
         }
 

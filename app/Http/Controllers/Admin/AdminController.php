@@ -39,12 +39,12 @@ class AdminController
         return $courses;
     }
 
-    public function getForCourseUI($id){
+    public function getForCourseUI($column, $value){
         $course =  Course::with(['users' => function ($query) {
             $query->select('id', 'name');},
             'media','admin'=> function ($query) {
                 $query->select('id', 'name');
-            }])->where('id',$id)->first();
+            }])->where($column,$value)->first();
         unset($course['user_id']);
         return $course;
     }
@@ -61,37 +61,16 @@ class AdminController
             $query->select('id', 'name','email','created_at','student_info')->where('role', 0);
         }])->get(['id','name']);
 
-        return view('admin/members',[
+        return view('shared/members',[
             'courses' => $courses
         ]);
     }
 
     public function password() {
-        return view('admin/password');
+        return view('shared/password');
     }
 
-    public function passReset(Request $request) {
-        if (Hash::check($request->old_password,Auth::user()->password)) {
-            $user = User::where('id',Auth::user()->id)->first();
-            $update = array();
-            $validatedData = $request->validate(
-                [
-                    'password' => ['required', 'string', 'min:8', 'confirmed'],
-                ]);
-            if (Hash::check($request->password, $user->password)) {
-                return redirect()->back()->with('message', 1);
 
-            } else {
-                $user->fill([
-                    'password' => Hash::make($request->password)
-                ])->save();
-                return redirect()->back()->with('message', 0);
-            }
-        }
-        else {
-            return redirect()->back()->with('message', 2);
-        }
-    }
 
     public function getUsers() {
         return view('admin/admin',[
@@ -118,6 +97,8 @@ class AdminController
                     $student_info = collect([
                         'school' => $request->newUser['school'],
                         'class' => $request->newUser['class'],
+                        'active' => false,
+                        'notes' => '',
                     ]);
                 }
                 $user = User::create([
@@ -178,16 +159,8 @@ class AdminController
     }
 
     public function courseDetail(Request $request) {
-        $course = new Course();
-        $course = Course::with(['users' => function ($query) {
-            $query->select('id', 'name');
-        }, 'media','admin'=> function ($query) {
-            $query->select('id', 'name');
-        }])->where('slug',$request->segment(3))->first();
-        unset($course['user_id']);
-
         return view('admin/detail', [
-            'course' => $course,
+            'course' => $this->getForCourseUI('slug',$request->segment(3)),
             'users' => User::where('role', 1)->get(['id','name'])
         ]);
     }
@@ -232,7 +205,7 @@ class AdminController
                 $course->addMedia($request->bgImg)->toMediaCollection('bg-photo-collect', 'bg-photo');
             }
             return [
-                $this->getForCourseUI($request->id),
+                $this->getForCourseUI('id',$request->id),
                 User::where('role', 1)->get(['id','name'])
             ] ;
         }
@@ -241,15 +214,12 @@ class AdminController
         $course = Course::find($request->id);
         $course['user_id'] = Auth::user()->id;
         $course->delete();
-        return Course::with(['media', 'admin' => function ($query) {
-            $query->select('id', 'name');
-        }])->get(['id','name','about','description','active','slug','user_id','created_at','updated_at']);
-
+        return $this->getForCoursesUI();
     }
 
     public function updateActive(Request $request) {
         $course =  Course::find($request->id);
         $course->update(['user_id' => Auth::user()->id, 'active'=> $request->value]);
-        return $this->getForCourseUI($request->id);
+        return $this->getForCourseUI('id',$request->id);
     }
 }

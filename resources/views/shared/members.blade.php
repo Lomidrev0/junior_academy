@@ -12,6 +12,7 @@
                 @isset($courses)
                 :courses="{{$courses}}"
                 @endisset
+                :admin ="{{ Auth::user()->role == 2 ? 'true' : 'false' }}"
             ></member-list>
         </div>
     </div>

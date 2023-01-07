@@ -1,0 +1,15 @@
+.notify-div {
+  position: relative;
+  display: inline-block;
+  .notify-dot {
+    position: absolute;
+    top: 1px;
+    right: -3px;
+    border-radius: 50%;
+    background-color: red;
+    width: 5px;
+    height: 5px;
+    z-index: 10;
+    padding: 3px;
+  }
+}

@@ -7,7 +7,6 @@
         @include('front/nav')
         @yield('frontContent')
         @include('shared/footer')
-
     </div>
 @endsection
 @section('scripts')
