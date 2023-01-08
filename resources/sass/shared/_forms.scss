@@ -1,102 +1,72 @@
-$color: #0cf;
-//button
-.button_first {
-    display: inline-block;
-    padding: .75rem 1.25rem;
-    border-radius: 10px;
-    color: black;
-    transition: all .3s;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    border: none;
-    &:after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: $color;
-        z-index: -2;
-    }
-    &:before {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 0%;
-        height: 100%;
-        background-color: darken($color, 15%);
-        transition: all .5s;
-
-        z-index: -1;
-    }
-    &:hover {
-        color: #fff;
-        &:before {
-            width: 100%;
-        }
-    }
-}
-
 //checkbox
-input[type=checkbox] + label {
-    display: block;
-    margin: 0.2em;
-    cursor: pointer;
-    padding: 0.2em;
-    padding-top: 4%;
-    display: flex;
-    p{
-        padding-left: 3%;
+.checkbox-wrapper-31:hover .check {
+    stroke-dashoffset: 0;
+}
+.checkbox-wrapper{
+    label {
+        padding-right: 12px;
+        padding-left: 12px;
     }
-
 }
-
-input[type=checkbox] {
-    display: none;
+.checkbox-wrapper-31 {
+    padding-left: 12px;
+    padding-right: 12px;
+    position: relative;
+    width: 40px;
+    margin: auto auto auto 0;
+    svg {
+        width: 27px;
+    }
 }
-
-input[type=checkbox] + label:before {
-    content: "\2714";
-    border: 0.1em solid #000;
-    border-radius: 0.2em;
-    display: inline-block;
-    width: 1.8em;
-    height: 1.8em;
-    padding-left: 0.393em;
-    padding-bottom: 0.3em;
-    margin-right: 0.2em;
-    vertical-align: bottom;
-    color: transparent;
-    transition: .2s;
+.checkbox-wrapper-31 .background {
+    fill: #ccc;
+    transition: ease all 0.6s;
+    -webkit-transition: ease all 0.6s;
 }
-
-input[type=checkbox] + label:active:before {
-    transform: scale(0);
+.checkbox-wrapper-31 .stroke {
+    fill: none;
+    stroke: #fff;
+    stroke-miterlimit: 10;
+    stroke-width: 2px;
+    stroke-dashoffset: 100;
+    stroke-dasharray: 100;
+    transition: ease all 0.6s;
+    -webkit-transition: ease all 0.6s;
 }
-
-input[type=checkbox]:checked + label:before {
-    background-color: MediumSeaGreen;
-    border-color: MediumSeaGreen;
-    color: #fff;
+.checkbox-wrapper-31 .check {
+    fill: none;
+    stroke: #fff;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2px;
+    stroke-dashoffset: 22;
+    stroke-dasharray: 22;
+    transition: ease all 0.6s;
+    -webkit-transition: ease all 0.6s;
 }
-
-input[type=checkbox]:disabled + label:before {
-    transform: scale(1);
-    border-color: #aaa;
+.checkbox-wrapper-31 input[type=checkbox] {
+    position: absolute;
+    width: 27px;
+    height: 100%;
+    -appearance: none;
+    -webkit-appearance: none;
 }
-
-input[type=checkbox]:checked:disabled + label:before {
-    transform: scale(1);
-    background-color: #bfb;
-    border-color: #bfb;
+.checkbox-wrapper-31 input[type=checkbox]:hover {
+    cursor: pointer;
+}
+.checkbox-wrapper-31 input[type=checkbox]:checked + svg .background {
+    fill: #6cbe45;
+}
+.checkbox-wrapper-31 input[type=checkbox]:checked + svg .stroke {
+    stroke-dashoffset: 0;
+}
+.checkbox-wrapper-31 input[type=checkbox]:checked + svg .check {
+    stroke-dashoffset: 0;
 }
 
 //tabulka form
 .card-header{
-    background-color: $d2-green;
+    background-color: $d3-green;
     color: whitesmoke;
 }
 .card{
@@ -116,6 +86,3 @@ input[type=checkbox]:checked:disabled + label:before {
 .d-md-inline{
     float: right;
 }
-
-
-

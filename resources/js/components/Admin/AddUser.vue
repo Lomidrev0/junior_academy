@@ -1,7 +1,6 @@
 <template>
   <div>
     <div>
-
       <button class="button_first" @click="user = 2, resetForm()">Admin</button>
       <button class="button_first" @click="user = 1, resetForm()">Teacher</button>
       <button class="button_first" @click="user = 0, resetForm()">Student</button>
@@ -59,11 +58,19 @@
                                     <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Confirm by password') }}</label>
                                     <div class="col-md-6">
                                         <input type="password" class="form-control pass" v-model="password" required>
-                                        <input type="checkbox" id="fruit1" name="fruit-1" value="Apple">
-                                        <label class="fajka" for="fruit1"><p>Show Password</p></label>
                                     </div>
                                 </div>
-
+                              <div class="d-flex flex-row mb-3 checkbox-wrapper">
+                                <label  class="col-md-4 col-form-label text-md-end">Show Password</label>
+                                <div class="checkbox-wrapper-31">
+                                  <input type="checkbox" class="showPass"/>
+                                  <svg viewBox="0 0 35.6 35.6">
+                                    <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                    <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                    <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                  </svg>
+                                </div>
+                              </div>
                                 <div v-if="user === 1 || user === 0" class="row mb-3">
                                     <div class="col-md-6 offset-md-4">
                                         <template v-if="addCourse">

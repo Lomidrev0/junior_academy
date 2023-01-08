@@ -12,8 +12,8 @@ $red: #ff0000;
 $palette-gradient: linear-gradient(to right, #FF0000 0%, #FFC814 25%, #FFFF00 50%, #40FF19 75%, #0FFFF7 50%, #0A28F0 100%);
 
 //main colors
-$blue: #1dcdfe;
-$d1-blue: #101ee3;
+$blue: #00c3ff;
+$d1-blue: #008FB3;
 $l1-green: #baf7e8;
 $green: #34f5c5;
 $d1-green: #21d0b2;
@@ -30,6 +30,7 @@ $tr-normal: all 0.5s;
 $tr-long: all 1s;
 
 //radius
+$radius: 0.375rem;
 $sm-radius: 6px;
 $md-radius: 12px;
 $lg-radius: 20px;

@@ -10,6 +10,7 @@
 //Custom
 @import 'shared/footer';
 @import 'shared/forms';
+@import "shared/buttons";
 
 
 //Global styles
@@ -28,9 +29,9 @@ html,body,#app{
 }
 
 .content-margin {
-  @media screen and (min-width: 800px) {
+  ///@media screen and (min-width: 800px) {
     margin: 4%;
-  }
+  //}
 
 }
 .shadow{
@@ -156,4 +157,8 @@ p,h1{
   border-top-color: #000;
   bottom: 1px;
   left: 45%;
+}
+
+.txt-col-white {
+    color: $white;
 }

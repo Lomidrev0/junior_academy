@@ -1,56 +1,58 @@
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
-$color: #0cf;
 #sidebar {
   min-width: 250px;
   max-width: 250px;
   background-color: $d2-green;
   transition: $tr-short;
   height: 100%;
+  margin-top: 53px;
+  position: fixed;
   ul{
     padding: 0;
     margin: 0;
     list-style-type: none;
     li {
       a {
-          display: block;
-          padding: .75rem 1.25rem;
-          color: white;
-          transition: all .3s;
-          position: relative;
-          overflow: hidden;
-          z-index: 1;
-          border: none;
-          text-decoration: none;
-          &:after {
-              content: '';
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              width: 100%;
-              height: 100%;
-              background-color: #2F455C;
-
-              z-index: -2;
-          }
-          &:before {
-              content: '';
-              position: absolute;
-              bottom: 0;
-              left: 0;
-              width: 0%;
-              height: 100%;
-              background-color: darken($color, 15%);
-              transition: all .5s;
-
-              z-index: -1;
-          }
-          &:hover {
-              color: #fff;
-              &:before {
-                  width: 100%;
-              }
+        display: block;
+        padding: .75rem 1.25rem;
+        color: white;
+        transition: all .3s;
+        position: relative;
+        overflow: hidden;
+        //z-index: 1;
+        border: none;
+        text-decoration: none;
+        i{
+          padding-right: 10px;
+        }
+        &:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+        &:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 100%;
+            background-color: darken($blue, 15%);
+            transition: all .5s;
+            z-index: -1;
+        }
+        &:hover {
+            color: #fff;
+            z-index: 1;
+            &:before {
+                width: 100%;
+            }
           }
       }
     }

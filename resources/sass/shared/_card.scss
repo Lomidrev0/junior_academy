@@ -1,0 +1,15 @@
+.card-color {
+  background-color: $d3-green;
+  border-radius: $radius;
+  span {
+    height: fit-content;
+    margin: auto auto auto 0;
+    padding-left: 10px;
+  }
+  i {
+    padding-right: 10px;
+    height: fit-content;
+    margin: auto 0;
+    font-size: x-large;
+  }
+}

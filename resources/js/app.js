@@ -152,6 +152,7 @@ const components = {
     'CourseList': require('./components/Front/CourseList').default,
     'AlbumWrapper': require('./components/Teacher/AlbumWrapper').default,
     'ImageWrapper': require('./components/Teacher/ImageWrapper').default,
+    'InfoCard': require('./components/InfoCard').default,
 };
 
 new Vue({
