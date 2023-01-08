@@ -3,9 +3,9 @@
 @section('authContent')
    <div>
       <div class="mb-5">
-         <h1>daco</h1>
+         <h1>Nadpis</h1>
          <hr>
-         <p>admin admin admin admin admin admin admin admin admin admin admin</p>
+         <p>admin admin admin admin admin admin admin admin admin admin admin admin admin admin admin admin admin admin admin</p>
       </div>
       <div class="container">
       </div>

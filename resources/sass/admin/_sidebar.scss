@@ -1,6 +1,7 @@
 /* ---------------------------------------------------
     SIDEBAR STYLE
 ----------------------------------------------------- */
+$color: #0cf;
 #sidebar {
   min-width: 250px;
   max-width: 250px;
@@ -13,16 +14,44 @@
     list-style-type: none;
     li {
       a {
-        padding: 12px 20px 12px 20px;
-        text-decoration: none;
-        color: $white;
-        display: block;
+          display: block;
+          padding: .75rem 1.25rem;
+          color: white;
+          transition: all .3s;
+          position: relative;
+          overflow: hidden;
+          z-index: 1;
+          border: none;
+          text-decoration: none;
+          &:after {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              background-color: #2F455C;
 
-        &:hover {
-          transition: $tr-short;
-          background-color: $green;
-          color: $d2-green;
-        }
+              z-index: -2;
+          }
+          &:before {
+              content: '';
+              position: absolute;
+              bottom: 0;
+              left: 0;
+              width: 0%;
+              height: 100%;
+              background-color: darken($color, 15%);
+              transition: all .5s;
+
+              z-index: -1;
+          }
+          &:hover {
+              color: #fff;
+              &:before {
+                  width: 100%;
+              }
+          }
       }
     }
   }
