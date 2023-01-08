@@ -5,10 +5,23 @@
 @import 'resources/sass/teacher/teacher';
 
 .navbar {
-  background: $gradient;
+  background: #008FB3;
+    color: white;
+}
+.navbar-color-text{
+    color: white;
+}
+navbar-color-text{
+    color: white;
+}
+text-color{
+    color: white;
 }
 .active-item {
   background-color: $blue;
+}
+text-color{
+    color: white;
 }
 .confirmation{
   left: 0;
@@ -385,3 +398,14 @@ input:checked + .slider:before {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
+.karticka{
+    background-color: #2F455C;
+    border-radius: 10px;
+
+}
+.text{
+    color: white;
+}
+
+

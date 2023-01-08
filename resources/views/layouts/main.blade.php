@@ -6,13 +6,13 @@
 
 @section('content')
     <div class="vh-mh-100">
-        <nav class="navbar navbar-expand-md navbar-light bg-white z-index-4 shadow">
+        <nav class="navbar navbar-expand-md navbar-light z-index-4 shadow">
             <div class="container">
-                <div>
+                <div class="text-color">
                     <button type="button" id="sidebarCollapse" class="btn">
-                        <i class="bi bi-list m-0"></i>
+                        <i class="bi bi-list m-0 text-color"></i>
                     </button>
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand navbar-color-text" href="{{ url('/') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
