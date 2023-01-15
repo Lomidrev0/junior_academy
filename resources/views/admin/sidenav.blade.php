@@ -18,13 +18,13 @@
         </a>
     </li>
     <li>
-        <a href="" class="{{Str::contains(url()->current(), '#')  ? 'active-item' : '' }}">
+        <a href="{{ route('admin.articles') }}" class="{{Str::contains(url()->current(), 'articles')  ? 'active-item' : '' }}">
             <i class="bi bi-chat-square-text-fill"></i>
             <span> {{__('Front page text')}}</span>
         </a>
     </li>
     <li>
-        <a href="{{route('admin.add_user')}}" class="{{Str::contains(url()->current(), 'add_user_form')  ? 'active-item' : '' }}">
+        <a href="{{route('admin.add-user')}}" class="{{Str::contains(url()->current(), 'add_user_form')  ? 'active-item' : '' }}">
             <i class="bi bi-person-plus-fill"></i>
             <span>{{__('Add user')}}</span>
         </a>

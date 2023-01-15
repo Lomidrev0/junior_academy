@@ -18,8 +18,11 @@ class CourseController
                 $query->select('id', 'name');
             }])->where('id', $request->id)->first()
         );
-        return back();
+        if (count(explode('/',url()->previous())) > 5) {
+            return redirect(dirname(url()->previous()));
+        }
+        else {
+            return back();
+        }
     }
-
-
 }

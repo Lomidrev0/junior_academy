@@ -12,7 +12,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="card shadow">
+                    <div class="card card-style">
                         <div class="card-header">
                             {{user === 0 ? i18n('Add student') : (user === 1 ? i18n('Add teacher') : i18n('Add admin') )}}
                             <i v-if="user === 0" class="bi bi-person-fill p-3"></i>
@@ -20,7 +20,7 @@
                             <i v-if="user === 2" class="bi bi-shield-shaded p-3"></i>
                         </div>
 
-                        <div class="card-body stredek">
+                        <div class="card-body custom-card-body">
                             <form key="saveUser">
                                 <div class="row mb-3">
                                     <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Name and surname') }}</label>
@@ -167,6 +167,7 @@ export default {
             })
             .then((response) => {
               this.saving = !this.saving;
+              console.log(response.data);
               if (response.data === 0) {
                 this.$toast.success(i18n('User has been successfully added'));
                 this.resetForm();

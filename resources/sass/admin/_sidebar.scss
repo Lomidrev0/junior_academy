@@ -9,6 +9,7 @@
   height: 100%;
   margin-top: 53px;
   position: fixed;
+  z-index: 3;
   ul{
     padding: 0;
     margin: 0;
@@ -43,7 +44,7 @@
             left: 0;
             width: 0%;
             height: 100%;
-            background-color: darken($blue, 15%);
+            background-color: $d1-blue;
             transition: all .5s;
             z-index: -1;
         }
@@ -57,27 +58,32 @@
       }
     }
   }
+  &.active {
+    margin-left: -250px;
+    -webkit-box-shadow: none;
+    box-shadow:none;
+    &.content {
+      margin-left: 0;
+    }
+  }
 }
 
-#sidebar.active {
-    margin-left: -250px;
-  -webkit-box-shadow: none;
-  box-shadow:none;
-}
 /* ---------------------------------------------------
     MEDIAQUERIES
 ----------------------------------------------------- */
 
 @media (max-width: 1000px) {
     #sidebar {
+      margin-left: 0;
+      z-index: 5;
+      &.active {
         margin-left: -250px;
-        position: absolute;
-        z-index: 10;
-    }
-    #sidebar.active {
+      }
+      &.content {
         margin-left: 0;
-        position: absolute;
+      }
     }
+
     #sidebarCollapse span {
         display: none;
     }

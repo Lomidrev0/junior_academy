@@ -29,7 +29,7 @@
             </div>
         </nav>
         <div id="admin-container" class="d-flex vh-mh-100 flex-row">
-            <div class=" z-index-3">
+            <div>
                 <nav id="sidebar" class="shadow">
                     @if(Auth::user()->role == 2)
                         @include('admin.sidenav')

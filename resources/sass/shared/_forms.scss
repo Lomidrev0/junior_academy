@@ -65,24 +65,18 @@
 }
 
 //tabulka form
-.card-header{
-    background-color: $d3-green;
-    color: whitesmoke;
-}
-.card{
-    border: none;
-}
-.stredek{
-    background-color: #F5F5F5;
-    color: #414141;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
 
-.card-header:first-child{
-    border-bottom-top-radius: 10px;
-    border-bottom-top-radius: 10px;
-}
-.d-md-inline{
-    float: right;
+.card-style{
+    border: none;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+    > div{
+      background-color: $d3-green;
+      color: whitesmoke;
+    }
+    .custom-card-body{
+      background-color: #F5F5F5;
+      color: #414141;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+    }
 }

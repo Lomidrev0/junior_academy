@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Session;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Spatie\MediaLibrary\Support\MediaStream;
+use function GuzzleHttp\Promise\all;
 
 class TeacherController
 {
@@ -96,7 +99,6 @@ class TeacherController
     }
 
     public function saveAlbum(Request $request) {
-        Storage::disk($request->disk)->makeDirectory(Str::slug($request->newAlbum['name']));
         $dir = Directory::create([
             'name' => $request->newAlbum['name'],
             'slug' => Str::slug($request->newAlbum['name']),
@@ -112,7 +114,7 @@ class TeacherController
 
     public function directory(Request $request) {
         return view('teacher/directory', [
-            'dir' => Directory::with('media')->where('slug', $request->segment(3))->first(['id','name','description','active']),
+            'dir' =>  Directory::with('media')->where('slug', $request->segment(3))->first(['id','name','description','active','slug']),
         ]);
     }
 
@@ -123,10 +125,49 @@ class TeacherController
     }
 
     public function deleteAlbum(Request $request) {
-        Storage::disk($request->disk)->deleteDirectory(Str::slug($request->name));
         $dir = Directory::find($request->id);
         $dir['user_id'] = Auth::user()->id;
         $dir->delete();
         return $this->getForDirsUI($request->disk);
+    }
+
+    public function storeImg(Request $request) {
+        $dir = Directory::where('id', $request->id)->first();
+        foreach ( $request->files as $file) {
+            $dir->addMedia($file)->toMediaCollection($dir->slug, 'gallery');
+        }
+        return  Directory::with('media')->find($request->id);
+    }
+
+    public function deleteImg(Request $request) {
+        Directory::where('id',$request->dirId)->first()->deleteMedia($request->id);
+        return Directory::with('media')->find($request->dirId);
+    }
+
+    public function downloadAlbum(Request $request){
+        $downloads = Directory::where('id', $request['id'])->first()->getMedia('album-2018');
+        return MediaStream::create('my-files.zip')->addMedia($downloads);
+    }
+
+    public function updateAlbum(Request $request) {
+       $dir = Directory::find($request->id);
+       if ($dir->name == $request->dir['name']) {
+           $dir->update([
+               'user_id' => Auth::user()->id,
+               'active' => $request->dir['active'],
+               'description' => $request->dir['description'],
+           ]);
+           return Directory::with('media')->find($request->id);
+       }
+       else {
+           $dir->update([
+               'user_id' => Auth::user()->id,
+               'active' => $request->dir['active'],
+               'description' => $request->dir['description'],
+               'name' => $request->dir['name'],
+               'slug' => Str::slug($request->dir['name']),
+           ]);
+           return [Directory::with('media')->find($request->id), $dir->slug];
+       }
     }
 }

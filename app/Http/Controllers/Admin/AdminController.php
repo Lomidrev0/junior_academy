@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Admin;
 
 
+use App\Article;
 use App\Course;
 use App\Mail\WelcomeMail;
 use App\User;
@@ -45,6 +46,7 @@ class AdminController
             'media','admin'=> function ($query) {
                 $query->select('id', 'name');
             }])->where($column,$value)->first();
+        $course['active'] = $course['active'] == 1 ? true : false;
         unset($course['user_id']);
         return $course;
     }
@@ -174,7 +176,7 @@ class AdminController
                 'slug' => Str::slug($request->name),
                 'description' => $request->description,
                 'about' => $request->about,
-                'active' => $request->isActive === 'true'? true : false,
+                'active' => $request->isActive === 'true' ? true : false,
                 'user_id' => Auth::user()->id
             ])->save();
             try{
@@ -221,5 +223,37 @@ class AdminController
         $course =  Course::find($request->id);
         $course->update(['user_id' => Auth::user()->id, 'active'=> $request->value]);
         return $this->getForCourseUI('id',$request->id);
+    }
+
+    public function articles() {
+        return view('admin/articles',[
+            'articles' => Article::with(['user' => function ($query) {
+                    $query->select('id', 'name');
+                }])->first()
+            ]);
+    }
+    public function updateArticle(Request $request) {
+        $article =  Article::find($request->id);
+        $article->update([
+            'user_id' => Auth::user()->id,
+            'active'=> $request->article['active'],
+            'title' => $request->article['title'],
+            'content' => $request->article['content'],
+            'slug' =>  Str::slug($request->article['title']),
+        ]);
+       return $article;
+    }
+
+    public function storeArticle(Request $request) {
+        //dd($request->article['active']);
+        $newArticle = Article::create([
+            'title'=> $request->article['title'],
+            'content'=> $request->article['content'],
+            'slug'=> $request->article['title'] ? Str::slug($request->article['title']) : null,
+            'active' => $request->article['active'],
+            'type' => 'front',
+            'user_id' => Auth::user()->id,
+        ]);
+        return $newArticle;
     }
 }

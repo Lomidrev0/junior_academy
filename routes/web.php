@@ -43,7 +43,10 @@ Route::middleware(['teacher'])->prefix('/teacher')->name('teacher.')->group(func
         Route::post('/save_album','TeacherController@saveAlbum')->name('save-album');
         Route::post('/update_active_album','TeacherController@updateActiveAlbum')->name('update-active');
         Route::post('/delete_album','TeacherController@deleteAlbum')->name('delete-album');
-
+        Route::post('/store_img','TeacherController@storeImg')->name('store-img');
+        Route::post('/delete_img','TeacherController@deleteImg')->name('delete-img');
+        Route::post('/update_album','TeacherController@updateAlbum')->name('update-album');
+        Route::get('/download_album','TeacherController@downloadAlbum')->name('download-album');
     });
 });
 
@@ -56,8 +59,11 @@ Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function (
         Route::get('/courses','AdminController@courses')->name('courses');
         Route::get('/members','AdminController@members')->name('members');
         Route::get('/reset_password','AdminController@password')->name('password');
-        Route::get('/add_user_form','AdminController@getUsers')->name('add_user');
+        Route::get('/add_user_form','AdminController@getUsers')->name('add-user');
         Route::get('/detail/{slug?}', 'AdminController@courseDetail' )->name('detail');
+        Route::get('/articles', 'AdminController@articles' )->name('articles');
+        Route::post('/add_article','AdminController@storeArticle')->name('add-article');
+        Route::post('/update_article','AdminController@updateArticle')->name('update-article');
         Route::post('/add_user','AdminController@addUser')->name('add');
         Route::post('/store_course', 'AdminController@storeCourse')->name('store');
         Route::post('/update_course', 'AdminController@updateCourse')->name('update');

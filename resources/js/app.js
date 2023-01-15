@@ -118,25 +118,61 @@ Vue.mixin({
  * Toast
  */
 
-import Toast from "vue-toastification";
-import "vue-toastification/dist/index.css";
-Vue.use(Toast, {
-    transition: "Vue-Toastification__fade",
-    maxToasts: 3,
-    newestOnTop: true,
-    position: "bottom-center",
-    timeout: 3010,
-    closeOnClick: true,
-    pauseOnFocusLoss: true,
-    pauseOnHover: true,
-    draggable: false,
-    draggablePercent: 1.44,
-    showCloseButtonOnHover: false,
-    hideProgressBar: false,
-    closeButton: false,
-    icon: false,
-    rtl: false
-});
+// import Toast from "vue-toastification";
+// import "vue-toastification/dist/index.css";
+// Vue.use(Toast, {
+//     transition: "Vue-Toastification__fade",
+//     maxToasts: 3,
+//     newestOnTop: true,
+//     position: "bottom-center",
+//     timeout: 3010,
+//     closeOnClick: true,
+//     pauseOnFocusLoss: true,
+//     pauseOnHover: true,
+//     draggable: false,
+//     draggablePercent: 1.44,
+//     showCloseButtonOnHover: false,
+//     hideProgressBar: false,
+//     closeButton: false,
+//     icon: false,
+//     rtl: false
+// });
+
+import Notify from 'simple-notify'
+import 'simple-notify/dist/simple-notify.min.css'
+
+function createToast( status,title,text,customClass,icon) {
+      new Notify({
+        status: status,
+        title: title,
+        text: text,
+        effect: 'slide',
+        speed: 300,
+        customClass: customClass,
+        customIcon: icon,
+        showIcon: true,
+        showCloseButton: true,
+        autoclose: true,
+        autotimeout: 3000,
+        gap: 15,
+        distance: 20,
+        type: 3,
+        position: 'bottom x-center'
+    })
+}
+export const toast = {
+    success: (title,text) => {
+        createToast('success',title,text,null,'<i class="bi bi-info-circle-fill"></i>');
+    },
+    error: (title,text) => {
+        createToast('error',title,text,null,'<i class="bi bi-exclamation-circle-fill"></i>');
+    },
+    warning: (title,text) => {
+        createToast('warning',title,text,null,'<i class="bi bi-exclamation-triangle-fill"></i>');
+    },
+}
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -153,12 +189,26 @@ const components = {
     'AlbumWrapper': require('./components/Teacher/AlbumWrapper').default,
     'ImageWrapper': require('./components/Teacher/ImageWrapper').default,
     'InfoCard': require('./components/InfoCard').default,
+    'AddArticle': require('./components/Admin/AddArticle').default,
 };
 
 new Vue({
     el: '#app',
     components
 })
+
+/*fancy aps*/
+
+import { Fancybox, Carousel, Panzoom } from "@fancyapps/ui";
+import "@fancyapps/ui/dist/fancybox.css";
+
+Fancybox.bind('[data-fancybox="gallery"]', {
+    caption: function (fancybox, carousel, slide) {
+        return (
+          `${slide.caption}`
+        );
+    },
+});
 
 
 /**

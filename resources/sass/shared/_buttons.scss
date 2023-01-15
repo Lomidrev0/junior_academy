@@ -7,6 +7,8 @@
   overflow: hidden;
   z-index: 2;
   border: none;
+  color: $white;
+
   &:after {
     content: '';
     position: absolute;
@@ -24,14 +26,17 @@
     left: 0;
     width: 0%;
     height: 100%;
-    background-color: darken($blue, 15%);
+    background-color: $d1-blue;
     transition: all .5s;
     z-index: -1;
   }
   &:hover {
-    color: #fff;
     &:before {
       width: 100%;
     }
   }
+  &:active {
+    top: 2px;
+  }
+
 }

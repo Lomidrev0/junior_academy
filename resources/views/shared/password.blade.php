@@ -26,9 +26,9 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="card">
+                    <div class="card card-style">
                         <div class="card-header">{{ __('Reset Password') }}</div>
-                        <div class="card-body">
+                        <div class="card-body custom-card-body">
                             <form method="POST" action="{{ route('reset') }}">
                                 @csrf
                                 <div class="row mb-3">

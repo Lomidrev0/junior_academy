@@ -1,6 +1,6 @@
 <template>
 <div>
-<button class="btn btn-primary" @click="show = !show">
+<button class="button_first" @click="show = !show">
   <i class="bi bi-plus-lg"></i>
   {{i18n('Add')}}
 </button>
@@ -16,8 +16,8 @@
       <div class="d-flex justify-content-evenly">
         <div class="imgUp" v-for="(file,key) in files">
           <label class="w-100">
-            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key)" class="uploadFile img custom-file-input" >
-            {{ file ? file.name : i18n('Choose image') }}
+            <input :type="'file'" :id="'input-'+key"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key); resetInput(key)" class="uploadFile img custom-file-input" >
+            {{ file ? getFileName(file) : i18n('Choose image') }}
             <div  class="imagePreview d-flex align-items-center">
               <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
                 <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
@@ -44,7 +44,7 @@
             </template>
           </template>
           <template v-else>
-            <span class="alert-danger">{{i18n('No teachers found!')}}</span>
+            <span class="alert-danger">{{i18n('No teachers found!')}} <a :href="route('admin.add-user')">Pridať učiteľa</a></span>
           </template>
         </div>
         <i @click="addTeacher = false" class="bi bi-dash"></i>
@@ -67,38 +67,36 @@
       </div>
     </template>
   </div>
-  <div class="w-100">
-    <div class="course-wrapper shadow">
-      <div class="course-card" v-for="(course, key) in coursesList">
-          <div class="course-item">
-            <div class="course-bg" :style="'background-image: url('+course.media[1].original_url+')'"></div>
-            <div class="course-card-body">
-              <div class="course-item-head d-flex justify-content-between">
-                <a :href="route('admin.detail', {slug: course.slug})">
-                  <div>
-                    <strong v-b-tooltip.hover :title="course.name">{{ truncateContent(course.name, 30) }}</strong>
-                  </div>
-                </a>
+  <div class="course-wrapper">
+    <div class="course-card" v-for="(course, key) in coursesList">
+        <div class="course-item shadow">
+          <div class="course-bg" :style="'background-image: url('+course.media[1].original_url+')'"></div>
+          <div class="course-card-body">
+            <div class="course-item-head d-flex justify-content-between">
+              <a :href="route('admin.detail', {slug: course.slug})">
                 <div>
-                  <label class="switch">
-                    <input type="checkbox" class="course-toggle" v-model="course.active" @click="updateCourse(course, key, $event)">
-                    <span class="slider round"></span>
-                  </label>
-                  <i class="bi bi-x-lg" @click="deleteCourse(course.id,course.name)"></i>
-                </div>
-              </div>
-              <a class="disabled" :href="route('admin.detail', {slug: course.slug})">
-                <div class="course-item-body">
-                  <img :src="course.media[0].original_url" alt="logo">
-                </div>
-                <div class="course-item-footer d-flex justify-content-around">
-                  <span v-b-tooltip.hover :title="course.admin.name">{{truncateContent(course.admin.name, 15)}}</span>
-                  <span>{{ formatDate(course.updated_at, 'H:mm - dd.MM.yyyy') }}</span>
+                  <strong v-b-tooltip.hover :title="course.name">{{ truncateContent(course.name, 30) }}</strong>
                 </div>
               </a>
+              <div>
+                <label class="switch">
+                  <input type="checkbox" class="course-toggle" v-model="course.active" @click="updateCourse(course, key, $event)">
+                  <span class="slider round"></span>
+                </label>
+                <i class="bi bi-x-lg" @click="deleteCourse(course.id,course.name)"></i>
+              </div>
             </div>
+            <a class="disabled" :href="route('admin.detail', {slug: course.slug})">
+              <div class="course-item-body">
+                <img :src="course.media[0].original_url" alt="logo">
+              </div>
+              <div class="course-item-footer d-flex justify-content-around">
+                <span v-b-tooltip.hover :title="course.admin.name">{{truncateContent(course.admin.name, 15)}}</span>
+                <span>{{ formatDate(course.updated_at, 'H:mm - dd.MM.yyyy') }}</span>
+              </div>
+            </a>
           </div>
-      </div>
+        </div>
     </div>
   </div>
 </div>
@@ -107,6 +105,7 @@
 <script>
 import WswgEditor from "../WswgEditor";
 import {i18n} from "../../app";
+import {toast} from "../../app"
 import courseFormMixin from "../courseFormMixin";
 import {parseISO} from 'date-fns';
 import formatDatesMixin from "../formatDatesMixin";
@@ -148,8 +147,8 @@ export default {
         this.error = i18n('There is already course with this name');
       } else {
         const formData = new FormData();
-        formData.append('logo',this.files.logo, this.files.logo.name);
-        formData.append('bgImg',this.files.bgImg, this.files.bgImg.name);
+        formData.append('logo',this.files.logo[0]);
+        formData.append('bgImg',this.files.bgImg[0]);
         formData.append('name', this.newCourse.name);
         formData.append('description', this.newCourse.description);
         formData.append('about', this.newCourse.content);
@@ -159,10 +158,13 @@ export default {
         axios
             .post(this.route('admin.store'), formData)
             .then((response) => {
-              this.reset();
+              this.reset(['logo','bgImg']);
               this.coursesList = this.formatDates(response.data);
               this.saving = false;
-              this.$toast.success(i18n('Course has been sucessfully created'));
+              toast.success(i18n('Course has been sucessfully created'),null);
+            })
+            .catch((error) => {
+              toast.error(i18n('Error'),error);
             })
       }
     },
@@ -172,7 +174,11 @@ export default {
             .post(this.route('admin.delete'), {id: id})
             .then((response) => {
               this.coursesList = this.formatDates(response.data);
-              this.$toast.success(i18n('Course has been successfully deleted'));
+              //this.$toast.success(i18n('Course has been successfully deleted'));
+              toast.success(i18n('Course has been sucessfully deleted'),null);
+            })
+            .catch((error) => {
+              toast.error(i18n('Error'),i18n('err'));
             })
       }
     },
@@ -182,13 +188,16 @@ export default {
              .post(this.route('admin.update-active'), {id: course.id, value: !course.active})
              .then((response) => {
                this.$set(this.coursesList, key, this.formatObjectDates(response.data));
-               this.$toast.success(i18n('Course has been sucessfully updated'));
+               toast.success(i18n('Course has been sucessfully updated'),null);
+               //this.$toast.success(i18n('Course has been sucessfully updated'));
              })
+         .catch((error) => {
+           toast.error(i18n('Error'),i18n('err'));
+         })
        }
        else {
          event.preventDefault();
          event.stopPropagation();
-
        }
     },
     reset() {

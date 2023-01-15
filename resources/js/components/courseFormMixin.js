@@ -9,12 +9,25 @@ export default {
       var reader = new FileReader(); // instance of the FileReader
       reader.readAsDataURL(file); // read the local file
       this.setImg(reader,key);
-      return event.target.files[0];
+      return Array.from(event.target.files);
+
     },
 
-    clearFile(key) {
-      $("#img-"+key).remove();
-      $('#ico-'+key).css('display','block')
+    resetInput(key){
+      document.getElementById('input-'+key).value = null;
+    },
+
+    clearFile(keys) {
+     if(Array.isArray(keys)){
+       _.forEach(keys, (key) =>{
+         $("#img-"+key).remove();
+         $('#ico-'+key).css('display','block')
+       })
+     }
+     else {
+       $("#img-"+keys).remove();
+       $('#ico-'+keys).css('display','block')
+     }
       return null;
     },
 
@@ -25,6 +38,14 @@ export default {
         l.appendTo($('#append-'+key));
         $('#ico-'+key).css('display','none');
       }
+    },
+    getFileName(file) {
+     if (file.length === 1){
+       return file[0].name;
+     }
+     else {
+       return file.length+' '+i18n('Files selected');
+     }
     },
 
     setExistingImg(imgs, keys) {

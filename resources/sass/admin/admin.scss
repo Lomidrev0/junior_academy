@@ -4,7 +4,7 @@
 @import 'resources/sass/shared/card';
 @import 'resources/sass/teacher/teacher';
 .content {
-  margin-left: 250px;
+  margin-left: 249.9px;
   margin-top: 53px;
 }
 @media (max-width: 1000px) {
@@ -17,7 +17,7 @@
   color: $white;
   width: 100%;
   position: fixed;
-  z-index: 10;
+  z-index: 6;
   i,a {
     color: $white;
   }
@@ -125,6 +125,14 @@
   label{
     background-color: #fff;
     text-align: center;
+    position: relative;
+    >input {
+      width: 100%;
+      height: 100%;
+      left: 0;
+      opacity: 0;
+      position: absolute;
+    }
   }
   .clear-file{
     background-color: $danger;
@@ -140,7 +148,7 @@
 .imagePreview {
   width: 95%;
   margin: 2.5%;
- height: 25vh;
+  height: 25vh;
   background-color:#fff;
   background-position: center;
   background-repeat: no-repeat;
@@ -155,15 +163,11 @@
   height: 0;
   overflow: hidden;
 }
-
-
-
 .course-wrapper {
   display: -ms-flexbox; /* IE10 */
   display: flex;
   -ms-flex-wrap: wrap; /* IE10 */
   flex-wrap: wrap;
-  border-radius: $md-radius;
   cursor: pointer;
   padding-top: 2%;
   padding-bottom: 2%;
@@ -185,10 +189,24 @@
   .course-item {
     position: relative;
     overflow: hidden;
+    border-radius: $radius;
+    margin: auto;
+    >div {
+      .c-header {
+        background-color: $d3-green;
+        color: $white;
+        padding: 1vh;
+        display: flex;
+        justify-content: space-between;
+      }
+      img {
+        width: 100%;
+      }
+    }
 
     .course-card-body {
       position: relative;
-      z-index: 4;
+      z-index: 2;
 
       .course-item-body {
         display: flex;
@@ -202,23 +220,23 @@
         }
       }
       .course-item-head {
-        background-color: $green;
-        color: $d2-green;
+        background-color: $d3-green;
+        color: $white;
         text-align: center;
         padding: 1vh;
         a{
           text-decoration: none;
-          color: $d2-green;
+          color: $white;
         }
         i{
-          margin: 0;
+          margin-left: 10px;
         }
       }
       .course-item-footer {
         padding-top: 1vh;
         padding-bottom: 1vh;
-        color: $d2-green;
-        background-color: $green;
+        color: $white;
+        background-color: $d3-green;
       }
     }
     .course-bg {
@@ -236,7 +254,7 @@
         transform: scale(1.2);
       }
       .course-item-head,.course-item-footer {
-        background-color: $d1-green;
+        background-color: $d1-blue;
       }
     }
   }
@@ -261,56 +279,6 @@
   .active-teacher{
     background-color: $green;
   }
-}
-
-/**switch**/
-
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 18px;
-  left: 25%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-  .slider {
-    border-radius: 34px;
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color:$red;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 15px;
-    width: 15px;
-    left: 2.3px;
-    bottom: 1.4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-}
-
-input:checked + .slider {
-  background-color: $d1-green;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(21.25px);
-  -ms-transform: translateX(21.25px);
-  transform: translateX(21.25px);
 }
 
 /* Rounded sliders */

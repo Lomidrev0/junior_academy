@@ -13,9 +13,9 @@ $palette-gradient: linear-gradient(to right, #FF0000 0%, #FFC814 25%, #FFFF00 50
 
 //main colors
 $blue: #00c3ff;
-$d1-blue: #008FB3;
+$d1-blue: darken($blue, 15%);
 $l1-green: #baf7e8;
-$green: #34f5c5;
+$green: #4de94d;
 $d1-green: #21d0b2;
 $d2-green: #2f455c;
 $d3-green:#243445;
