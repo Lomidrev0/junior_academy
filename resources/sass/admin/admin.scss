@@ -260,6 +260,7 @@
   }
   .active-teacher{
     background-color: $green;
+
   }
 }
 
@@ -379,6 +380,9 @@ input:checked + .slider:before {
 @keyframes fadein {
   from { opacity: 0; }
   to   { opacity: 1; }
+}
+.marginn{
+    font-size: 17px;
 }
 
 

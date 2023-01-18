@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Front;
 
 
 use App\Course;
+use Illuminate\Http\Request;
 
 class FrontController
 {
@@ -28,5 +29,19 @@ class FrontController
         return view('front/home',[
             'courses' => $this->getForCoursesUI(),
         ]);
+    }
+    public function getContact(){
+        return view('front/contact',[
+            'courses' => Course::with(['users' => function ($query) {
+                $query->select('name','email');
+                }])->where('active',true)->get(),
+        ]);
+    }
+    public function getDetail(Request $request){
+        return view('front/detail',[
+            'course' =>  json_decode(Course::with(['users' => function ($query) {
+                $query->select('name','email');
+            },'media'])->where('slug',$request->slug)->first()
+            )]);
     }
 }

@@ -17,10 +17,10 @@
         </button>
         <div id="navbar-menu" aria-labelledby="navbar-toggle">
             <ul class="navbar-links">
-                <li class="navbar-item"><a class="navbar-link" href="/about">About</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/blog">Blog</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/careers">Careers</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/contact">Contact</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/">Domov</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/login">Prihlásenie</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/gallery">Galéria</a></li>
+                <li class="navbar-item"><a class="navbar-link" href="/contact">Kontakt</a></li>
             </ul>
         </div>
     </nav>

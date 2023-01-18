@@ -1,37 +1,20 @@
 <template>
-  <div>
-    <div class="course-card" v-for="(course, key) in coursesList">
-      <div class="course-item">
-        <div class="course-bg" :style="'background-image: url('+course.media[1].original_url+')'"></div>
-        <div class="course-card-body">
-          <div class="course-item-head d-flex justify-content-between">
-            <a :href="route('admin.detail', {slug: course.slug})">
-              <div>
-                <strong>{{course.name}}</strong>
-              </div>
-            </a>
-            <div>
-              <label class="switch">
-                <input type="checkbox" class="course-toggle" v-model="course.active" @click="updateCourse(course, key, $event)">
-                <span class="slider round"></span>
-              </label>
-              <i class="bi bi-x-lg" @click="deleteCourse(course.id,course.name)"></i>
+    <div>
+        <article v-for="(course, key) in coursesList" class="postcard light blue">
+                <img class="postcard__img":style="'background-image: url('+course.media[1].original_url+')'" />
+                    <div class="postcard__text t-dark">
+                        <div class="random">
+                            <div class="image rekt"><img class="img_up" :src="course.media[0].original_url" alt="logo"></div>
+                                 <div class="logos rekt">
+                                    <a :href="route('course-detail',{slug:course.slug})"> <h1 class="postcard__title blue heading_course">{{course.name}}</h1></a>
+                                 <i class="fas fa-calendar-alt mr-2"></i><p>{{ formatDate(course.created_at, 'dd.MMMM.yyyy') }}</p>
+                            </div>
+                        </div>
+                    <div class="postcard__bar"></div>
+                <div class="postcard>__preview-txt">{{ removeHTML(course.description) }}</div>
             </div>
-          </div>
-          <a class="disabled" :href="route('admin.detail', {slug: course.slug})">
-            <div class="course-item-body">
-              <img :src="course.media[0].original_url" alt="logo">
-            </div>
-            <div class="course-item-footer d-flex justify-content-around">
-              <span>{{course.admin.name}}</span>
-              <span>{{ formatDate(course.updated_at, 'H:mm - dd.MM.yyyy') }}</span>
-            </div>
-          </a>
-        </div>
-      </div>
+        </article>
     </div>
-  </div>
-
 </template>
 
 <script>
@@ -45,12 +28,15 @@ export default {
       coursesList: this.courses ? (this.courses.length > 0 ? _.cloneDeep(this.courses)  : null) : null,
     }
   },
+    methods: {
+        removeHTML(str){
+            var tmp = document.createElement("DIV");
+            tmp.innerHTML = str;
+            return tmp.textContent || tmp.innerText || "";
+        },
+    },
   created(){
     this.coursesList = this.formatDates(this.coursesList);
   }
 }
 </script>
-
-<style scoped>
-
-</style>
