@@ -18,14 +18,17 @@ use App\Http\Controllers\Admin\AdminController;
 */
 
 
+
+
 Route::namespace('Front')->group(function () {
     Route::get('/', 'FrontController@index');
+    Route::get('/contact','FrontController@getContact');
+    Route::get('/course_detail/{slug?}','FrontController@getDetail')->name('course-detail');
 });
 
 Route::middleware(['student'])->prefix('/student')->name('student.')->group(function () {
     Route::namespace('Student')->group(function () {
         Route::get('/','StudentController@index')->name('home');
-
     });
 });
 /*teacher routes*/

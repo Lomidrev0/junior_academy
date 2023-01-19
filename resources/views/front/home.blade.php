@@ -1,36 +1,24 @@
 @extends('front.main')
-
 @section('frontContent')
-    <div class="front-bg">
-        <div>
-            <h1>JUNIOR Akademia</h1>
-            <p>Urob viac pre svoju budúcnosť, nauč sa niečo zaujímavé...</p>
-        </div>
-    </div>
-        <div class="container">
-            <div class="row justify-content-center">
-                    AKTUALIZÁCIA: V súčasnosti prebieha prihlasovanie záujemcov. Pri naplnení požadovaného počtu 10 záujemcov Vás budeme kontaktovať na mail uvedený pri registrácií a pošleme Vám detailne informácie. Kurzy budeme realizovať prezenčne. Ďakujeme za pochopenie.
+        <header class="header">
+             <div class="overlay">
+                <h1 class="title">JUNIOR Akadémia</h1>
+                    <h1 class="subtitle">Urob viac pre svoju budúcnosť, nauč sa niečo zaujímavé...</h1>
+                         <a class="btn button_first marginn" href="#xddd">Registrácia</a>
+             </div>
+        </header>
+            <div class="card_second card-colorr">
+                <p class="text_db"><br>Myšlienka založiť JUNIOR akadémiu SPŠE vznikla ako reakcia na signály z&nbsp; priemyselnej praxe o&nbsp;<strong>nedostatku technicky vzdelaných odborníkov</strong>&nbsp;a&nbsp;tiež na obecný trend mladej generácie uprednostňovať humanitné štúdium, čo&nbsp;<strong>nezaručuje</strong>&nbsp;perspektívne uplatnenie na trhu práce.<br><br>V&nbsp;súčasnosti sa SPŠE snaží zvýšiť záujem o&nbsp;štúdium technických a&nbsp;prírodovedných odborov usporiadaním&nbsp;<a href="http://zssutaze.spse-po.sk/">súťaží pre žiakov ZŠ.</a>&nbsp;Tieto aktivity sa stretávajú s&nbsp;kladnou odozvou, pričom účastníci prejavujú záujem aj o&nbsp;dlhodobejšie aktivity - možno celoročne. Práve preto vznikol projekt s názvom JUNIOR akadémia.<br><br>Akadémia je neformálne voľnočasové vzdelávanie nad rámec povinnej školskej dochádzky.<br><strong>Cieľom</strong>&nbsp;je mládež nielen odborne vzdelávať, ale aj zoznamovať sa&nbsp;s atmosférou stredoškolského štúdia.<br><br><strong>Kurzy budú pozostávať z&nbsp;8 dvojhodinových stretnutí (celkovo 16 hodín) v&nbsp;odpoludňajších hodinách v&nbsp;priestoroch SPŠE pod dozorom pedagógov SPŠE a&nbsp;budú prebiehať v období november&nbsp;2022&nbsp;až jún 2023.</strong>Podmienkou otvorenia kurzu je jeho naplnenie desiatimi záujemcami. Viac informácii o kurze získate pri výbere jednotlivých kurzov. Prihlasovanie sa deje výhradne elektronickou formou. O stave vášho prihlásenia budete priebežne informovaní prostredníctvom mailovej adresy, ktorú ste uviedli pri prihlasovaní.<br><br></p>
+            </div>
 
-
-                    Myšlienka založiť JUNIOR akadémiu SPŠE vznikla ako reakcia na signály z  priemyselnej praxe o nedostatku technicky vzdelaných odborníkov a tiež na obecný trend mladej generácie uprednostňovať humanitné štúdium, čo nezaručuje perspektívne uplatnenie na trhu práce.
-
-                    V súčasnosti sa SPŠE snaží zvýšiť záujem o štúdium technických a prírodovedných odborov usporiadaním súťaží pre žiakov ZŠ. Tieto aktivity sa stretávajú s kladnou odozvou, pričom účastníci prejavujú záujem aj o dlhodobejšie aktivity - možno celoročne. Práve preto vznikol projekt s názvom JUNIOR akadémia.
-
-                    Akadémia je neformálne voľnočasové vzdelávanie nad rámec povinnej školskej dochádzky.
-                    Cieľom je mládež nielen odborne vzdelávať, ale aj zoznamovať sa s atmosférou stredoškolského štúdia.
-
-                    Kurzy budú pozostávať z 8 dvojhodinových stretnutí (celkovo 16 hodín) v odpoludňajších hodinách v priestoroch SPŠE pod dozorom pedagógov SPŠE a budú prebiehať v období november 2022 až jún 2023.
-
-                    Podmienkou otvorenia kurzu je jeho naplnenie desiatimi záujemcami. Viac informácii o kurze získate pri výbere jednotlivých kurzov. Prihlasovanie sa deje výhradne elektronickou formou. O stave vášho prihlásenia budete priebežne informovaní prostredníctvom mailovej adresy, ktorú ste uviedli pri prihlasovaní.
-                <div>
+                <div class="container py-4">
+                     <h1 class="h1 text-center" id="pageHeaderTitle"></h1>
+                </div>
+<div class="container">
                    <course-list
                            @isset($courses)
                            :courses="{{$courses}}"
                            @endisset
                    ></course-list>
-                </div>
-            </div>
-        </div>
-
-
+</div>
 @endsection
