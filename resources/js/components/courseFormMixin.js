@@ -62,5 +62,6 @@ export default {
       tmp.innerHTML = str;
       return tmp.textContent || tmp.innerText || "";
     },
+
   }
 }

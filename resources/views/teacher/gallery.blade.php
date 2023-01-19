@@ -5,7 +5,9 @@
         <div class="mb-5">
             <h1>Gallery</h1>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <info-card
+                    :text="'{{ __('Here you can add new courses or edit them') }}'"
+            ></info-card>
         </div>
         <div class="container">
             <album-wrapper

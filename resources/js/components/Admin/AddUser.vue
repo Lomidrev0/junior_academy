@@ -1,108 +1,106 @@
 <template>
   <div>
     <div>
-      <button class="button_first" @click="user = 2, resetForm()">Admin</button>
-      <button class="button_first" @click="user = 1, resetForm()">Teacher</button>
-      <button class="button_first" @click="user = 0, resetForm()">Student</button>
-    </div>
-    <div>
       <div class="text-center m-3">
         <h3>{{user === 0 ? i18n('Add student') : (user === 1 ? i18n('Add teacher') : i18n('Add admin') )}}</h3>
       </div>
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card card-style">
-                        <div class="card-header">
-                            {{user === 0 ? i18n('Add student') : (user === 1 ? i18n('Add teacher') : i18n('Add admin') )}}
-                            <i v-if="user === 0" class="bi bi-person-fill p-3"></i>
-                            <i v-if="user === 1" class="bi bi-book-half p-3"></i>
-                            <i v-if="user === 2" class="bi bi-shield-shaded p-3"></i>
-                        </div>
-
-                        <div class="card-body custom-card-body">
-                            <form key="saveUser">
-                                <div class="row mb-3">
-                                    <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Name and surname') }}</label>
-                                    <div class="col-md-6">
-                                        <input  type="text" class="form-control" v-model="newUser.name" required>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Email address') }}</label>
-                                    <div class="col-md-6">
-                                        <input type="email" class="form-control" v-model="newUser.email" required>
-                                    </div>
-                                </div>
-
-                                <template v-if="user === 0">
-
-                                    <div class="row mb-3">
-                                        <label  class="col-md-4 col-form-label text-md-end">{{ i18n('School') }}</label>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" v-model="newUser.school" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="row mb-3">
-                                        <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Class') }}</label>
-                                        <div class="col-md-6">
-                                            <input type="text" class="form-control" v-model="newUser.class" required>
-                                        </div>
-                                    </div>
-
-                                </template>
-
-                                <div class="row mb-3">
-                                    <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Confirm by password') }}</label>
-                                    <div class="col-md-6">
-                                        <input type="password" class="form-control pass" v-model="password" required>
-                                    </div>
-                                </div>
-                              <div class="d-flex flex-row mb-3 checkbox-wrapper">
-                                <label  class="col-md-4 col-form-label text-md-end">Show Password</label>
-                                <div class="checkbox-wrapper-31">
-                                  <input type="checkbox" class="showPass"/>
-                                  <svg viewBox="0 0 35.6 35.6">
-                                    <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
-                                    <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
-                                    <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
-                                  </svg>
-                                </div>
-                              </div>
-                                <div v-if="user === 1 || user === 0" class="row mb-3">
-                                    <div class="col-md-6 offset-md-4">
-                                        <template v-if="addCourse">
-                                            <div class="button_first nejde" @click="addCourse = !addCourse">{{i18n('Add course')}}<i class="bi bi-caret-up-fill arrow"></i></div>
-                                        </template>
-                                        <template v-else>
-                                            <div class="button_first nejde" @click="addCourse = !addCourse">{{i18n('Add course')}}<i class="bi bi-caret-down-fill arrow"></i></div>
-                                        </template>
-                                        <div v-if="addCourse">
-                                            <div v-for="course in courses">
-                                                <input type="checkbox" id="fruit2" name="fruit-1" value="Apple" :value="course.id" v-model="newUser.course" >
-                                                <label for="fruit2" >{{ course.name }}</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mb-0">
-                                    <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="button_first" @click.prevent="saveUser(user)" :disabled="saving">
-                                            {{user === 0 ? i18n('Add student') : (user === 1 ? i18n('Add teacher') : i18n('Add admin') )}}
-                                            <b-spinner small v-if="saving"></b-spinner>
-                                        </button>
-<!--                                         <input type="checkbox" id="fruit1" name="fruit-1" value="Apple">-->
-<!--                                        <label for="fruit1">Show Password</label> -->
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+          <div class="row justify-content-center">
+            <div class="col-md-8">
+              <div class="card card-style">
+                <div class="card-header">
+                  {{user === 0 ? i18n('Add student') : (user === 1 ? i18n('Add teacher') : i18n('Add admin') )}}
+                  <i v-if="user === 0" class="bi bi-person-fill p-3"></i>
+                  <i v-if="user === 1" class="bi bi-book-half p-3"></i>
+                  <i v-if="user === 2" class="bi bi-shield-shaded p-3"></i>
+                  <label class="select-wrapper card-header-select">
+                    <select name="id" v-model="user" class="select">
+                      <option :value="2">
+                       <span>Admin</span>
+                      </option>
+                      <option :value="1" >
+                        <span>Teacher</span>
+                      </option>
+                      <option :value="0">
+                        <span>Student</span>
+                      </option>
+                    </select>
+                  </label>
                 </div>
+                <div class="card-body custom-card-body">
+                  <form key="saveUser">
+                    <div class="row mb-3">
+                      <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Name and surname') }}</label>
+                      <div class="col-md-6">
+                        <input  type="text" class="form-control" v-model="newUser.name" required>
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Email address') }}</label>
+                      <div class="col-md-6">
+                        <input type="email" class="form-control" v-model="newUser.email" required>
+                      </div>
+                    </div>
+                    <template v-if="user === 0">
+                        <div class="row mb-3">
+                          <label  class="col-md-4 col-form-label text-md-end">{{ i18n('School') }}</label>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control" v-model="newUser.school" required>
+                          </div>
+                        </div>
+                        <div class="row mb-3">
+                          <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Class') }}</label>
+                          <div class="col-md-6">
+                            <input type="text" class="form-control" v-model="newUser.class" required>
+                          </div>
+                        </div>
+                    </template>
+                    <div class="row mb-3">
+                      <label  class="col-md-4 col-form-label text-md-end">{{ i18n('Confirm by password') }}</label>
+                      <div class="col-md-6">
+                        <input type="password" class="form-control pass" v-model="password" required>
+                      </div>
+                    </div>
+                  <div class="d-flex flex-row mb-3 checkbox-wrapper">
+                    <label  class="col-md-4 col-form-label text-md-end">Show Password</label>
+                    <div class="checkbox-wrapper-31">
+                      <input type="checkbox" class="showPass"/>
+                      <svg viewBox="0 0 35.6 35.6">
+                        <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                        <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                        <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                      </svg>
+                    </div>
+                  </div>
+                    <div v-if="user === 1 || user === 0" class="row mb-3">
+                      <div class="col-md-6 offset-md-4">
+                        <template v-if="addCourse">
+                          <div class="button_first nejde" @click="addCourse = !addCourse">{{i18n('Add course')}}<i class="bi bi-caret-up-fill arrow"></i></div>
+                        </template>
+                        <template v-else>
+                          <div class="button_first nejde" @click="addCourse = !addCourse">{{i18n('Add course')}}<i class="bi bi-caret-down-fill arrow"></i></div>
+                        </template>
+                        <div v-if="addCourse">
+                          <div v-for="course in courses">
+                            <input type="checkbox" id="fruit2" name="fruit-1" value="Apple" :value="course.id" v-model="newUser.course" >
+                            <label for="fruit2" >{{ course.name }}</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mb-0">
+                      <div class="col-md-6 offset-md-4">
+                        <button type="submit" class="button_first" @click.prevent="saveUser(user)" :disabled="saving">
+                          {{user === 0 ? i18n('Add student') : (user === 1 ? i18n('Add teacher') : i18n('Add admin') )}}
+                          <b-spinner small v-if="saving"></b-spinner>
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
+          </div>
         </div>
     </div>
     <template v-if="error.length > 0">
@@ -136,6 +134,11 @@ export default {
         class: null,
         course:[],
       }
+    }
+  },
+  watch : {
+    user: function (){
+      this.resetForm();
     }
   },
   methods: {

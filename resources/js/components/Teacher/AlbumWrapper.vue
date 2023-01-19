@@ -6,22 +6,36 @@
   </button>
   <div v-show="show">
     <form key="saveAlbum" class="add-course-form">
-      <div>
-        <input :type="'text'" class="form-control" :placeholder="i18n('Course name') + ' *'" v-model="newAlbum.name">
+      <div class="d-flex inputs-wrapper">
+        <div class="d-flex flex-column text-input-wrapper m-auto w-75">
+          <div>
+            <input :type="'text'" class="form-control shadow" :placeholder="i18n('Course name') + ' *'" v-model="newAlbum.name">
+          </div>
+          <div>
+            <textarea class="form-control shadow" rows="3" :placeholder="i18n('Short course description')" v-model="newAlbum.description"></textarea>
+          </div>
+        </div>
       </div>
       <div>
-        <textarea class="form-control" rows="3" :placeholder="i18n('Short course description')" v-model="newAlbum.description"></textarea>
-      </div>
-      <div>
-        <input type="checkbox" v-model="newAlbum.isActive"> aktivny
-      </div>
-      <div>
-        <button type="submit" @click.prevent="saveAlbum()">
-          <template>
+        <div class="d-flex align-content-center flex-column">
+          <div class="m-auto mt-3">
+            <label class="d-flex">
+              Aktivovať kurz:
+              <div class="checkbox-wrapper-31">
+                <input type="checkbox" v-model="newAlbum.isActive"/>
+                <svg viewBox="0 0 35.6 35.6">
+                  <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                  <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                  <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                </svg>
+              </div>
+            </label>
+          </div>
+          <button class="button_first m-auto mt-3 mb-3 px-5" type="submit" @click.prevent="saveAlbum()">
             {{ i18n('Save') }}
-          </template>
-          <b-spinner small v-if="saving"></b-spinner>
-        </button>
+            <b-spinner small v-if="saving"></b-spinner>
+          </button>
+        </div>
       </div>
     </form>
     <template v-if="error.length > 0">
@@ -34,10 +48,10 @@
     </template>
   </div>
   <div class="w-100">
-    <div class="course-wrapper shadow">
+    <div class="course-wrapper">
       <template v-if="albumList.length > 0">
         <div class="course-card" v-for="(album, key) in albumList">
-          <div class="course-item">
+          <div class="course-item shadow">
             <div class="course-card-body">
               <div class="course-item-head d-flex justify-content-between">
                 <a :href="route('teacher.directory', {slug: album.slug})">
@@ -53,7 +67,7 @@
                   <i class="bi bi-x-lg" @click="deleteAlbum(album.id,album.name, album.disk)"></i>
                 </div>
               </div>
-              <a class="disabled" href="">
+              <a class="disabled" :href="route('teacher.directory', {slug: album.slug})">
                 <div class="course-item-body flex-column text-center">
                   <div v-b-tooltip.hover :title="album.description"> {{ truncateContent(album.description, 30) }}</div>
                   <div>Vytvorene: {{ formatDate(album.created_at, 'dd.MM.yyyy') }}</div>

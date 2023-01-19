@@ -1,13 +1,15 @@
 <ul>
     <li>
         @if($courses->count() > 0)
-        <form action="{{route('change-course')}}" method="POST">
+        <form action="{{route('change-course')}}" method="POST" class="d-flex">
             @csrf
-            <label for="id">
-                prepnut kurz
-                <select name="id" onchange="this.form.submit()">
+            <label for="id" class="select-wrapper">
+                 <span>Kurz:</span>
+                <select name="id" onchange="this.form.submit()"  class="select">
                     @foreach ($courses as $course)
-                        <option value="{{$course->id}}" {{ Auth::user()->getSelectedCourse()->id === $course->id ? 'selected' : '' }}>{{$course->name}}</option>
+                        <option value="{{$course->id}}" {{ Auth::user()->getSelectedCourse()->id === $course->id ? 'selected' : '' }}>
+                            {{$course->name}}
+                        </option>
                     @endforeach
                 </select>
             </label>

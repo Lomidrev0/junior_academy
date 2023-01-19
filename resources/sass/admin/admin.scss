@@ -31,21 +31,21 @@
 ----------------------------------------------------- */
 .table-wrapper {
   cursor: pointer;
-  border-radius: $md-radius;
+  border-radius: $radius;
 
   .search-bar{
-    border-radius: $md-radius $md-radius 0 0 ;
-    background-color: $green;
+    border-radius: $radius $radius 0 0 ;
+    background-color: $d3-green;
     padding: 5px;
 
     input{
-      border-radius: 0 $md-radius $md-radius 0;
+      border-radius: 0 $radius $radius 0;
       background-color: $white;
       border: none;
 
     }
     .search-icon{
-      border-radius: $md-radius 0 0 $md-radius;
+      border-radius: $radius 0 0 $radius;
       display: inline-block;
       background-color: $white;
       padding: 5px;
@@ -69,22 +69,24 @@
     }
     .unactive-course:hover{
       transition: $tr-short;
-      background-color: $d1-green;
+      background-color: $d1-blue;
+      color: $white;
     }
     .active-course {
-      background-color: $green;
-      color: $d2-green;
+      background-color: $d3-green;
+      color: $white;
     }
   }
   table {
     margin: 0;
     width: 100%;
-    border-radius: $md-radius;
+    border-radius: $radius;
   }
   tbody{
     tr {
       &:hover {
-        background-color: $d1-green;
+        background-color: $d1-blue;
+        color: $white;
       }
     }
   }
@@ -93,14 +95,16 @@
   th, td {
     text-align: left;
     padding: 8px;
-
-    a {
-      color: $d1-blue;
+    p {
+      width: max-content;
+      a {
+        color: $d1-blue;
+      }
     }
   }
   thead {
-    background-color: $green;
-    color: $d2-green;
+    background-color: $d3-green;
+    color: $white;
   }
 }
 
@@ -119,50 +123,6 @@
 /* ---------------------------------------------------
     Courses subpage styles
 ----------------------------------------------------- */
-.imgUp {
-  width: 40vh;
-  cursor: pointer;
-  label{
-    background-color: #fff;
-    text-align: center;
-    position: relative;
-    >input {
-      width: 100%;
-      height: 100%;
-      left: 0;
-      opacity: 0;
-      position: absolute;
-    }
-  }
-  .clear-file{
-    background-color: $danger;
-    text-align: center;
-    color: $white;
-   }
-}
-.dynamic {
-  width: 20vh;
-  height: 20vh;
-  object-fit: cover;
-}
-.imagePreview {
-  width: 95%;
-  margin: 2.5%;
-  height: 25vh;
-  background-color:#fff;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: inline-block;
-  border-style: dashed;
-  border-width: 1px;
-}
-
-.custom-file-input {
-  width: 0;
-  height: 0;
-  overflow: hidden;
-}
 .course-wrapper {
   display: -ms-flexbox; /* IE10 */
   display: flex;
@@ -185,25 +145,37 @@
   display: flex;
   flex-direction: column;
   transition: 0.3s;
+  .img-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius;
+    height: 28vh;
 
+    .image-detail {
+      display: none;
+      background-color: $d3-green;
+      color: $white;
+      text-align: center;
+      padding: 1vh;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      z-index: 2;
+      i{
+        margin-left: 10px;
+      }
+    }
+    &:hover {
+      border: 2px solid $d3-green;
+      .image-detail {
+        display: block;
+      }
+    }
+  }
   .course-item {
     position: relative;
     overflow: hidden;
     border-radius: $radius;
-    margin: auto;
-    >div {
-      .c-header {
-        background-color: $d3-green;
-        color: $white;
-        padding: 1vh;
-        display: flex;
-        justify-content: space-between;
-      }
-      img {
-        width: 100%;
-      }
-    }
-
     .course-card-body {
       position: relative;
       z-index: 2;
@@ -260,33 +232,17 @@
   }
 
 }
-.teacher-wrapper {
-  flex-direction: row;
-  .checkbox-item{
-    background-color: $white;
-    -webkit-box-shadow: $w-b-s;
-    box-shadow: $b-s;
-    margin-right: 1.5%;
-    margin-left: 1.5%;
-    padding: 1vh;
-    -webkit-user-select: none;
-    -webkit-touch-callout: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    border-radius: $md-radius;
-  }
-  .active-teacher{
-    background-color: $green;
-  }
-}
-
 /* Rounded sliders */
 
 .slider.round:before {
   border-radius: 50%;
 }
 
+@media screen and (min-width: 2000px) {
+  .img-item {
+    max-height: 20vh;
+  }
+}
 
 @media screen and (max-width: 1500px) {
   .course-card {
@@ -301,6 +257,9 @@
     flex: 50%;
     max-width: 50%;
   }
+  .img-item {
+    min-height: 45vh;
+  }
 }
 
 @media screen and (max-width: 765px) {
@@ -309,10 +268,13 @@
     flex: 100%;
     max-width: 100%;
   }
+  .img-item {
+    min-height: 40vh;
+  }
+  .image-detail {
+    display: block !important;
+  }
 }
-/*************************************************/
-
-/*************************************************/
 
 /* ---------------------------------------------------
     Alerts

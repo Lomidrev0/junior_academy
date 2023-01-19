@@ -7,62 +7,80 @@
         </button>
       </a>
     </div>
-    <form>
-      <div>
-        <input :type="'text'" class="form-control" :name="'name'" :placeholder="i18n('Course name') + ' *'" v-model="editCourse.name">
-      </div>
-      <div>
-        <textarea class="form-control" rows="3" :name="'description'" :placeholder="i18n('Short course description')" v-model="editCourse.description"></textarea>
-      </div>
-
-      <div class="d-flex justify-content-evenly">
-        <div class="imgUp" v-for="(file,key) in files">
-          <label class="w-100">
-            <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key)" class="uploadFile img custom-file-input" >
-            {{ file ? file.name : i18n('Choose image') }}
-            <div  class="imagePreview d-flex align-items-center">
-              <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
-                <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
-              </div>
-            </div>
-          </label>
-          <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
+    <form class="add-course-form">
+      <div class="d-flex inputs-wrapper">
+        <div class="d-flex flex-column text-input-wrapper">
+          <div>
+            <input :type="'text'" class="form-control shadow" :name="'name'" :placeholder="i18n('Course name') + ' *'" v-model="editCourse.name">
+          </div>
+          <div>
+            <textarea class="form-control shadow" rows="3" :name="'description'" :placeholder="i18n('Short course description')" v-model="editCourse.description"></textarea>
+          </div>
         </div>
-      </div>
-
-      <div>
-        <input type="checkbox" v-model="editCourse.active"> {{i18n('Active')}}
+        <div class="d-flex justify-content-around file-input-wrapper">
+          <div class="imgUp shadow" v-for="(file,key) in files">
+            <label class="w-100">
+              <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key)" class="uploadFile img custom-file-input" >
+              {{ file ? file.name : i18n('Choose image') }}
+              <div  class="imagePreview d-flex align-items-center">
+                <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
+                  <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
+                </div>
+              </div>
+            </label>
+            <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
+          </div>
+        </div>
       </div>
       <div>
         <wswg-editor v-model="editCourse.about"></wswg-editor>
       </div>
       <div>
-        <div>
-          {{i18n('Add teacher: ')}}
+        <div class="add-teacher">
+          <h4>
+            {{i18n('Add teacher')+':'}}
+          </h4>
         </div>
-        <div class="d-flex teacher-wrapper">
+        <div class="teacher-for-wrapper">
           <template v-if="users.length">
             <template v-for="user in users">
-              <label class="d-flex checkbox-item" :class="getActiveTeacher(user.id) ? 'active-teacher':''">
+              <label class="add-teacher-wrapper" :class="getActiveTeacher(user.id) ? 'active-teacher':''">
                 <input :value="user.id" type="checkbox" v-model="teachers">
-                <div>
+                <span >
+                  <i class="bi bi-check-circle-fill check-icon" :class="getActiveTeacher(user.id) ? 'd-block':'d-none'"></i>
+                  <i class="bi bi-x-circle-fill close-icon" :class="getActiveTeacher(user.id) ? 'd-none':'d-block'"></i>
+                </span>
+                <span>
                   {{user.name}}
-                </div>
+                </span>
               </label>
             </template>
           </template>
           <template v-else>
-            <span class="alert-danger">{{i18n('No teachers found!')}}</span>
+            <span class="alert-danger">{{i18n('No teachers found!')}} <a :href="route('admin.add-user')">Pridať učiteľa</a></span>
           </template>
         </div>
       </div>
       <div>
-        <button type="submit" @click.prevent="update()">
-          <template>
+        <div class="d-flex align-content-center flex-column">
+          <div class="m-auto mt-3">
+            <label class="d-flex">
+              Aktivovať kurz:
+              <div class="checkbox-wrapper-31">
+                <input type="checkbox" v-model="editCourse.active"/>
+                <svg viewBox="0 0 35.6 35.6">
+                  <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                  <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                  <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                </svg>
+              </div>
+            </label>
+          </div>
+          <button class="button_first m-auto mt-3 mb-3 px-5" type="submit" @click.prevent="update()">
             {{ i18n('Save') }}
-          </template>
-          <b-spinner small v-if="saving"></b-spinner>
-        </button>
+            <b-spinner small v-if="saving"></b-spinner>
+          </button>
+        </div>
       </div>
     </form>
     <template v-if="error.length > 0">

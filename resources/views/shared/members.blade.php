@@ -5,7 +5,9 @@
         <div class="mb-5">
             <h1>{{__('List of registered')}}</h1>
             <hr>
-            <p>{{__('List of registered students')}}</p>
+            <info-card
+                    :text="'{{__('List of registered students')}}'"
+            ></info-card>
         </div>
         <div class="container">
             <member-list

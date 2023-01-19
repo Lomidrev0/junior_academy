@@ -5,7 +5,9 @@
         <div class="mb-5">
             <h1>Gallery</h1>
             <hr>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <info-card
+                    :text="'{{__('List of registered students')}}'"
+            ></info-card>
         </div>
         <div class="container">
             <image-wrapper

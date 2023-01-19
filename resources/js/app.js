@@ -262,6 +262,7 @@ $(document).ready(function(){
         }else{
             passInput.attr('type','password');
         }
+        console.log(passInput);
     })
 })
 

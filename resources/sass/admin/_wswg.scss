@@ -1,13 +1,13 @@
 .wswg-editor {
-  border-radius: $md-radius;
+  border-radius: $radius;
   background-color: $white;
 }
 
 .menubar {
   overflow: hidden;
   padding: 3px;
-  background: $green;
-  border-radius: $md-radius $md-radius 0 0;
+  background: $d3-green;
+  border-radius: $radius $radius 0 0;
 
   ._group {
     float: left;
@@ -23,19 +23,19 @@
   ._button,.color-picker {
     padding: 2px 7px;
     border: none;
-    background: $green;
+    background: $d3-green;
     min-width: 24px;
     font-size: 1.2rem;
     float: left;
-    color: $d3-green;
-    border-radius: $md-radius;
+    color: $white;
+    border-radius: $radius;
 
     i{
       margin: 0;
     }
 
     &:hover {
-      background: $d1-green ;
+      background: $d1-blue ;
     }
 
     &.is-active {
@@ -64,7 +64,7 @@
     table {
       width: 100%;
       table-layout: fixed;
-      border-radius: $md-radius;
+      border-radius: $radius;
       -webkit-box-shadow: $w-b-s;
       box-shadow: $b-s;
 

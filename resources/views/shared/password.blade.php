@@ -5,8 +5,9 @@
         <div class="mb-5">
             <h1>{{ __('Change password') }}</h1>
             <hr>
-            <p>{{ __('You can change your password here') }}</p>
-
+            <info-card
+                    :text="'{{ __('You can change your password here') }}'"
+            ></info-card>
             @if(session()->has('message'))
                 @if(session()->get('message') == 1)
                     <div id="message" class="alert alert-danger">
@@ -60,13 +61,22 @@
                                         <input id="password-confirm" type="password" class="form-control pass" name="old_password" required autocomplete="new-password">
                                     </div>
                                 </div>
-
+                                <div class="d-flex flex-row mb-3 checkbox-wrapper">
+                                    <label  class="col-md-4 col-form-label text-md-end">Show Password</label>
+                                    <div class="checkbox-wrapper-31">
+                                        <input type="checkbox" class="showPass"/>
+                                        <svg viewBox="0 0 35.6 35.6">
+                                            <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                            <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                            <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                        </svg>
+                                    </div>
+                                </div>
                                 <div class="row mb-0">
                                     <div class="col-md-6 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
+                                        <button type="submit" class="button_first">
                                             {{ __('Reset Password') }}
                                         </button>
-                                        <input type="checkbox" class="showPass">Show Password
                                         @if (Route::has('password.request'))
                                             <a class="btn btn-link" href="{{ route('password.request') }}">
                                                 {{ __('Forgot Your Password?') }}

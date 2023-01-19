@@ -15,15 +15,15 @@
         <table class="table">
           <thead class="thead-dark">
           <tr>
-            <th>{{i18n('Name and surname')}}</th>
-            <th>{{i18n('School')}}</th>
-            <th>{{i18n('Class')}}</th>
-            <th>{{i18n('Email')}}</th>
-            <th>{{i18n('Registration date')}}</th>
+            <th><p>{{i18n('Name and surname')}}</p></th>
+            <th><p>{{i18n('School')}}</p></th>
+            <th><p>{{i18n('Class')}}</p></th>
+            <th><p>{{i18n('Email')}}</p></th>
+            <th><p>{{i18n('Registration date')}}</p></th>
             <template v-if="admin === false">
-              <th>{{i18n('Active')}}</th>
-              <th>{{i18n('Notes')}}</th>
-              <th>{{i18n('Delete')}}</th>
+              <th><p>{{i18n('Active')}}</p></th>
+              <th><p>{{i18n('Notes')}}</p></th>
+              <th><p>{{i18n('Delete')}}</p></th>
             </template>
           </tr>
           </thead>
@@ -31,14 +31,14 @@
           <template v-for="(course, index) in computedCourses">
             <tr v-for="(user, key) in course.users">
               <template v-if="index === select">
-                <td>{{user.name}}</td>
-                <td>{{JSON.parse(user.student_info).school}}</td>
-                <td>{{ JSON.parse(user.student_info).class}}</td>
-                <td><a :href="'mailto:'+user.email">{{ user.email }}</a></td>
-                <td>{{ formatDate(user.created_at, 'H:mm - dd.MM.yyyy') }}</td>
+                <td><p>{{user.name}}</p></td>
+                <td><p>{{JSON.parse(user.student_info).school}}</p></td>
+                <td><p>{{ JSON.parse(user.student_info).class}}</p></td>
+                <td><p><a :href="'mailto:'+user.email">{{ user.email }}</a></p></td>
+                <td><p>{{ formatDate(user.created_at, 'H:mm - dd.MM.yyyy') }}</p></td>
                 <template v-if="admin === false">
-                  <td>
-                    <label class="switch">
+                  <td class="position-relative">
+                    <label class="switch position-absolute">
                       <input type="checkbox" class="course-toggle" v-model="JSON.parse(user.student_info).active" @click="updateMember(user, key)">
                       <span class="slider round"></span>
                     </label>
@@ -49,7 +49,7 @@
                       <div class="notify-dot" v-if="JSON.parse(user.student_info).notes"></div>
                     </div>
                   </td>
-                  <td><i class="bi bi-x-lg" @click=" deleteMember(user.id,user.name)"></i></td>
+                  <td><p><i class="bi bi-x-lg" @click=" deleteMember(user.id,user.name)"></i></p></td>
                 </template>
               </template>
             </tr>

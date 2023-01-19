@@ -45,3 +45,33 @@ input:checked + .slider:before {
   -ms-transform: translateX(21.25px);
   transform: translateX(21.25px);
 }
+.select-wrapper {
+  border-bottom: 1.5px solid $white;
+  margin: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+  cursor: pointer;
+
+  .select {
+    background-color: transparent;
+    color: $white;
+    border: none;
+    padding: .20rem 0 .20rem .20rem;
+    cursor: pointer;
+    &:focus-visible {
+      outline: none
+    }
+    option {
+      background-color: $d3-green;
+      color: $white;
+    }
+    &:hover {
+      transition: 0.3s;
+      color: $grey;
+    }
+  }
+}
+.card-header-select {
+  right: 16px;
+  position: absolute;
+}

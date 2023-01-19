@@ -1,54 +1,73 @@
 <template>
   <div>
-    <div>
+    <div class="forms-wrapper">
       <form key="saveAlbum" class="add-course-form">
-        <div>
-          <input :type="'text'" class="form-control" :placeholder="i18n('Course name') + ' *'" v-model="directory.name">
-        </div>
-        <div>
-          <textarea class="form-control" rows="3" :placeholder="i18n('Short course description')" v-model="directory.description"></textarea>
-        </div>
-        <div>
-          <input type="checkbox" v-model="directory.active"> aktivny
-        </div>
-        <div>
-          <button type="submit" @click.prevent="updateDir()">
-            <template>
-              {{ i18n('Save') }}
-            </template>
-            <b-spinner small v-if="saving"></b-spinner>
-          </button>
-        </div>
-      </form>
-      <p>-----------------------------------</p>
-      <form key="#" class="add-course-form">
-          <div class="imgUp" v-for="(file,key) in files">
-            <label class="w-100">
-              <input :type="'file'" multiple="multiple" :id="'input-'+key" accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key); resetInput(key)" class="uploadFile img custom-file-input" >
-              {{ file ? getFileName(file) : i18n('Choose image') }}
-              <div  class="imagePreview d-flex align-items-center">
-                <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
-                  <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
-                </div>
-              </div>
-            </label>
-            <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
+        <div class="d-flex inputs-wrapper">
+          <div class="d-flex flex-column text-input-wrapper m-auto w-75">
+            <div>
+              <input :type="'text'" class="form-control" :placeholder="i18n('Course name') + ' *'" v-model="directory.name">
+            </div>
+            <div>
+              <textarea class="form-control" rows="3" :placeholder="i18n('Short course description')" v-model="directory.description"></textarea>
+            </div>
           </div>
+        </div>
         <div>
-          <button type="submit" @click.prevent="saveImg()">
-            <template>
+          <div class="d-flex align-content-center flex-column">
+            <div class="m-auto mt-3">
+              <label class="d-flex">
+                Aktivovať kurz:
+                <div class="checkbox-wrapper-31">
+                  <input type="checkbox" v-model="directory.active"/>
+                  <svg viewBox="0 0 35.6 35.6">
+                    <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                    <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                    <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                  </svg>
+                </div>
+              </label>
+            </div>
+            <button class="button_first m-auto mt-3 mb-3 px-5" type="submit" @click.prevent="updateDir()">
               {{ i18n('Save') }}
-            </template>
-            <b-spinner small v-if="saving"></b-spinner>
-          </button>
+              <b-spinner small v-if="saving"></b-spinner>
+            </button>
+          </div>
         </div>
       </form>
-      <button @click.prevent="fn()">
-        <template>
-          {{ i18n('Saveddddd') }}
-        </template>
-        <b-spinner small v-if="saving"></b-spinner>
-      </button>
+      <form key="#" class="add-course-form">
+        <div class="d-flex inputs-wrapper">
+          <div class="d-flex justify-content-around file-input-wrapper">
+            <div class="imgUp shadow" v-for="(file,key) in files">
+              <label class="w-100">
+                <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key); resetInput(key)" class="uploadFile img custom-file-input" >
+                {{ file ? file.name : i18n('Choose image') }}
+                <div  class="imagePreview d-flex align-items-center">
+                  <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
+                    <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
+                  </div>
+                </div>
+              </label>
+              <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="d-flex align-content-center flex-column">
+            <button class="button_first m-auto mt-3 mb-3 px-5" type="submit" @click.prevent="saveImg()">
+              {{ i18n('Save') }}
+              <b-spinner small v-if="saving"></b-spinner>
+            </button>
+          </div>
+        </div>
+      </form>
+
+
+<!--      <button @click.prevent="fn()">-->
+<!--        <template>-->
+<!--          {{ i18n('Saveddddd') }}-->
+<!--        </template>-->
+<!--        <b-spinner small v-if="saving"></b-spinner>-->
+<!--      </button>-->
       <template v-if="error.length > 0">
         <div class="alert alert-danger my-3 mx-4" role="alert">
           {{ error }}
@@ -59,26 +78,25 @@
       </template>
     </div>
     <div class="course-wrapper">
-      <template v-if="true">
-          <div class="course-card" v-for="(image, key) in directory.media">
-            <div class="course-item shadow">
-              <div>
-                <div class="c-header">
-                  <span>{{image.name}}</span>
+      <div class="course-card" v-for="(image, key) in directory.media">
+          <div class="course-item shadow img-item">
+            <a :href="image.original_url" data-fancybox="gallery" :data-caption="image.name">
+              <div class="course-bg" :style="'background-image: url('+image.original_url+')'">
+                <img class="d-none"  :src="image.original_url" alt="">
+              </div>
+            </a>
+            <div class=" image-detail">
+              <div class="d-flex justify-content-between">
+                  <div>
+                    <strong v-b-tooltip.hover :title="image.name">{{ image.name }}</strong>
+                  </div>
+                <div>
                   <i class="bi bi-x-lg" @click="deleteImg(image.id,image.name)"></i>
                 </div>
-                <a :href="image.original_url" data-fancybox="gallery" :data-caption="image.name">
-                  <img :src="image.original_url" alt="">
-                </a>
               </div>
             </div>
-          </div>
-      </template>
-      <template v-else>
-        <div>
-          <p>Zatial zaiadne obr</p>
         </div>
-      </template>
+      </div>
     </div>
   </div>
 </template>

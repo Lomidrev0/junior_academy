@@ -531,7 +531,6 @@ export default {
   },
   watch: {
     value(current) {
-      console.log(current);
       if (current !== this.editor.getHTML()) {
         if (current === ''){
           this.editor.commands.clearContent(true);
