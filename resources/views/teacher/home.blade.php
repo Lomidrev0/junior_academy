@@ -3,10 +3,11 @@
 @section('authContent')
     <div>
         <div class="mb-5">
-            <h1>daco</h1>
+            <h1>{{__('Home')}}</h1>
             <hr>
-            <p>teacher teacher</p>
-            <p>{{ Session::get('selected-course')->name }}</p>
+            <info-card
+                    :text="'{{__('Welcome to JUNIOR Academy teacher panel.')}}'"
+            ></info-card>
         </div>
         <div class="container">
         </div>

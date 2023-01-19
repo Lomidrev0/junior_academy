@@ -1,8 +1,8 @@
 <header id="navbar">
     <nav class="navbar-container container">
         <a href="/" class="home-link">
-            <div class="navbar-logo"></div>
-            Website Name
+{{--            <div class="navbar-logo"></div>--}}
+            Junior akadémia
         </a>
         <button
                 type="button"

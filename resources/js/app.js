@@ -190,6 +190,7 @@ const components = {
     'ImageWrapper': require('./components/Teacher/ImageWrapper').default,
     'InfoCard': require('./components/InfoCard').default,
     'AddArticle': require('./components/Admin/AddArticle').default,
+    'Alert': require('./components/Alert').default,
 };
 
 new Vue({

@@ -2,17 +2,17 @@
 <div>
   <button class="btn btn-primary" @click="show = !show">
     <i class="bi bi-plus-lg"></i>
-    {{i18n('Add')}}
+    {{i18n('Add album')}}
   </button>
   <div v-show="show">
     <form key="saveAlbum" class="add-course-form">
       <div class="d-flex inputs-wrapper">
         <div class="d-flex flex-column text-input-wrapper m-auto w-75">
           <div>
-            <input :type="'text'" class="form-control shadow" :placeholder="i18n('Course name') + ' *'" v-model="newAlbum.name">
+            <input :type="'text'" class="form-control shadow" :placeholder="i18n('Album name')" v-model="newAlbum.name">
           </div>
           <div>
-            <textarea class="form-control shadow" rows="3" :placeholder="i18n('Short course description')" v-model="newAlbum.description"></textarea>
+            <textarea class="form-control shadow" rows="3" :placeholder="i18n('Short album description')" v-model="newAlbum.description"></textarea>
           </div>
         </div>
       </div>
@@ -20,7 +20,7 @@
         <div class="d-flex align-content-center flex-column">
           <div class="m-auto mt-3">
             <label class="d-flex">
-              Aktivovať kurz:
+             {{i18n('Activate course')}}
               <div class="checkbox-wrapper-31">
                 <input type="checkbox" v-model="newAlbum.isActive"/>
                 <svg viewBox="0 0 35.6 35.6">
@@ -32,20 +32,13 @@
             </label>
           </div>
           <button class="button_first m-auto mt-3 mb-3 px-5" type="submit" @click.prevent="saveAlbum()">
-            {{ i18n('Save') }}
+            {{ i18n('Save album') }}
             <b-spinner small v-if="saving"></b-spinner>
           </button>
         </div>
       </div>
     </form>
-    <template v-if="error.length > 0">
-      <div class="alert alert-danger my-3 mx-4" role="alert">
-        {{ error }}
-        <div @click="error = ''" class="d-md-inline">
-          <i class="bi bi-x-lg"></i>
-        </div>
-      </div>
-    </template>
+    <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
   </div>
   <div class="w-100">
     <div class="course-wrapper">
@@ -70,7 +63,7 @@
               <a class="disabled" :href="route('teacher.directory', {slug: album.slug})">
                 <div class="course-item-body flex-column text-center">
                   <div v-b-tooltip.hover :title="album.description"> {{ truncateContent(album.description, 30) }}</div>
-                  <div>Vytvorene: {{ formatDate(album.created_at, 'dd.MM.yyyy') }}</div>
+                  <div>{{i18n('Created at')}} {{ formatDate(album.created_at, 'dd.MM.yyyy') }}</div>
                 </div>
                 <div class="course-item-footer d-flex justify-content-around">
                   <span v-b-tooltip.hover :title="album.user.name">{{ truncateContent(album.user.name, 15) }}</span>
@@ -83,7 +76,7 @@
       </template>
       <template v-else>
         <div>
-          <p>Zatial zaiadne albumy</p>
+          <p>{{i18n('No albums yet')}}</p>
         </div>
       </template>
     </div>
@@ -92,12 +85,14 @@
 </template>
 
 <script>
-import {i18n} from "../../app";
+import {i18n, toast} from "../../app";
 import formatDatesMixin from "../formatDatesMixin";
 import truncateMixin from "../truncateMixin";
 import {parseISO} from "date-fns";
+import Alert from "../Alert";
 
 export default {
+  components: {Alert},
   mixins:[formatDatesMixin, truncateMixin],
   props: ['albums'],
   data(){
@@ -115,24 +110,34 @@ export default {
   },
   methods: {
     saveAlbum() {
-      this.saving = true;
-      axios
-      .post(this.route('teacher.save-album'),{newAlbum: this.newAlbum, disk: 'gallery'})
-      .then((response) => {
-        this.clearForm();
-        this.saving = false;
-        this.albumList = this.formatDates(response.data);
-        this.$toast.success(i18n('Course has been sucessfully updated'));
-      })
+
+      if (this.newAlbum.name.length > 119){
+        this.error = i18n('The name is too long!');
+      } else if(this.newAlbum.name.length === 0){
+        this.error = i18n('You have not filled in all required fields');
+      }else if(_.find(this.albumList, (album) => { return album.name === this.newAlbum.name })){
+        this.error = i18n('There is already album with this name');
+      }
+      else {
+        this.saving = true;
+        axios
+            .post(this.route('teacher.save-album'),{newAlbum: this.newAlbum, disk: 'gallery'})
+            .then((response) => {
+              this.clearForm();
+              this.saving = false;
+              this.albumList = this.formatDates(response.data);
+              toast.success(i18n('Album has been sucessfully createed'),null);
+            })
+      }
+
     },
     deleteAlbum(id,name,disk) {
       if (confirm(i18n('Are you sure you want to delete course: ') + ' "' + name + '"?' )) {
         axios
             .post(this.route('teacher.delete-album'), {id: id, name: name, disk: disk })
             .then((response) => {
-              console.log(response.data)
               this.albumList = this.formatDates(response.data);
-              this.$toast.success(i18n('Course has been successfully deleted'));
+              toast.success(i18n('Album has been sucessfully deleted'),null);
             })
       }
     },
@@ -142,7 +147,7 @@ export default {
             .post(this.route('teacher.update-active'), {id: album.id, value: !album.active})
             .then((response) => {
               this.$set(this.albumList, key, this.formatObjectDates(response.data));
-              this.$toast.success(i18n('Course has been sucessfully updated'));
+              toast.success(i18n('Album has been sucessfully updated'),null);
             })
       }
       else {
@@ -169,7 +174,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

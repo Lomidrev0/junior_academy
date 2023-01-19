@@ -226,10 +226,13 @@ class AdminController
     }
 
     public function articles() {
+        $articles = Article::with(['user' => function ($query) {
+            $query->select('id', 'name');
+        }])->first();
+        $articles['active'] = $articles['active'] == 1 ? true : false;
+
         return view('admin/articles',[
-            'articles' => Article::with(['user' => function ($query) {
-                    $query->select('id', 'name');
-                }])->first()
+            'articles' => $articles,
             ]);
     }
     public function updateArticle(Request $request) {

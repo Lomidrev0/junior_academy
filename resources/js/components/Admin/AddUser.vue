@@ -62,7 +62,7 @@
                       </div>
                     </div>
                   <div class="d-flex flex-row mb-3 checkbox-wrapper">
-                    <label  class="col-md-4 col-form-label text-md-end">Show Password</label>
+                    <label  class="col-md-4 col-form-label text-md-end">{{i18n('Show password')}}</label>
                     <div class="checkbox-wrapper-31">
                       <input type="checkbox" class="showPass"/>
                       <svg viewBox="0 0 35.6 35.6">
@@ -103,20 +103,15 @@
           </div>
         </div>
     </div>
-    <template v-if="error.length > 0">
-      <div class="alert alert-danger my-3 mx-4" role="alert">
-        {{ error }}
-        <div @click="error = ''" class="d-md-inline">
-          <i class="bi bi-x-lg"></i>
-        </div>
-      </div>
-    </template>
+    <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
   </div>
 </template>
 
 <script>
-import {i18n} from "../../app";
+import {i18n, toast} from "../../app";
+import Alert from "../Alert";
 export default {
+  components: {Alert},
   props:['courses'],
 
   data() {
@@ -170,9 +165,8 @@ export default {
             })
             .then((response) => {
               this.saving = !this.saving;
-              console.log(response.data);
               if (response.data === 0) {
-                this.$toast.success(i18n('User has been successfully added'));
+                toast.success(i18n('User has been sucessfully added'),null);
                 this.resetForm();
               } else if(response.data === 1) {
                 this.error = this.i18n('Incorrect password');
@@ -181,13 +175,13 @@ export default {
                 this.error = this.i18n('The address is taken');
                 this.password ='';
               } else {
-                  this.error = this.i18n('Form has not been processed');
+                this.error = this.i18n('Form has not been processed');
                 this.password ='';
               }
             })
            .catch((error) => {
               this.saving = !this.saving;
-              this.error = i18n('Form has not been processed')
+              toast.success(i18n('Form has not been processed'),null);
               setTimeout(() => this.error = '',6000);
               this.resetForm();
               console.log(error);
@@ -204,7 +198,6 @@ export default {
       this.password = '';
     },
   }
-
 }
 </script>
 

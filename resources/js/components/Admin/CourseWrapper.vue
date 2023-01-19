@@ -2,14 +2,14 @@
 <div>
 <button class="button_first" @click="show = !show">
   <i class="bi bi-plus-lg"></i>
-  {{i18n('Add')}}
+  {{i18n('Add course')}}
 </button>
   <div class="mb-5" v-show="show">
     <form key="saveCourse" class="add-course-form">
       <div class="d-flex inputs-wrapper">
         <div class="d-flex flex-column text-input-wrapper">
           <div>
-            <input :type="'text'" class="form-control shadow" :name="'name'" :placeholder="i18n('Course name') + ' *'" v-model="newCourse.name">
+            <input :type="'text'" class="form-control shadow" :name="'name'" :placeholder="i18n('Course name')" v-model="newCourse.name">
           </div>
           <div>
             <textarea class="form-control shadow" rows="3" :name="'description'" :placeholder="i18n('Short course description')" v-model="newCourse.description"></textarea>
@@ -57,14 +57,14 @@
             </template>
           </template>
           <template v-else>
-            <span class="alert-danger">{{i18n('No teachers found!')}} <a :href="route('admin.add-user')">Pridať učiteľa</a></span>
+            <span class="alert-danger">{{i18n('No teachers found!')}} <a :href="route('admin.add-user')">{{i18n('Add teacher')}}</a></span>
           </template>
         </div>
       </div>
       <div class="d-flex align-content-center flex-column">
         <div class="m-auto mt-3">
           <label class="d-flex">
-            Aktivovať kurz:
+            {{i18n('Activate course')+':'}}
             <div class="checkbox-wrapper-31">
               <input type="checkbox" v-model="newCourse.isActive"/>
               <svg viewBox="0 0 35.6 35.6">
@@ -81,14 +81,7 @@
         </button>
       </div>
     </form>
-    <template v-if="error.length > 0">
-      <div class="alert alert-danger my-3 mx-4" role="alert">
-        {{ error }}
-        <div @click="error = ''" class="d-md-inline">
-          <i class="bi bi-x-lg"></i>
-        </div>
-      </div>
-    </template>
+    <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
   </div>
   <div class="course-wrapper">
     <div class="course-card" v-for="(course, key) in coursesList">
@@ -133,10 +126,11 @@ import courseFormMixin from "../courseFormMixin";
 import {parseISO} from 'date-fns';
 import formatDatesMixin from "../formatDatesMixin";
 import truncateMixin from "../truncateMixin";
+import Alert from "../Alert";
 
 export default {
   mixins:[courseFormMixin, formatDatesMixin, truncateMixin],
-  components: {WswgEditor},
+  components: {Alert, WswgEditor},
   props: ['courses','users'],
   data(){
     return {

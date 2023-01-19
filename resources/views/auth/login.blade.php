@@ -1,13 +1,11 @@
-@extends('layouts.app')
-
-@section('content')
+@extends('front.main')
+@section('frontContent')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
+    <div class="row justify-content-center special-height">
+        <div class="col-md-8 m-auto">
+            <div class="card card-style">
                 <div class="card-header">{{ __('Login') }}</div>
-
-                <div class="card-body">
+                <div class="card-body custom-card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -39,23 +37,26 @@
                             </div>
                         </div>
 
-                        <div class="row mb-3">
-                            <div class="col-md-6 offset-md-4">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                    <label class="form-check-label" for="remember">
-                                        {{ __('Remember Me') }}
-                                    </label>
-                                </div>
+                        <div class="d-flex flex-row mb-3 checkbox-wrapper">
+                            <label  class="col-md-4 col-form-label text-md-end">{{ __('Remember Me') }}</label>
+                            <div class="checkbox-wrapper-31">
+                                <input type="checkbox" class="showPass" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}/>
+                                <svg viewBox="0 0 35.6 35.6">
+                                    <circle class="background" cx="17.8" cy="17.8" r="17.8"></circle>
+                                    <circle class="stroke" cx="17.8" cy="17.8" r="14.37"></circle>
+                                    <polyline class="check" points="11.78 18.12 15.55 22.23 25.17 12.87"></polyline>
+                                </svg>
                             </div>
                         </div>
 
                         <div class="row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="button_first">
                                     {{ __('Login') }}
+                                    <b-spinner small v-if="saving"></b-spinner>
                                 </button>
+
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">

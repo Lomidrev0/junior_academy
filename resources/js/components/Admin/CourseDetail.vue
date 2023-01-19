@@ -83,25 +83,20 @@
         </div>
       </div>
     </form>
-    <template v-if="error.length > 0">
-      <div class="alert alert-danger my-3 mx-4" role="alert">
-        {{ error }}
-        <div @click="error = ''" class="d-md-inline">
-          <i class="bi bi-x-lg"></i>
-        </div>
-      </div>
-    </template>
+    <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
   </div>
 </template>
 
 <script>
 import WswgEditor from "../WswgEditor";
+import Alert from "../Alert";
 import {i18n, route} from "../../app";
 import courseFormMixin from "../courseFormMixin";
+import {toast} from "../../app"
 
 export default {
   mixins:[courseFormMixin],
-  components: {WswgEditor},
+  components: {WswgEditor,Alert},
   props: ['course','users'],
   data() {
     return {
@@ -154,7 +149,7 @@ export default {
             .then((response) => {
               if (response.data.length > 1) {
                 this.editCourse = response.data[0];
-                this.$toast.success(i18n('Course has been sucessfully updated'));
+                toast.success(i18n('Course has been sucessfully updated'),null);
               } else {
                 history.replaceState(response.data, '', '/admin/detail/' + response.data.slug);
               }
@@ -176,7 +171,3 @@ export default {
   },
 }
 </script>
-
-<style scoped>
-
-</style>

@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Front;
 
 
+use App\Article;
 use App\Course;
 use Illuminate\Http\Request;
 
@@ -28,6 +29,7 @@ class FrontController
     {
         return view('front/home',[
             'courses' => $this->getForCoursesUI(),
+            'article' => Article::where('type','front')->first('content'),
         ]);
     }
     public function getContact(){

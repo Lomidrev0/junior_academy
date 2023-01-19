@@ -1,12 +1,11 @@
 @component('mail::message')
     # {{ __('Your account registration has been successful.') }}
 
-    {{ __('Thank you for signing up, :name!', ['name' => $data['name']]) }}
-    {{ __('Your account for web app DHZ Župčany has been successfully created.') }}
+    {{ __('login:') }}{{ $data['email'] }}
 
-    {{ __('Your login email to Admin panel DHZ Župčany: ') }}{{ $data['password'] }}
+    {{ __('password:') }}{{ $data['password'] }}
 
-    <a href="{{ url('/') }}" target="_blank">{{ __('Back to the DHZ page') }}</a>
+    <a href="{{ url('/') }}" target="_blank">{{ __('Back to the  page') }}</a>
 
 
     {{ __('Best Regards,') }}<br>

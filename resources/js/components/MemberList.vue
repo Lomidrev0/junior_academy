@@ -60,22 +60,15 @@
       <div>
         <b-modal id="modal-scrollable" scrollable>
           <template #modal-header="{ close }">
-            <h5>Modal Header</h5>
+            <h5>{{i18n('Notes')}}</h5>
             <i class="bi bi-x-lg" @click="close(); clearNote()"></i>
           </template>
           <div class="w-100 m-auto">
             <textarea class="w-100 mh-100" v-model="updateNote.note"></textarea>
           </div>
           <template #modal-footer="{ ok, cancel, hide }">
-            <template v-if="error.length > 0">
-              <div class="alert alert-danger my-3 mx-4" role="alert">
-                {{ error }}
-                <div @click="error = ''" class="d-md-inline">
-                  <i class="bi bi-x-lg"></i>
-                </div>
-              </div>
-            </template>
-            <b-button size="sm" variant="success" @click="saveNote(); ok()">
+            <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
+            <b-button size="sm" variant="success" @click="saveNote(); error.length > 0? '' :ok()">
               OK
             </b-button>
           </template>
@@ -86,8 +79,10 @@
 
 <script>
 import {parseISO} from 'date-fns';
-import {i18n} from "../app";
+import {i18n, toast} from "../app";
+import Alert from "./Alert";
 export default {
+  components: {Alert},
   props:['courses', 'admin'],
   data (){
     return{
@@ -156,7 +151,7 @@ export default {
             setTimeout(function() {
               $('input').prop( "disabled", false);
             }, 1000);
-            this.$toast.success(i18n('Course has been sucessfully updated'));
+            toast.success(i18n('Users state has been updated'),null);
           })
 
     },
@@ -167,7 +162,7 @@ export default {
             .then((response) => {
               this.dataCourses = response.data;
               this.formatDates();
-              this.$toast.success(i18n('Course has been successfully deleted'));
+              toast.success(i18n('Student has been sucessfully deleted'),null);
             })
       }
     },
@@ -177,22 +172,29 @@ export default {
       this.updateNote.key = key;
     },
     saveNote() {
-      axios
-          .post(this.route('teacher.set-note'), {id: this.updateNote.id, value: this.updateNote.note})
-          .then((response) => {
-            let data =response.data
-            data.created_at = parseISO(data.created_at);
-            data.student_info = JSON.stringify(data.student_info);
-            this.$set(this.dataCourses[0].users,this.updateNote.key, data);
-            this.clearNote();
-            this.$toast.success(i18n('Course has been successfully deleted'));
-          })
+     if (_.find(this.dataCourses[this.updateNote.key].users, (user) => {
+       return JSON.parse(user.student_info).notes === this.updateNote.note;
+     })){
+       this.error = i18n('A change is required for save');
+     }
+     else {
+       axios
+           .post(this.route('teacher.set-note'), {id: this.updateNote.id, value: this.updateNote.note})
+           .then((response) => {
+             let data =response.data
+             data.created_at = parseISO(data.created_at);
+             data.student_info = JSON.stringify(data.student_info);
+             this.$set(this.dataCourses[0].users,this.updateNote.key, data);
+             this.clearNote();
+             toast.success(i18n('Note has been updated'),null);
+           })
+     }
+
     },
     clearNote() {
       this.updateNote.note = '';
       this.updateNote.id = null;
       this.updateNote.key = null;
-
     }
   },
   created() {
