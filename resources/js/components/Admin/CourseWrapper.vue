@@ -175,7 +175,7 @@ export default {
         axios
             .post(this.route('admin.store'), formData)
             .then((response) => {
-              this.reset(['logo','bgImg']);
+              this.clearFile(['logo','bgImg']);
               this.coursesList = this.formatDates(response.data);
               this.saving = false;
               toast.success(i18n('Course has been sucessfully created'),null);
@@ -191,7 +191,6 @@ export default {
             .post(this.route('admin.delete'), {id: id})
             .then((response) => {
               this.coursesList = this.formatDates(response.data);
-              //this.$toast.success(i18n('Course has been successfully deleted'));
               toast.success(i18n('Course has been sucessfully deleted'),null);
             })
             .catch((error) => {
@@ -206,7 +205,6 @@ export default {
              .then((response) => {
                this.$set(this.coursesList, key, this.formatObjectDates(response.data));
                toast.success(i18n('Course has been sucessfully updated'),null);
-               //this.$toast.success(i18n('Course has been sucessfully updated'));
              })
          .catch((error) => {
            toast.error(i18n('Error'),i18n('err'));

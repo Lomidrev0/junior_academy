@@ -6,7 +6,7 @@
             <h1>Gallery</h1>
             <hr>
             <info-card
-                    :text="'{{ __('Here you can add new courses or edit them') }}'"
+                    :text="'{{ __('Here you can add new albums or edit them') }}'"
             ></info-card>
         </div>
         <div class="container">

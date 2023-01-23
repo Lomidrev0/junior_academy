@@ -10,6 +10,7 @@ use App\Directory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Session;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -150,24 +151,29 @@ class TeacherController
     }
 
     public function updateAlbum(Request $request) {
-       $dir = Directory::find($request->id);
-       if ($dir->name == $request->dir['name']) {
-           $dir->update([
-               'user_id' => Auth::user()->id,
-               'active' => $request->dir['active'],
-               'description' => $request->dir['description'],
-           ]);
-           return Directory::with('media')->find($request->id);
-       }
-       else {
-           $dir->update([
-               'user_id' => Auth::user()->id,
-               'active' => $request->dir['active'],
-               'description' => $request->dir['description'],
-               'name' => $request->dir['name'],
-               'slug' => Str::slug($request->dir['name']),
-           ]);
-           return [Directory::with('media')->find($request->id), $dir->slug];
-       }
+        $dir = Directory::find($request->id);
+        if (Validator::make($request->dir, ['name' => 'unique:directories'])->fails() && $dir->name != $request->dir['name']) {
+            return null;
+        }
+        else {
+            if ($dir->name == $request->dir['name']) {
+                $dir->update([
+                    'user_id' => Auth::user()->id,
+                    'active' => $request->dir['active'],
+                    'description' => $request->dir['description'],
+                ]);
+                return Directory::with('media')->find($request->id);
+            }
+            else {
+                $dir->update([
+                    'user_id' => Auth::user()->id,
+                    'active' => $request->dir['active'],
+                    'description' => $request->dir['description'],
+                    'name' => $request->dir['name'],
+                    'slug' => Str::slug($request->dir['name']),
+                ]);
+                return [Directory::with('media')->find($request->id), $dir->slug];
+            }
+        }
     }
 }

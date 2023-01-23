@@ -189,6 +189,8 @@
           width:  10rem;
           height: 10rem;
           object-fit: cover;
+          border-radius: 50%;
+          vertical-align: middle;
         }
       }
       .course-item-head {
@@ -220,10 +222,12 @@
       transition: all 0.5s;
       position: absolute;
       z-index: 1;
+      opacity: 0.6;
     }
     &:hover {
       .course-bg {
         transform: scale(1.2);
+        opacity: 0.9;
       }
       .course-item-head,.course-item-footer {
         background-color: $d1-blue;

@@ -20,7 +20,7 @@
         <div class="d-flex align-content-center flex-column">
           <div class="m-auto mt-3">
             <label class="d-flex">
-             {{i18n('Activate course')}}
+             {{i18n('Activate album')}}
               <div class="checkbox-wrapper-31">
                 <input type="checkbox" v-model="newAlbum.isActive"/>
                 <svg viewBox="0 0 35.6 35.6">
@@ -110,11 +110,12 @@ export default {
   },
   methods: {
     saveAlbum() {
-
       if (this.newAlbum.name.length > 119){
         this.error = i18n('The name is too long!');
       } else if(this.newAlbum.name.length === 0){
-        this.error = i18n('You have not filled in all required fields');
+        this.error = i18n('Name is requaired');
+      }else if(this.newAlbum.name.length > 499) {
+        this.error = i18n('Description is too long!');
       }else if(_.find(this.albumList, (album) => { return album.name === this.newAlbum.name })){
         this.error = i18n('There is already album with this name');
       }

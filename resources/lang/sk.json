@@ -77,5 +77,12 @@
   "Album has been sucessfully deleted": "Album bol úspešne odstránený",
   "Album has been sucessfully updated": "Album bol úspešne upravený",
   "No albums yet": "Zatiaľ žiadne albumy",
-  "There is already album with this name": "Album s takým menom už existuje"
+  "There is already album with this name": "Album s takým menom už existuje",
+  "Activate album": "Aktivovať album",
+  "Here you can add new albums or edit them": "Tu môžete pridávať nové albumy alebo ich upravovať",
+  "Here you can edit album or add photos to album": "Tu môžete upravovať album alebo pridávať doň fotky",
+  "Edit album": "Upraviť album",
+  "Add photos": "Pridať fotky",
+  "selected images": "vybrané obrázky",
+  "Name is requaired": "Meno je požadované"
 }

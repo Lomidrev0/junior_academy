@@ -14,7 +14,7 @@ class FrontController
         $courses = new Course();
         $courses = Course::with(['media', 'admin' => function ($query) {
             $query->select('id', 'name');
-        }])->get(['id','name','about','description','active','slug','user_id','created_at','updated_at']);
+        }])->where('active',true)->get(['id','name','about','description','active','slug','user_id','created_at','updated_at']);
 
         $courses = $courses->map(function($course) {
             unset($course['user_id']);
@@ -23,7 +23,6 @@ class FrontController
         });
         return $courses;
     }
-
 
     public function index()
     {
