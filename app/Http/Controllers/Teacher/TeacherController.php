@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Teacher;
 
 
 use App\Course;
+use App\Message;
 use App\User;
 use App\Directory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -16,9 +18,12 @@ use Session;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\MediaStream;
 use function GuzzleHttp\Promise\all;
+use App\Traits\MessageTrait;
 
 class TeacherController
 {
+    use MessageTrait;
+
     public function getForCourseUserUI() {
         return
             Course::with(['users' => function ($query) {
@@ -176,4 +181,42 @@ class TeacherController
             }
         }
     }
+   public function getMessages(){
+        return view('teacher/messages', [
+            'messages' => collect($this->getMsgList())->sortByDesc('created_at')->values(),
+        ]);
+   }
+
+   public function userSearch(Request $request){
+       $val = $request->val;
+       $query = User::where('role',0)->where('name', 'like', "%$val%");
+       $ids = $request->ids;
+       if ($ids) {
+           $query->whereIn('id', $ids);
+       } else {
+           $take = $request->take;
+
+           if ($take >= 0) {
+               $query->take($take);
+
+               $skip = $request->skip;
+               if ($skip >= 0) {
+                   $query->skip($skip);
+               }
+           }
+       }
+       $count = $query->count();
+       $users = $query->get();
+
+       return [
+           'count' => $count,
+           'items' => $users->map(function($user) {
+               return [
+                   'id'=> $user->id,
+                   'name'=> $user->name,
+                   'role'=> $user->role,
+               ];
+           }),
+       ];
+   }
 }

@@ -61,6 +61,12 @@ return [
             'url' => env('APP_URL').'/storage/gallery',
             'visibility' => 'public',
         ],
+        'attachments' => [
+            'driver' => 'local',
+            'root' =>  storage_path('app/public/attachments'),
+            'url' => env('APP_URL').'/storage/attachments',
+            'visibility' => 'public',
+        ],
 
         'courses' => [
             'driver' => 'local',

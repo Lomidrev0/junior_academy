@@ -100,6 +100,20 @@ Vue.mixin({
     },
 });
 
+Vue.directive('click-outside', {
+    bind: function (el, binding, vnode) {
+        el.clickOutsideEvent = function (event) {
+            if (!(el == event.target || el.contains(event.target))) {
+                vnode.context[binding.expression](event);
+            }
+        };
+        document.body.addEventListener('click', el.clickOutsideEvent)
+    },
+    unbind: function (el) {
+        document.body.removeEventListener('click', el.clickOutsideEvent)
+    },
+});
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -191,6 +205,10 @@ const components = {
     'InfoCard': require('./components/InfoCard').default,
     'AddArticle': require('./components/Admin/AddArticle').default,
     'Alert': require('./components/Alert').default,
+    'Chat': require('./components/Chat').default,
+    'TextInput': require('./components/TextInput').default,
+    'SarchInput': require('./components/SearchInput').default,
+    'MessageModal':require('./components/MessageModal').default,
 };
 
 new Vue({
@@ -266,5 +284,3 @@ $(document).ready(function(){
         console.log(passInput);
     })
 })
-
-

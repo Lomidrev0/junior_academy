@@ -224,7 +224,6 @@ export default {
       this.newCourse.teachers = [];
     },
     getActiveTeacher(id) {
-      console.log(_.includes(this.newCourse.teachers,id))
       return  _.includes(this.newCourse.teachers,id)
     }
   },
