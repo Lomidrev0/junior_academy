@@ -4,7 +4,7 @@
          <div class="overlay">
             <h1 class="title">JUNIOR Akadémia</h1>
             <h1 class="subtitle">Urob viac pre svoju budúcnosť, nauč sa niečo zaujímavé...</h1>
-            <a class="btn button_first marginn" href="#">Registrácia</a>
+            <a class="btn button_first marginn" href="/register">Registrácia</a>
          </div>
     </header>
     <div class="card_second card-colorr">
@@ -15,6 +15,7 @@
     <div class="container py-4">
          <h1 class="h1 text-center" id="pageHeaderTitle"></h1>
     </div>
+
     <div class="container">
         <course-list
            @isset($courses)

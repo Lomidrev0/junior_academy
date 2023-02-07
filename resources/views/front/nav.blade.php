@@ -1,27 +1,26 @@
-<header id="navbar">
-    <nav class="navbar-container container">
-        <a href="/" class="home-link">
-{{--            <div class="navbar-logo"></div>--}}
-            Junior akadémia
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="links container-fluid">
+        <a class="navbar-brand  " href="#">
+             Junior-Akadémia
         </a>
-        <button
-                type="button"
-                id="navbar-toggle"
-                aria-controls="navbar-menu"
-                aria-label="Toggle menu"
-                aria-expanded="false"
-        >
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-        <div id="navbar-menu" aria-labelledby="navbar-toggle">
-            <ul class="navbar-links">
-                <li class="navbar-item"><a class="navbar-link" href="/">Domov</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/login">Prihlásenie</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/gallery">Galéria</a></li>
-                <li class="navbar-item"><a class="navbar-link" href="/contact">Kontakt</a></li>
+        <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Domov</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Galéria</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link button_first" href="#">Prihlásenie</a>
+                </li>
             </ul>
         </div>
-    </nav>
-</header>
+    </div>
+</nav>

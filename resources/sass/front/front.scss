@@ -294,7 +294,7 @@
 }
 
 .img_up{
-    width: 100%;
+    width: 90px;
     max-width: 90px;
     height: auto;
     float: left;
@@ -319,6 +319,8 @@
 .map-clean {
     color: #313437;
     background-color: $white2;
+    border-radius: $radius;
+    box-shadow: $box-shadow;
 }
 
 .map-clean p {
@@ -360,7 +362,7 @@
 @media (max-width:1400px) {
     .text_left{
         word-wrap: break-word;
-        text-align: center
+
 
 
     }
@@ -441,3 +443,35 @@
 .special-height {
     min-height: 78.1vh;
 }
+
+.random{
+    display: flex;
+}
+
+
+@media (max-width:576px) {
+    .img_up{
+        width: 90px;
+        height: 90px;
+    }
+.postcard__text{
+    width: 100%;
+}
+
+    }
+@media (max-width:406px) {
+ .subtitle{
+     text-align: center;
+ }
+
+}
+@media (max-width:225px) {
+    .title{
+        text-align: center;
+    }
+
+}
+
+
+
+
