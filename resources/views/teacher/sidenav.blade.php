@@ -4,8 +4,9 @@
         <form action="{{route('change-course')}}" method="POST" class="d-flex">
             @csrf
             <label for="id" class="select-wrapper">
-                 <span>Kurz:</span>
+                 <span>Kurz: </span>
                 <select name="id" onchange="this.form.submit()"  class="select">
+
                     @foreach ($courses as $course)
                         <option value="{{$course->id}}" {{ Auth::user()->getSelectedCourse()->id === $course->id ? 'selected' : '' }}>
                             {{$course->name}}
@@ -20,6 +21,12 @@
         <a href="{{route('teacher.home')}}">
             <i class="bi bi-house-fill"></i>
             <span>{{__('Home')}}</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{route('teacher.messages')}}" {!! (Str::contains(url()->current(), 'messages') ? 'class=active-item' : '') !!}>
+            <i class="bi bi-chat-dots-fill"></i>
+            <span>{{ __('Messages')}}</span>
         </a>
     </li>
     <li>

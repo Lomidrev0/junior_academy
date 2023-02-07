@@ -1,5 +1,5 @@
 <template>
-  <div class="alert alert-danger my-3 mx-4 d-flex justify-content-between" role="alert">
+  <div :class=" offMargin ? '' : 'my-3 mx-4'" class="alert alert-danger d-flex justify-content-between" role="alert">
     <div>
       {{ error }}
     </div>
@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  props: ['error'],
+  props: ['error','offMargin'],
   methods: {
     close() {
       this.$emit('close');

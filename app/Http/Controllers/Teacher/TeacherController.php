@@ -5,19 +5,26 @@ namespace App\Http\Controllers\Teacher;
 
 
 use App\Course;
+use App\Message;
 use App\User;
 use App\Directory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Session;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\MediaLibrary\Support\MediaStream;
 use function GuzzleHttp\Promise\all;
+use App\Traits\MessageTrait;
 
 class TeacherController
 {
+    use MessageTrait;
+
     public function getForCourseUserUI() {
         return
             Course::with(['users' => function ($query) {
@@ -150,24 +157,72 @@ class TeacherController
     }
 
     public function updateAlbum(Request $request) {
-       $dir = Directory::find($request->id);
-       if ($dir->name == $request->dir['name']) {
-           $dir->update([
-               'user_id' => Auth::user()->id,
-               'active' => $request->dir['active'],
-               'description' => $request->dir['description'],
-           ]);
-           return Directory::with('media')->find($request->id);
-       }
-       else {
-           $dir->update([
-               'user_id' => Auth::user()->id,
-               'active' => $request->dir['active'],
-               'description' => $request->dir['description'],
-               'name' => $request->dir['name'],
-               'slug' => Str::slug($request->dir['name']),
-           ]);
-           return [Directory::with('media')->find($request->id), $dir->slug];
-       }
+        $dir = Directory::find($request->id);
+        if (Validator::make($request->dir, ['name' => 'unique:directories'])->fails() && $dir->name != $request->dir['name']) {
+            return null;
+        }
+        else {
+            if ($dir->name == $request->dir['name']) {
+                $dir->update([
+                    'user_id' => Auth::user()->id,
+                    'active' => $request->dir['active'],
+                    'description' => $request->dir['description'],
+                ]);
+                return Directory::with('media')->find($request->id);
+            }
+            else {
+                $dir->update([
+                    'user_id' => Auth::user()->id,
+                    'active' => $request->dir['active'],
+                    'description' => $request->dir['description'],
+                    'name' => $request->dir['name'],
+                    'slug' => Str::slug($request->dir['name']),
+                ]);
+                return [Directory::with('media')->find($request->id), $dir->slug];
+            }
+        }
     }
+   public function getMessages(){
+        $userLR = Carbon::parse(User::where('id',Auth::user()->id)->first()->last_read)->toISOString();
+        User::where('id',Auth::user()->id)->update(['last_read' => Carbon::now()]);
+        return view('teacher/messages', [
+            'messages' => collect($this->getMsgList())->sortByDesc('created_at')->values(),
+            'last_read'=> $userLR,
+        ]);
+
+   }
+
+   public function userSearch(Request $request){
+       $val = $request->val;
+       $query = User::where('role',0)->where('name', 'like', "%$val%");
+       $ids = $request->ids;
+       if ($ids) {
+           $query->whereIn('id', $ids);
+       } else {
+           $take = $request->take;
+
+           if ($take >= 0) {
+               $query->take($take);
+
+               $skip = $request->skip;
+               if ($skip >= 0) {
+                   $query->skip($skip);
+               }
+           }
+       }
+       $count = $query->count();
+       $users = $query->get();
+
+       return [
+           'count' => $count,
+           'items' => $users->map(function($user) {
+               return [
+                   'id'=> $user->id,
+                   'name'=> $user->name,
+                   'role'=> $user->role,
+                   'email'=> $user->email,
+               ];
+           }),
+       ];
+   }
 }

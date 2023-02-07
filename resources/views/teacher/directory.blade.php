@@ -6,7 +6,7 @@
             <h1>Gallery</h1>
             <hr>
             <info-card
-                    :text="'{{__('List of registered students')}}'"
+                    :text="'{{__('Here you can edit album or add photos to album')}}'"
             ></info-card>
         </div>
         <div class="container">

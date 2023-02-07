@@ -11,6 +11,7 @@
             @if(session()->has('message'))
                 @if(session()->get('message') == 1)
                     <div id="message" class="alert alert-danger">
+
                         {{ __('New password matches old') }}
                     </div>
                 @elseif(session()->get('message') == 0)

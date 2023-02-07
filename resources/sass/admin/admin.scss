@@ -11,6 +11,11 @@
   .content {
     margin-left: 0px;
   }
+  .no-results {
+   img {
+     width: 35vmax !important;
+   }
+  }
 }
 .navbar {
   background: $d1-blue;
@@ -118,8 +123,323 @@
       }
     }
   }
+  //.no-results {
+  //
+  //}
 }
+/* ---------------------------------------------------
+    Comunication comunication subpage styles
+----------------------------------------------------- */
+.modal-header {
+  background-color: $d3-green;
+  color: $white;
+  div {
+    display: flex;
+    h5 {
+      padding-right: 2vw;
+      margin: 0;
+    }
+    i {
+      padding: 0 5px;
+    }
+  }
+}
+.moadl-f-error{
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+.m-modal-body{
+  position: relative;
+  z-index: 5;
+  .loading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 40vh;
+    justify-content: center;
+  }
+  .send-mail {
+    margin: auto;
+    font-size: 26px;
+    cursor: pointer;
+    .mail-check-ico {
+      position: absolute;
+      left: 15px;
+      top: -9px;
+      color: $green;
+      font-size: 20px;
+    }
+  }
+  .msg-attachments {
+    text-decoration: none;
+    .attachments-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      div {
+        margin: 1vh;
+        padding: 1vh 2vh;
+        background-color: $l1-grey;
+        border-radius: $radius;
+        a {
+          text-decoration: none;
+          word-break: break-all;
+        }
+      }
 
+    }
+  }
+  .selected-items-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    .selected-items {
+      padding: 0.5vh;
+      .selected-item {
+        padding-left: 1.5vh;
+        border: 1px solid $grey;
+        border-radius: $radius;
+        display: flex;
+        cursor: text;
+        i {
+          margin-left: 1.5vh;
+          padding: 0 0.5vh;
+          background-color: $red;
+          color: $white;
+          border-radius: 0 $radius $radius 0;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  .search-bar-radius {
+    border-radius: $radius $radius 0 0 ;
+    padding: 5px;
+    .search-input {
+      border: 1px solid $grey;
+      border-radius: $radius 0 0 $radius;
+      width: 50%;
+      input{
+        background-color: $white;
+        border: none;
+        padding-left: 1vh;
+        width: 80%;
+        &:focus {
+          outline: none;
+        }
+      }
+      .search-icon{
+        border-radius: $radius 0 0 $radius;
+        display: inline-block;
+        background-color: $white;
+        padding: 1vh 1.5vh;
+        height: -webkit-fill-available;
+      }
+      .search-focus{
+        background-color: $green;
+        color: $white;
+      }
+    }
+  }
+  .msg-input-wrapper{
+    padding: 3vh 0;
+    .msg-input {
+      padding: 5px;
+      label {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        input,textarea {
+          border-radius: $radius;
+          border: 1px solid $grey;
+          padding: 1vh 2vh;
+        }
+      }
+      .attachments {
+        border-style: dashed;
+        border-width: 1px;
+        border-color: $grey;
+        border-radius: $radius;
+        background-color: white;
+        flex-direction: row;
+        padding: 1vh 0;
+        position: relative;
+        input {
+          opacity: 0;
+          width: 100%;
+          position: absolute;
+        }
+        i {
+          padding: 0 2vh;
+        }
+      }
+    }
+  }
+  .result-wrapper {
+    user-select: none;
+    opacity: 1;
+    position: absolute;
+    width: 50%;
+    background-color: $white;
+    color: $d3-green;
+    overflow-y: auto;
+    padding: 1vh 0;
+    max-height: 24rem;
+    cursor: pointer;
+    border: 1px solid $grey;
+    border-radius: $radius;
+    div {
+      padding: 0 0.7vh;
+      &:hover{
+        background-color: $green;
+        color: $white;
+      }
+      i {
+        padding-right: 0.7vh;
+      }
+    }
+    .total-records {
+      color: $d1-grey;
+      text-align: center;
+      cursor: inherit;
+      &:hover {
+        background-color: $white;
+        color: #808080;
+      }
+    }
+  }
+}
+.search-buttons-wrapper {
+  display: flex;
+  div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 1vh;
+    color: $white;
+    cursor: pointer;
+    &:hover {
+      filter: brightness(85%);
+    }
+  }
+  .only-active {
+    background-color: $d1-green;
+  }
+  .all {
+    background-color: $blue;
+    border-radius: 0 $radius $radius 0;
+  }
+}
+.modal-err-wrapper {
+  width: 70%;
+}
+/*chat*/
+.msg-wrapper{
+  border-radius: $radius;
+  padding: 0.5vh 2vh;
+  margin: 2vh 0;
+  cursor: pointer;
+  .msg-header {
+    display: flex;
+    align-items: center;
+    .msg-icon {
+      font-size: 50px;
+      padding-right: 3vh;
+      color: $green;
+    }
+    .subject-user {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+    }
+  }
+  &:hover {
+    background-color: $l1-grey;
+    transition: $tr-short;
+  }
+}
+.new-msg {
+  border: 1px solid $d3-green;
+  .msg-icon {
+    color: $blue !important;
+  }
+}
+.from-to {
+  word-break: break-all;
+  .msg-subject {
+    margin-right: 5vw;
+  }
+  .to-icon {
+    padding: 0 3px;
+  }
+  .role-ico {
+    margin-right: 4px;
+  }
+  .h-ico{
+    margin-bottom: 0;
+    padding:0 3px 5px 10px;
+  }
+  p {
+    padding-left: 5vh;
+  }
+  .comma-span {
+    padding-right: 3px;
+  }
+  .plus-another{
+    padding-left: 5px;
+  }
+  .msg-date {
+    right: 0;
+    position: absolute;
+  }
+}
+.msg-content {
+  white-space: break-spaces;
+  margin: 1.2rem 0;
+  padding: 0 0.7rem;
+  line-height: 150%;
+}
+/*end chat*/
+@media (max-width: 991.5px) {
+  .m-modal-body{
+    .search-bar-radius {
+      flex-direction: column-reverse;
+      align-items: end;
+      .search-input {
+        border-radius: $radius;
+        width: 100%;
+        input{
+          border-radius: $radius;
+          width: 80%;
+        }
+      }
+    }
+    .search-buttons-wrapper {
+      width: 100%;
+      div{
+        width: 50%;
+      }
+    }
+    .result-wrapper {
+      width: 100%;
+    }
+  }
+  .search-buttons-wrapper {
+    div {
+      padding: 1vh 1.5vh;
+    }
+    .only-active {
+      background-color: $d1-green;
+      border-radius: $radius 0 0 $radius;
+    }
+  }
+  .modal-footer {
+    flex-direction: column;
+    .modal-err-wrapper {
+      width: 100%;
+    }
+  }
+}
 /* ---------------------------------------------------
     Courses subpage styles
 ----------------------------------------------------- */
@@ -189,6 +509,8 @@
           width:  10rem;
           height: 10rem;
           object-fit: cover;
+          border-radius: 50%;
+          vertical-align: middle;
         }
       }
       .course-item-head {
@@ -220,10 +542,12 @@
       transition: all 0.5s;
       position: absolute;
       z-index: 1;
+      opacity: 0.6;
     }
     &:hover {
       .course-bg {
         transform: scale(1.2);
+        opacity: 0.9;
       }
       .course-item-head,.course-item-footer {
         background-color: $d1-blue;
@@ -262,7 +586,7 @@
   }
 }
 
-@media screen and (max-width: 765px) {
+@media screen and (max-width: 767px) {
   .course-card {
     -ms-flex: 100%;
     flex: 100%;
@@ -274,11 +598,36 @@
   .image-detail {
     display: block !important;
   }
+  .msg-wrapper{
+    .msg-header {
+      flex-direction: column;
+      .msg-icon {
+        font-size: 40px;
+        padding-right: 0;
+      }
+      .from-to {
+        flex-wrap: wrap;
+        align-content: center;
+        .msg-subject {
+          margin-right: 0;
+          padding-left: 0;
+          margin: auto;
+        }
+        div{
+          margin: auto;
+          position: inherit !important;
+          padding-left: 0 !important;
+          .h-ico {
+            padding: 0 5px;
+          }
+        }
+      }
+      .f-direct-c {
+        flex-direction: column;
+      }
+    }
+  }
 }
-/*************************************************/
-
-/*************************************************/
-
 /* ---------------------------------------------------
     Alerts
 ----------------------------------------------------- */
@@ -307,6 +656,18 @@
   left: 3%;
   cursor: pointer;
   animation: fadein 2s;
+}
+.no-results {
+  margin: 5vh 0;
+  position: relative;
+  div {
+
+  }
+  img {
+    width: 15vmax;
+    display: block;
+    margin: auto;
+  }
 }
 
 @keyframes fadein {
