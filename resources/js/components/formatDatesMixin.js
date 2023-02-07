@@ -18,6 +18,9 @@ export default {
         updated_at: parseISO(value.updated_at),
         created_at: parseISO(value.created_at)
       }
+    },
+    formatToUpperCase(value) {
+      return _.startCase(value);
     }
   }
 }

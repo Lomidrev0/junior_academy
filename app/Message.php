@@ -16,6 +16,7 @@ class Message extends Model implements HasMedia
         'sender_id',
         'course_id',
         'groups',
+        'mail'
     ];
 
     public function users()
@@ -25,5 +26,9 @@ class Message extends Model implements HasMedia
     public function sender()
     {
         return $this->belongsTo('App\User', 'sender_id');
+    }
+    public function course()
+    {
+        return $this->belongsTo('App\Course', 'course_id');
     }
 }

@@ -11,7 +11,8 @@
         </div>
         <div class="container">
             <chat
-               :messages="{{$messages}}"
+               :messages="{{ $messages }}"
+               :last-read="{{ json_encode($last_read) }}"
             ></chat>
         </div>
     </div>

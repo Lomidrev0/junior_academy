@@ -28,30 +28,54 @@
           </tr>
           </thead>
           <tbody>
-          <template v-for="(course, index) in computedCourses">
-            <tr v-for="(user, key) in course.users">
+          <template v-if="computedCourses.length > 0">
+            <template v-for="(course, index) in computedCourses">
               <template v-if="index === select">
-                <td><p>{{user.name}}</p></td>
-                <td><p>{{JSON.parse(user.student_info).school}}</p></td>
-                <td><p>{{ JSON.parse(user.student_info).class}}</p></td>
-                <td><p><a :href="'mailto:'+user.email">{{ user.email }}</a></p></td>
-                <td><p>{{ formatDate(user.created_at, 'H:mm - dd.MM.yyyy') }}</p></td>
-                <template v-if="admin === false">
-                  <td class="position-relative">
-                    <label class="switch position-absolute">
-                      <input type="checkbox" class="course-toggle" v-model="JSON.parse(user.student_info).active" @click="updateMember(user, key)">
-                      <span class="slider round"></span>
-                    </label>
-                  </td>
-                  <td>
-                    <div class="notify-div">
-                      <i v-b-modal.modal-scrollable class="bi bi-file-earmark-text-fill" @click="setUpdateNote(JSON.parse(user.student_info).notes, user.id, key)"></i>
-                      <div class="notify-dot" v-if="JSON.parse(user.student_info).notes"></div>
-                    </div>
-                  </td>
-                  <td><p><i class="bi bi-x-lg" @click=" deleteMember(user.id,user.name)"></i></p></td>
+                <template v-if="computedCourses[index].users.length > 0 ">
+                  <tr v-for="(user, key) in course.users">
+                    <td><p>{{user.name}}</p></td>
+                    <td><p>{{JSON.parse(user.student_info).school}}</p></td>
+                    <td><p>{{ JSON.parse(user.student_info).class}}</p></td>
+                    <td><p><a :href="'mailto:'+user.email">{{ user.email }}</a></p></td>
+                    <td><p>{{ formatDate(user.created_at, 'H:mm - dd.MM.yyyy') }}</p></td>
+                    <template v-if="admin === false">
+                      <td class="position-relative">
+                        <label class="switch position-absolute">
+                          <input type="checkbox" class="course-toggle" v-model="JSON.parse(user.student_info).active" @click="updateMember(user, key)">
+                          <span class="slider round"></span>
+                        </label>
+                      </td>
+                      <td>
+                        <div class="notify-div">
+                          <i v-b-modal.modal-scrollable class="bi bi-file-earmark-text-fill" @click="setUpdateNote(JSON.parse(user.student_info).notes, user.id, key)"></i>
+                          <div class="notify-dot" v-if="JSON.parse(user.student_info).notes"></div>
+                        </div>
+                      </td>
+                      <td><p><i class="bi bi-x-lg" @click=" deleteMember(user.id,user.name)"></i></p></td>
+                    </template>
+                  </tr>
+                </template>
+                <template v-else>
+                  <tr class="pointer-event-none">
+                    <td colspan="8">
+                      <no-results
+                          :header="i18n('No users found')"
+                          :body="i18n('It appears that no student has signed up for this course yet.')"
+                      ></no-results>
+                    </td>
+                  </tr>
                 </template>
               </template>
+            </template>
+          </template>
+          <template v-else>
+            <tr class="pointer-event-none">
+              <td colspan="8">
+                <no-results
+                    :header="i18n('No courses found')"
+                    :body="i18n('No course has been created yet. Create a course and allow students to sign up!')"
+                ></no-results>
+              </td>
             </tr>
           </template>
           </tbody>
@@ -63,14 +87,24 @@
             <h5>{{i18n('Notes')}}</h5>
             <i class="bi bi-x-lg" @click="close(); clearNote()"></i>
           </template>
-          <div class="w-100 m-auto">
-            <textarea class="w-100 mh-100" v-model="updateNote.note"></textarea>
+          <div class="m-modal-body">
+            <div class="msg-input-wrapper">
+              <div class="w-100 m-auto msg-input">
+                <label>
+                  <textarea v-model="updateNote.note" :placeholder="i18n('Note content')" rows="12" class="w-100 mh-100"></textarea>
+                </label>
+              </div>
+            </div>
           </div>
           <template #modal-footer="{ ok, cancel, hide }">
-            <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
-            <b-button size="sm" variant="success" @click="saveNote(); error.length > 0? '' :ok()">
-              OK
-            </b-button>
+            <div class="modal-err-wrapper">
+              <alert v-if="error.length > 0" :error="error" :off-margin="true"  @close="error = ''"></alert>
+            </div>
+            <div>
+              <button class="button_first" @click="saveNote(); error.length > 0? '' :ok()">
+                {{i18n('Save')}}
+              </button>
+            </div>
           </template>
         </b-modal>
       </div>
@@ -81,8 +115,9 @@
 import {parseISO} from 'date-fns';
 import {i18n, toast} from "../app";
 import Alert from "./Alert";
+import NoResults from "./NoResults";
 export default {
-  components: {Alert},
+  components: {NoResults, Alert},
   props:['courses', 'admin'],
   data (){
     return{

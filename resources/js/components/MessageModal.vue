@@ -51,6 +51,10 @@
               <span>{{i18n('All participants')}}</span>
             </div>
           </div>
+          <div @click="vals.mail = !vals.mail" class="send-mail position-relative">
+              <i v-b-tooltip.hover :title="i18n('Send this message also by email')" class="bi bi-envelope-at-fill"></i>
+              <i  v-if="vals.mail" class="bi bi-check-circle-fill mail-check-ico"></i>
+          </div>
         </div>
       </div>
       <template >
@@ -104,30 +108,38 @@
       </div>
     </div>
     <template #modal-footer>
+      <template v-if="saving">
+        <div class="w-100 d-flex align-items-baseline justify-content-center">
+          <h4 class="p-2">{{i18n('Sending message')+'...'}}</h4>
+          <b-spinner small></b-spinner>
+        </div>
+      </template>
+      <template v-else>
         <div class="modal-err-wrapper">
           <alert v-if="error.length > 0" :error="error" :off-margin="true"  @close="error = ''"></alert>
         </div>
-      <div>
-        <button class="button_first" @click="clear()">
-          {{i18n('Clear')}}
-        </button>
-        <button class="button_first" @click="sendMsg(vals)">
-          {{i18n('Send meessage')}}
-        </button>
-      </div>
+        <div>
+          <button class="button_first" @click="clear()">
+            {{i18n('Clear')}}
+          </button>
+          <button class="button_first" @click="sendMsg(vals)">
+            {{i18n('Send meessage')}}
+          </button>
+        </div>
       </template>
+    </template>
   </b-modal>
 </template>
-
 <script>
 import SearchInput from "./SearchInput";
 import TextInput from "./TextInput";
 import truncateMixin from "./truncateMixin";
 import Alert from "./Alert";
 import {i18n, toast} from "../app";
+import WswgEditor from "./WswgEditor";
 
 export default {
-  components: {Alert, SearchInput, TextInput},
+  components: {WswgEditor, Alert, SearchInput, TextInput},
   mixins:[truncateMixin],
   props: ['header','values'],
   data(){
@@ -135,7 +147,9 @@ export default {
       searchResult: null,
       error:'',
       totalResultCount:null,
+      saving: false,
       vals: {
+        mail:false,
         selected: [],
         title: '',
         content: '',
@@ -179,17 +193,17 @@ export default {
       }
     },
     onFileSelected(event) {
-     _.find(event.target.files, (file) => { return file.size > 30000000}) ?  this.error = 'Niektoré zo súborov sú príliš veľké. Maximálna povolená veľkosť súboru je 30MB': this.error= '';
+     _.find(event.target.files, (file) => { return file.size > 20000000}) ?  this.error = 'Niektoré zo súborov sú príliš veľké. Maximálna povolená veľkosť súboru je 20MB': this.error= '';
      if (this.vals.files.length > 0) {
        if (event.target.files.length > this.vals.files.length) {
-         return _.differenceWith(Array.from(_.filter(event.target.files, (file) => { return file.size <= 30000000 })),this.vals.files,_.isEqual);
+         return _.differenceWith(Array.from(_.filter(event.target.files, (file) => { return file.size <= 20000000 })),this.vals.files,_.isEqual);
        }
      else {
-         return _.differenceWith(this.vals.files, Array.from(_.filter(event.target.files, (file) => { return file.size <= 30000000 })),_.isEqual);
+         return _.differenceWith(this.vals.files, Array.from(_.filter(event.target.files, (file) => { return file.size <= 20000000 })),_.isEqual);
        }
      }
      else {
-       return _.concat(this.vals.files, Array.from(_.filter(event.target.files, (file) => { return file.size <= 30000000 })));
+       return _.concat(this.vals.files, Array.from(_.filter(event.target.files, (file) => { return file.size <= 20000000 })));
      }
     },
     removeFile(name){
@@ -211,28 +225,39 @@ export default {
       }
     },
     sendMsg(message){
-      const formData = new FormData();
-      let data = _.cloneDeep(message);
-       _.unset(data,'value');
-      data.selected = _.map(data.selected, (select)=>{return select.id});
-      data.selected = JSON.stringify(data.selected);
-      data.multipleSelect = data.multipleSelect.value;
-      _.forEach(data.files, (file,key) => {return  formData.append('file'+key,file);})
-      _.unset(data,'files')
-      formData.append('data',JSON.stringify(data));
-      axios
-      .post(this.route('send-message'), formData)
-      .then((response) =>{
-        this.clear();
-        this.$emit('close',{});
-        this.$emit('newMessage', response.data );
-        toast.success(i18n('Course has been sucessfully deleted'),null);
-      })
-
+      if (message.selected.length === 0 && message.multipleSelect.value === ''){
+          this.error = i18n('Enter at least one recipient');
+      } else if(message.title === '') {
+          this.error = i18n('Enter subject of the message');
+      } else if(message.title.length > 100) {
+          this.error = i18n('The message subject is too long');
+      } else {
+        const formData = new FormData();
+        let data = _.cloneDeep(message);
+        _.unset(data,'value');
+        data.selected = _.map(data.selected, (select)=>{return  {'id': select.id, 'email': select.email}});
+        data.selectedEmails = JSON.stringify(_.map(data.selected, (select)=>{return select.email}));
+        data.selected = JSON.stringify(_.map(data.selected, (select)=>{return select.id}));
+        data.multipleSelect = data.multipleSelect.value;
+        _.forEach(data.files, (file,key) => {return  formData.append('file'+key,file);})
+        _.unset(data,'files')
+        formData.append('data',JSON.stringify(data));
+        this.saving = true;
+        axios
+            .post(this.route('send-message'), formData)
+            .then((response) =>{
+              this.clear();
+              this.saving = false;
+              this.$emit('close',{});
+              this.$emit('newMessage', response.data );
+              toast.success(i18n('Course has been sucessfully deleted'),null);
+            })
+      }
     },
   },
   mounted() {
     if (this.values){
+      this.vals.mail = this.values.mail;
       this.vals.selected = this.values.selected;
       this.vals.title =  this.values.title;
       this.vals.content = this.values.content;

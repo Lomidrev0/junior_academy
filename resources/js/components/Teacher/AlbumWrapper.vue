@@ -1,6 +1,6 @@
 <template>
 <div>
-  <button class="btn btn-primary" @click="show = !show">
+  <button class="button_first" @click="show = !show">
     <i class="bi bi-plus-lg"></i>
     {{i18n('Add album')}}
   </button>
@@ -75,9 +75,10 @@
         </div>
       </template>
       <template v-else>
-        <div>
-          <p>{{i18n('No albums yet')}}</p>
-        </div>
+        <no-results
+            :header="i18n('No albums found')"
+            :body="i18n('This course has no albums yet. Try adding some!')"
+        ></no-results>
       </template>
     </div>
   </div>
@@ -90,9 +91,10 @@ import formatDatesMixin from "../formatDatesMixin";
 import truncateMixin from "../truncateMixin";
 import {parseISO} from "date-fns";
 import Alert from "../Alert";
+import NoResults from "../NoResults";
 
 export default {
-  components: {Alert},
+  components: {NoResults, Alert},
   mixins:[formatDatesMixin, truncateMixin],
   props: ['albums'],
   data(){

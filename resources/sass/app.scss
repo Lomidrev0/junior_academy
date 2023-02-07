@@ -148,6 +148,11 @@ p,h1{
 .tooltip{
   opacity: 1;
 }
+.modal-content {
+  .tooltip{
+    top: -65px !important;
+  }
+}
 .arrow {
   position: absolute;
   width: 0.8rem;
@@ -171,4 +176,13 @@ p,h1{
 }
 .color-green {
   color: $green;
+}
+.m-none {
+  margin: 0;
+}
+.pointer-event-none {
+  pointer-events: none;
+}
+.notifications-container {
+  min-width: 30%;
 }

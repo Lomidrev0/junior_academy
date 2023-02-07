@@ -2,7 +2,7 @@
   <div>
     <div>
       <a :href="route('admin.courses')">
-        <button class="btn btn-primary">
+        <button class="button_first">
           <i class="bi bi-arrow-left"></i>{{i18n('Back')}}
         </button>
       </a>

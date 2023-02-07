@@ -72,8 +72,9 @@
 <!--      </button>-->
     </div>
     <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
-    <div class="course-wrapper">
-      <div class="course-card" v-for="(image, key) in directory.media">
+    <template v-if="directory.media.length > 0">
+      <div class="course-wrapper">
+        <div class="course-card" v-for="(image, key) in directory.media">
           <div class="course-item shadow img-item">
             <a :href="image.original_url" data-fancybox="gallery" :data-caption="image.name">
               <div class="course-bg" :style="'background-image: url('+image.original_url+')'">
@@ -82,17 +83,24 @@
             </a>
             <div class=" image-detail">
               <div class="d-flex justify-content-between">
-                  <div>
-                    <strong v-b-tooltip.hover :title="image.name">{{ image.name }}</strong>
-                  </div>
+                <div>
+                  <strong v-b-tooltip.hover :title="image.name">{{ image.name }}</strong>
+                </div>
                 <div>
                   <i class="bi bi-x-lg" @click="deleteImg(image.id,image.name)"></i>
                 </div>
               </div>
             </div>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <no-results
+          :header="i18n('No image found')"
+          :body="i18n('There are no images in this album yet. Try adding some!')"
+      ></no-results>
+    </template>
   </div>
 </template>
 
@@ -100,8 +108,9 @@
 import courseFormMixin from "../courseFormMixin";
 import {i18n, toast} from "../../app";
 import Alert from "../Alert";
+import NoResults from "../NoResults";
 export default {
-  components: {Alert},
+  components: {NoResults, Alert},
   mixins: [courseFormMixin],
   props: ['dir'],
   data() {

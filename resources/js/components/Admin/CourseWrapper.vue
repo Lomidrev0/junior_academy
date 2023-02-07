@@ -84,7 +84,8 @@
     <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
   </div>
   <div class="course-wrapper">
-    <div class="course-card" v-for="(course, key) in coursesList">
+    <template v-if="coursesList.length > 0">
+      <div class="course-card" v-for="(course, key) in coursesList">
         <div class="course-item shadow">
           <div class="course-bg" :style="'background-image: url('+course.media[1].original_url+')'"></div>
           <div class="course-card-body">
@@ -113,7 +114,14 @@
             </a>
           </div>
         </div>
-    </div>
+      </div>
+    </template>
+    <template v-else>
+      <no-results
+          :header="i18n('No courses found')"
+          :body="i18n('No course has been created yet. Create a course and allow students to sign up!')"
+      ></no-results>
+    </template>
   </div>
 </div>
 </template>
@@ -127,10 +135,11 @@ import {parseISO} from 'date-fns';
 import formatDatesMixin from "../formatDatesMixin";
 import truncateMixin from "../truncateMixin";
 import Alert from "../Alert";
+import NoResults from "../NoResults";
 
 export default {
   mixins:[courseFormMixin, formatDatesMixin, truncateMixin],
-  components: {Alert, WswgEditor},
+  components: {NoResults, Alert, WswgEditor},
   props: ['courses','users'],
   data(){
     return {

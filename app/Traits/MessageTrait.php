@@ -46,6 +46,7 @@ trait MessageTrait {
                 'email' => Auth::user()->email,
                 'role' => Auth::user()->role,
             ];
+            $msg['mail'] = $msg['mail'] == 1 ? true : false;
             unset($msg['sender_id']);
             unset($msg['deleted_at']);
             return $msg;
@@ -84,6 +85,7 @@ trait MessageTrait {
                     }
                 }
             }
+            $msg['mail'] = $msg['mail'] == 1 ? true : false;
             unset($msg['sender_id']);
             unset($msg['deleted_at']);
             return $msg;

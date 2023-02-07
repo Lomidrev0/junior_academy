@@ -1,5 +1,6 @@
 <?php
 
+use App\Mail\MessageMail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Teacher\TeacherController;
@@ -81,9 +82,13 @@ Route::namespace('Shared')->group(function () {
     Route::post('/reset_password','ResetPassword@passReset')->name('reset');
     Route::post('/change_course','CourseController@changeCourse')->name('change-course');
     Route::post('/send_msg','MessageController@sendMessage')->name('send-message');
+    Route::get('/get_selected_msg','MessageController@getMessage')->name('get-message');
 
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/email', function (){
+//return new MessageMail();
+//});

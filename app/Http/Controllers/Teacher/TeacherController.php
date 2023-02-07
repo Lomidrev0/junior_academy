@@ -10,6 +10,7 @@ use App\User;
 use App\Directory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -182,9 +183,13 @@ class TeacherController
         }
     }
    public function getMessages(){
+        $userLR = Carbon::parse(User::where('id',Auth::user()->id)->first()->last_read)->toISOString();
+        User::where('id',Auth::user()->id)->update(['last_read' => Carbon::now()]);
         return view('teacher/messages', [
             'messages' => collect($this->getMsgList())->sortByDesc('created_at')->values(),
+            'last_read'=> $userLR,
         ]);
+
    }
 
    public function userSearch(Request $request){
@@ -215,6 +220,7 @@ class TeacherController
                    'id'=> $user->id,
                    'name'=> $user->name,
                    'role'=> $user->role,
+                   'email'=> $user->email,
                ];
            }),
        ];

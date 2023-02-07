@@ -49,3 +49,4 @@ mix
   .js('resources/js/admin/admin.js', 'public/js/admin.js')
   .sass('resources/sass/front/front.scss', 'public/css/front.css')
   .sass('resources/sass/admin/admin.scss', 'public/css/admin.css')
+  .copy('resources/assets/', 'public/')

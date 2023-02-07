@@ -11,6 +11,11 @@
   .content {
     margin-left: 0px;
   }
+  .no-results {
+   img {
+     width: 35vmax !important;
+   }
+  }
 }
 .navbar {
   background: $d1-blue;
@@ -118,6 +123,9 @@
       }
     }
   }
+  //.no-results {
+  //
+  //}
 }
 /* ---------------------------------------------------
     Comunication comunication subpage styles
@@ -125,6 +133,16 @@
 .modal-header {
   background-color: $d3-green;
   color: $white;
+  div {
+    display: flex;
+    h5 {
+      padding-right: 2vw;
+      margin: 0;
+    }
+    i {
+      padding: 0 5px;
+    }
+  }
 }
 .moadl-f-error{
   width: 100%;
@@ -134,6 +152,43 @@
 .m-modal-body{
   position: relative;
   z-index: 5;
+  .loading-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 40vh;
+    justify-content: center;
+  }
+  .send-mail {
+    margin: auto;
+    font-size: 26px;
+    cursor: pointer;
+    .mail-check-ico {
+      position: absolute;
+      left: 15px;
+      top: -9px;
+      color: $green;
+      font-size: 20px;
+    }
+  }
+  .msg-attachments {
+    text-decoration: none;
+    .attachments-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      div {
+        margin: 1vh;
+        padding: 1vh 2vh;
+        background-color: $l1-grey;
+        border-radius: $radius;
+        a {
+          text-decoration: none;
+          word-break: break-all;
+        }
+      }
+
+    }
+  }
   .selected-items-wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -177,6 +232,7 @@
         display: inline-block;
         background-color: $white;
         padding: 1vh 1.5vh;
+        height: -webkit-fill-available;
       }
       .search-focus{
         background-color: $green;
@@ -277,7 +333,6 @@
 .modal-err-wrapper {
   width: 70%;
 }
-
 /*chat*/
 .msg-wrapper{
   border-radius: $radius;
@@ -290,42 +345,59 @@
     .msg-icon {
       font-size: 50px;
       padding-right: 3vh;
+      color: $green;
     }
     .subject-user {
       display: flex;
       flex-direction: column;
       width: 100%;
-      div {
-        .to-icon {
-          padding: 0 3px;
-        }
-        .role-ico {
-          margin-right: 4px;
-        }
-        h4{
-          margin-bottom: 0;
-          padding-bottom: 5px;
-        }
-        p {
-          padding-left: 5vh;
-        }
-        .comma-span {
-          padding-right: 3px;
-        }
-        .plus-another{
-          padding-left: 5px;
-        }
-        .msg-date {
-          right: 0;
-          position: absolute;
-        }
-      }
     }
   }
   &:hover {
-    background-color: $l1-green;
+    background-color: $l1-grey;
     transition: $tr-short;
   }
+}
+.new-msg {
+  border: 1px solid $d3-green;
+  .msg-icon {
+    color: $blue !important;
+  }
+}
+.from-to {
+  word-break: break-all;
+  .msg-subject {
+    margin-right: 5vw;
+  }
+  .to-icon {
+    padding: 0 3px;
+  }
+  .role-ico {
+    margin-right: 4px;
+  }
+  .h-ico{
+    margin-bottom: 0;
+    padding:0 3px 5px 10px;
+  }
+  p {
+    padding-left: 5vh;
+  }
+  .comma-span {
+    padding-right: 3px;
+  }
+  .plus-another{
+    padding-left: 5px;
+  }
+  .msg-date {
+    right: 0;
+    position: absolute;
+  }
+}
+.msg-content {
+  white-space: break-spaces;
+  margin: 1.2rem 0;
+  padding: 0 0.7rem;
+  line-height: 150%;
 }
 /*end chat*/
 @media (max-width: 991.5px) {
@@ -535,10 +607,19 @@
       }
       .from-to {
         flex-wrap: wrap;
-        p,h4{
+        align-content: center;
+        .msg-subject {
+          margin-right: 0;
+          padding-left: 0;
+          margin: auto;
+        }
+        div{
           margin: auto;
           position: inherit !important;
           padding-left: 0 !important;
+          .h-ico {
+            padding: 0 5px;
+          }
         }
       }
       .f-direct-c {
@@ -575,6 +656,18 @@
   left: 3%;
   cursor: pointer;
   animation: fadein 2s;
+}
+.no-results {
+  margin: 5vh 0;
+  position: relative;
+  div {
+
+  }
+  img {
+    width: 15vmax;
+    display: block;
+    margin: auto;
+  }
 }
 
 @keyframes fadein {

@@ -209,6 +209,8 @@ const components = {
     'TextInput': require('./components/TextInput').default,
     'SarchInput': require('./components/SearchInput').default,
     'MessageModal':require('./components/MessageModal').default,
+    'MessageDetail':require('./components/MessageDetail').default,
+    'NoResults': require('./components/NoResults').default,
 };
 
 new Vue({
