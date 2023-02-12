@@ -1,26 +1,36 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="links container-fluid">
-        <a class="navbar-brand  " href="#">
-             Junior-Akadémia
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Domov</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Galéria</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Kontakt</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link button_first" href="#">Prihlásenie</a>
-                </li>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<header class="header-area">
+    <div class="header-container">
+        <div class="site-logo">
+            <a href="/">Junior<span>Akadémia</span></a>v
+        </div>
+        <div class="mobile-nav">
+            <i class="bi bi-list"></i>
+        </div>
+        <div class="site-nav-menu">
+            <ul class="primary-menu">
+                <li><a href="/" class="active">Home</a></li>
+                <li><a href="/gallery">Galéria</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/login">Login</a></li>
             </ul>
         </div>
     </div>
-</nav>
+</header>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $(".mobile-nav i").click(function(){
+            $(".site-nav-menu").toggleClass("mobile-menu");
+        });
+    });
+</script>
+
+</body>
