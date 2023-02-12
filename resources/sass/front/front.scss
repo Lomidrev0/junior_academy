@@ -1,25 +1,12 @@
 @import "resources/sass/app";
 @import 'nav';
 
-.front-bg {
-  background-image: url("https://juniorakademia.spse-po.sk/img/main_bg.jpg");
-  background-repeat: no-repeat;
-  background-position: top center;
-  background-size: cover;
-  height: 90vh;
-  display: flex;
-  align-items: center;
-  div{
-    color: $white;
-  }
-
-}
-
 .header {
     position: relative;
-    min-height: 650px;
-    background: url("https://juniorakademia.spse-po.sk/img/main_bg.jpg") no-repeat center center fixed;
+   height: 100vh;
+    background-image: url("https://juniorakademia.spse-po.sk/img/main_bg.jpg");
     background-size: cover;
+    overflow: hidden;
 
     .overlay {
         position: absolute;
@@ -34,6 +21,7 @@
         justify-content: center;
         display: flex;
 
+
         .subtitle {
             font-size: calc(15px + (18 - 15) * ((100vw - 320px) / (1200 - 320)));
             font-weight: 700;
@@ -43,6 +31,7 @@
         .title {
             font-size: calc(30px + (70 - 30) * ((100vw - 320px) / (1200 - 320)));
             font-weight: bold;
+            margin: 1vh 0;
         }
     }
 
@@ -92,8 +81,8 @@
     padding-top: 1%;
 }
 .card_second {
-    border-radius: $radius;
-   margin: 8vh 15vh;
+    background-color: $clean-white;
+    padding: 8vh 15vh;
     span {
         height: fit-content;
         margin: auto auto auto 0;
@@ -111,18 +100,27 @@
     margin-top: 1%;
 }
 /* Cards */
+.course-wrapper-border {
+    margin: 10vh 25px;
+    border-left: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    border-right: 1px solid #dddddd;
+    border-radius: 0 0 8px 8px;
+    h2 {
+        margin: 0;
+        text-align: center;
+        padding-bottom: 10vh;
+    }
+}
 .postcard {
     flex-wrap: wrap;
     display: flex;
-    box-shadow: 0 4px 21px -12px rgba(0, 0, 0, 0.66);
     border-radius: $radius;
     margin: 0 0 2rem 0;
     overflow: hidden;
     position: relative;
     color: $black;
-    &.light {
-        background-color: #e1e5ea;
-    }
+    height: 16rem;
     a {
         color: inherit;
         text-decoration: none;
@@ -147,6 +145,7 @@
         width: 100%;
         object-fit: cover;
         position: relative;
+        background-position: center;
     }
 
     .postcard__img_link {
@@ -170,6 +169,7 @@
     }
 
     .postcard__preview-txt {
+        word-break: break-word;
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: justify;
@@ -184,7 +184,7 @@
         right: 0;
         bottom: 0;
         left: 0;
-        background-image: linear-gradient(-70deg, #424242, transparent 50%);
+       // background-image: linear-gradient(-70deg, #424242, transparent 50%);
         opacity: 1;
         border-radius: $radius;
     }
@@ -194,6 +194,14 @@
     }
 }
 
+@media screen and (max-width: 1195px) {
+    .postcard {
+        height: auto;
+    }
+    .course-wrapper-border {
+        margin: 10vh 5px;
+    }
+}
 @media screen and (min-width: 769px) {
     .postcard {
         flex-wrap: inherit;
@@ -214,7 +222,7 @@
         }
 
         .postcard__text {
-            padding: 3rem;
+            padding: 1.5rem 3rem;
             width: 100%;
             color:$black;
         }
@@ -271,34 +279,18 @@
 
     .postcard.light {
         .postcard__text:before {
-            background: #e1e5ea;
+            background: $white;
         }
     }
 }
-
-/* COLORS */
-.postcard  .blue.play:hover {
-    background: $main-blue;
-}
-.blue .postcard__title:hover {
-    color: $main-blue;
-}
-.blue .postcard__bar {
-    background-color: $main-blue;
-}
-.blue::before {
-    background-image: linear-gradient(-30deg, $main-blue-rgb-015, transparent 50%);
-}
-.blue:nth-child(2n)::before {
-    background-image: linear-gradient(30deg, $main-blue-rgb-015, transparent 50%);
-}
-
 .img_up{
-    width: 90px;
-    max-width: 90px;
+    width: 100px;
+    max-width: 100px;
     height: auto;
     float: left;
-
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center center;
 }
 
 .rekt{
@@ -378,7 +370,7 @@
 
     .card_second {
         word-break: break-word;
-        margin: 3vh 4vh;
+       padding: 25px;
     }
 }
 
@@ -471,6 +463,77 @@
     }
 
 }
+
+///*my CARD*/
+//.couse-list-wrapper {
+//    position: relative;
+//    background-position: center;
+//    background-repeat: no-repeat;
+//    background-size: 100%;
+//    width: 100%;
+//    height: 300px;
+//    margin: 15vh 0;
+//    border-radius: $radius;
+//    cursor: pointer;
+//    transition: background-size 0.3s ease-in-out;
+//    &:before {
+//        content: "";
+//        position: absolute;
+//        border-radius: $radius;
+//        top: 0;
+//        left: 0;
+//        width: 100%;
+//        height: 100%;
+//        background-color: rgba(0, 0, 0, 0.3); /* Black color with 50% opacity */
+//    }
+//    .course-wrapper-content {
+//        position: absolute;
+//        top: 50%;
+//        transform: translateY(-50%);
+//        text-align: center;
+//        display: flex;
+//        justify-content: space-between;
+//        background-color: rgba(255, 255, 255, 0.9);
+//       // color: $white;
+//        width: 90%;
+//        border-radius: 0 $radius $radius 0;
+//        .course-list-card {
+//            width: inherit;
+//            display: flex;
+//            flex-direction: column;
+//            justify-content: center;
+//            margin: 0 5vh;
+//            padding: 2vh;
+//            div {
+//                display: flex;
+//                justify-content: space-between;
+//            }
+//            p {
+//                text-align: start;
+//                margin-top: 15px;
+//            }
+//        }
+//    }
+//    .to-right {
+//        flex-direction: row-reverse;
+//        right: 0;
+//
+//        border-radius: $radius 0 0 $radius;
+//    }
+//    .avatar {
+//        display: block;
+//        width: 200px;
+//        height: 200px;
+//        border-radius: 50%;
+//        padding: 10px;
+//        object-fit: cover;
+//        object-position: center center;
+//    }
+//    &:hover {
+//      background-size: 120%;
+//    }
+//}
+
 
 
 

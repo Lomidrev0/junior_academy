@@ -78,7 +78,7 @@ class MessageController
             'content'=> $reqData->content,
             'attachments'=> count($request->files) > 0 ? true : false,
             'sender_id' => Auth::user()->id,
-            'course_id' => Session::get('selected-course')->id,
+            'course_id' => Session::has('selected-course') ? Session::get('selected-course')->id : null,
             'mail' => $reqData->mail ? true : false,
         ];
         if ( $group['name']) {
@@ -117,12 +117,7 @@ class MessageController
         ])->where('id',$request->id)->first();
 
         if ($msg->groups){
-            if (json_decode($msg->groups)->recipients == 'all') {
-                $msg['groups'] = 'all';
-                $msg->unsetRelation('users');
-            }
-            else {
-                $msg['groups'] = 'selected';
+            if (json_decode($msg->groups)->recipients == 'active') {
                 $string = '"active":true';
                 $save = $msg->users->diff(User::where('student_info', 'like', "%$string%")->get());
                 $msg->unsetRelation('users');
@@ -130,6 +125,8 @@ class MessageController
                     $msg['users'] = $save;
                 }
             }
+            $msg['groups'] = json_decode($msg->groups);
+            $msg->unsetRelation('users');
         }
         $msg['mail'] = $msg['mail'] == 1 ? true : false;
         $msg['attachments'] = $msg['attachments'] == 1 ? true : false;

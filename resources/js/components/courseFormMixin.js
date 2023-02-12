@@ -40,6 +40,7 @@ export default {
       }
     },
     getFileName(file) {
+      console.log( Array.isArray(file))
      if (file.length === 1){
        return file[0].name;
      }
@@ -49,9 +50,11 @@ export default {
     },
 
     setExistingImg(imgs, keys) {
-      _.forEach(_.map(imgs, (img)=>{ return img.original_url }), function(value,index) {
+      _.forEach(_.map(imgs, (img)=>{ return [img.original_url, img.disk] }), function(value,index) {
+        console.log( Array.isArray(value[0]))
          var l = $('<img class="dynamic">').attr('id','img-'+keys[index]);
-         l.attr('src', value);
+
+         l.attr('src', value[1] === 'logo'? value[0]: (value[1] === 'bg-photo'? value[0]: ''));
          l.appendTo($('#append-'+keys[index]));
         $('#ico-'+keys[index]).css('display','none');
       });

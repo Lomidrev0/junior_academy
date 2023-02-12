@@ -30,6 +30,8 @@ Route::namespace('Front')->group(function () {
 Route::middleware(['student'])->prefix('/student')->name('student.')->group(function () {
     Route::namespace('Student')->group(function () {
         Route::get('/','StudentController@index')->name('home');
+        Route::get('/messages','StudentController@getMessages')->name('messages');
+        Route::get('/user_search', 'StudentController@userSearch')->name('user-search');
     });
 });
 /*teacher routes*/
@@ -50,6 +52,7 @@ Route::middleware(['teacher'])->prefix('/teacher')->name('teacher.')->group(func
         Route::post('/delete_album','TeacherController@deleteAlbum')->name('delete-album');
         Route::post('/store_img','TeacherController@storeImg')->name('store-img');
         Route::post('/delete_img','TeacherController@deleteImg')->name('delete-img');
+        Route::post('/delete_imgs','TeacherController@deleteImgs')->name('delete-imgs');
         Route::post('/update_album','TeacherController@updateAlbum')->name('update-album');
         Route::get('/download_album','TeacherController@downloadAlbum')->name('download-album');
         Route::get('/user_search', 'TeacherController@userSearch')->name('user-search');

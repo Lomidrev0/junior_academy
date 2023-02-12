@@ -2,25 +2,28 @@
 @section('frontContent')
     <header class="header">
          <div class="overlay">
-            <h1 class="title">JUNIOR Akadémia</h1>
-            <h1 class="subtitle">Urob viac pre svoju budúcnosť, nauč sa niečo zaujímavé...</h1>
-            <a class="btn button_first marginn" href="/register">Registrácia</a>
+             <div class="parallax-content d-flex flex-column">
+                 <h1 class="title m-auto">JUNIOR Akadémia</h1>
+                 <h1 class="subtitle m-auto my-2">Urob viac pre svoju budúcnosť, nauč sa niečo zaujímavé...</h1>
+                 <a class="btn button_first marginn m-auto my-2" href="/register">Registrácia</a>
+             </div>
          </div>
     </header>
-    <div class="card_second card-colorr">
+    <div class="card_second card-colorr shadow">
         @isset($article)
             {!! $article->content !!}
         @endisset
     </div>
-    <div class="container py-4">
-         <h1 class="h1 text-center" id="pageHeaderTitle"></h1>
+    @if(count($courses) > 0)
+    <div class="course-wrapper-border">
+        <h2>Prehľad naších kurzov:</h2>
+        <div class="container">
+            <course-list
+                    @isset($courses)
+                    :courses="{{$courses}}"
+                    @endisset
+            ></course-list>
+        </div>
     </div>
-
-    <div class="container">
-        <course-list
-           @isset($courses)
-           :courses="{{$courses}}"
-           @endisset
-        ></course-list>
-    </div>
+    @endif
 @endsection

@@ -12,6 +12,12 @@
         </a>
     </li>
     <li>
+        <a href="{{route('student.messages')}}" {!! (Str::contains(url()->current(), 'messages') ? 'class=active-item' : '') !!}>
+            <i class="bi bi-chat-dots-fill"></i>
+            <span>{{ __('Messages')}}</span>
+        </a>
+    </li>
+    <li>
         <div>
             <a class="dropdown-item" href="{{ route('logout') }}"
                onclick="event.preventDefault();

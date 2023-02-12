@@ -26,6 +26,10 @@
                         <i class="bi bi-person-fill p-3"></i>
                     @endif
                 </div>
+                <div id="digital-clock">
+                    <span id="clock-time"></span>
+                    <span id="clock-date"></span>
+                </div>
             </div>
         </nav>
         <div id="admin-container" class="d-flex vh-mh-100 flex-row">
@@ -55,5 +59,12 @@
 
 @section('scripts')
     <script src="{{ asset('js/admin.js') }}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        if ({!! json_encode(session()->has('message')) !!}) {
+          resetPasToast({!! json_encode(session()->get('message')) !!});
+        }
+      });
+    </script>
 @endsection
 

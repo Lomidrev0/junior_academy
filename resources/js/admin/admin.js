@@ -25,11 +25,32 @@ addEventListener("resize", (event) => {
   transform();
 });
 
+/*clock*/
+$(document).ready(function () {
+  function updateTime() {
+    // Get the current date and time
+    let now = new Date();
 
-//display messages
-$(window).on('load', function(){
-  $('#message').css('display','block');
+    // Format the time as hh:mm:ss
+    let hours = now.getHours().toString().padStart(2, '0');
+    let minutes = now.getMinutes().toString().padStart(2, '0');
+    let seconds = now.getSeconds().toString().padStart(2, '0');
+    let timeString = hours + ':' + minutes + ':' + seconds;
+
+    // Format the date as dd/mm/yyyy
+    let day = now.getDate().toString().padStart(2, '0');
+    let month = (now.getMonth() + 1).toString().padStart(2, '0');
+    let year = now.getFullYear();
+    let dateString = day + '.' + month + '.' + year;
+
+    // Update the time and date elements in the HTML
+    document.getElementById('clock-time').textContent = timeString;
+    document.getElementById('clock-date').textContent = dateString;
+  }
+
+// Call updateTime() initially to display the current time
+  updateTime();
+
+// Update the clock every second
+  setInterval(updateTime, 1000);
 });
-setTimeout(function() {
-  $('#message').fadeOut(2000);
-}, 5000);

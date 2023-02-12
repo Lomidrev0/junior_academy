@@ -11,10 +11,9 @@
         </div>
         <div class="container">
             <chat
-               :messages="{{ $messages }}"
-               :last-read="{{ json_encode($last_read) }}"
-               :auth="{{Auth::user()->role}}"
-               :course="{{Session::get('selected-course')}}"
+                :messages="{{ $messages }}"
+                :last-read="{{ json_encode($last_read) }}"
+                :auth="{{Auth::user()->role}}"
             ></chat>
         </div>
     </div>

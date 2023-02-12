@@ -116,5 +116,9 @@
   "It appears that no student has signed up for this course yet.": "It appears that no student has signed up for this course yet.",
   "Note content":"Note content",
   "No courses found": "No courses found",
-  "No course has been created yet. Create a course and allow students to sign up!": "No course has been created yet. Create a course and allow students to sign up!"
+  "No course has been created yet. Create a course and allow students to sign up!": "No course has been created yet. Create a course and allow students to sign up!",
+  "New Message": "New Message",
+  "For course: ": "For course: ",
+  "New password": "New password",
+  "Confirm new password": "Confirm new password"
 }

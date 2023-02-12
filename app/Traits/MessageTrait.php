@@ -11,27 +11,25 @@ trait MessageTrait {
 
 
     public function getMsgList() {
-        return array_merge(json_decode($this->getSentMsgs()), json_decode($this->getReceivedMsgs()));
+      //dd($this->getSentMsgs());
+        return array_merge($this->getSentMsgs()->toArray(), $this->getReceivedMsgs()->toArray());
     }
 
     public function getSentMsgs() {
         $sMsgs = Message::where('sender_id', Auth::user()->id)
-            ->where('course_id', Session::get('selected-course')->id)
             ->with([
                 'users' => function ($query) {
                     $query->select('id', 'name','email','role');
                 },
-            ])->get();
-
+            ]);
+//        if (Auth::user()->role == 1){
+//            $sMsgs->where('course_id', Session::get('selected-course')->id);
+//        }
+        $sMsgs = $sMsgs->get();
 
         return $sMsgs->map(function ($msg){
             if ($msg->groups){
-                if (json_decode($msg->groups)->recipients == 'all') {
-                    $msg['groups'] = 'all';
-                    $msg->unsetRelation('users');
-                }
-                else {
-                    $msg['groups'] = 'selected';
+                if (json_decode($msg->groups)->recipients == 'active') {
                     $string = '"active":true';
                     $save = $msg->users->diff(User::where('student_info', 'like', "%$string%")->get());
                     $msg->unsetRelation('users');
@@ -39,6 +37,8 @@ trait MessageTrait {
                         $msg['users'] = $save;
                     }
                 }
+                $msg['groups'] = json_decode($msg->groups);
+                $msg->unsetRelation('users');
             }
             $msg['sender'] = [
                 'id' => Auth::user()->id,
@@ -56,9 +56,11 @@ trait MessageTrait {
     public function getReceivedMsgs(){
         $rMsgs = Message::whereHas(
             'users', function ($query) {
-            return $query
-                ->where('user_id', '=', Auth::user()->id)
-                ->where('course_id', Session::get('selected-course')->id);
+             $query->where('user_id', '=', Auth::user()->id);
+//                 if (Auth::user()->role == 1 ){
+//                     $query->where('course_id', Session::get('selected-course')->id);
+//                 }
+                 return $query;
         })
             ->with([
                 'users' => function ($query) {
@@ -68,27 +70,25 @@ trait MessageTrait {
                     $query->select('id', 'name','email','role');
                 }
             ])->get();
-
-        return $rMsgs->map(function ($msg){
-            if ($msg->groups){
-                if (json_decode($msg->groups)->recipients == 'all') {
-                    $msg['groups'] = 'all';
-                    $msg->unsetRelation('users');
-                }
-                else {
-                    $msg['groups'] = 'selected';
-                    $string = '"active":true';
-                    $save = $msg->users->diff(User::where('student_info', 'like', "%$string%")->get());
-                    $msg->unsetRelation('users');
-                    if (count($save) > 0){
-                        $msg['users'] = $save;
+        return $rMsgs
+            ->filter(function ($rMsg) { return $rMsg->sender->id != Auth::user()->id; })
+            ->map(function ($msg){
+                if ($msg->groups){
+                    if (json_decode($msg->groups)->recipients == 'active') {
+                        $string = '"active":true';
+                        $save = $msg->users->diff(User::where('student_info', 'like', "%$string%")->get());
+                        $msg->unsetRelation('users');
+                        if (count($save) > 0){
+                            $msg['users'] = $save;
+                        }
                     }
+                    $msg['groups'] = json_decode($msg->groups);
+                    $msg->unsetRelation('users');
                 }
-            }
             $msg['mail'] = $msg['mail'] == 1 ? true : false;
             unset($msg['sender_id']);
             unset($msg['deleted_at']);
-            return $msg;
+            return  $msg;
         });
     }
 }

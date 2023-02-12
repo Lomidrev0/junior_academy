@@ -151,9 +151,18 @@ class TeacherController
         return Directory::with('media')->find($request->dirId);
     }
 
+    public function deleteImgs(Request $request) {
+        $dirctory = Directory::with('media')->where('id',$request->dirId)->first();
+        foreach ($request->imgs as $img) {
+           $dirctory->deleteMedia($img);
+        }
+        return Directory::with('media')->find($request->dirId);
+    }
+
     public function downloadAlbum(Request $request){
-        $downloads = Directory::where('id', $request['id'])->first()->getMedia('album-2018');
-        return MediaStream::create('my-files.zip')->addMedia($downloads);
+        $directory = $request->dir;
+        $downloads = Directory::where('id', $directory['id'])->first()->getMedia($directory['slug']);
+        return MediaStream::create($directory['slug'] . ".zip")->addMedia($downloads);
     }
 
     public function updateAlbum(Request $request) {

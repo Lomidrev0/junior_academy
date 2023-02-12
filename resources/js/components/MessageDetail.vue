@@ -28,8 +28,10 @@
             <span><b>{{msg.sender.name === 'Me' ? i18n(msg.sender.name): msg.sender.name }}</b></span>
             <i class="bi bi-arrow-right to-icon color-red"></i>
             <i v-if="msg.groups" class="bi bi-people-fill role-ico"></i>
-            <span v-if="msg.groups === 'all'">{{i18n('All participants')}}</span>
-            <span v-if="msg.groups === 'selected'">{{i18n('Course participants')}}</span>
+            <teemplate v-if="msg.groups">
+              <span v-if="msg.groups.recipients === 'all'">{{i18n('All participants')}} - {{msg.groups.name}}</span>
+              <span v-if="msg.groups.recipients === 'selected'">{{i18n('Course participants')}} - {{msg.groups.name}}</span>
+            </teemplate>
             <template v-if="msg.users">
               <span v-if="msg.groups" class="comma-span">,</span>
               <div v-for="(user, index) in msg.users" v-if="index < (msg.groups ? 1 : 2)">

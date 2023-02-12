@@ -116,5 +116,9 @@
   "It appears that no student has signed up for this course yet.": "Vzdá sa, že žiadny žiak sa zatiaľ do tohto kurzu neprihlásil.",
   "Note content":"Obsah poznámky",
   "No courses found": "Nenašli sa žiadne kurzy",
-  "No course has been created yet. Create a course and allow students to sign up!": "Zatiaľ nie je vytvorený žiadný kurz. Vytvorte nejaký kurz a umožnite tak žiakom prihlásovať sa doň!"
+  "No course has been created yet. Create a course and allow students to sign up!": "Zatiaľ nie je vytvorený žiadný kurz. Vytvorte nejaký kurz a umožnite tak žiakom prihlásovať sa doň!",
+  "New Message": "Nová správa",
+  "For course: ": "Pre kurz: ",
+  "New password": "Nové heslo",
+  "Confirm new password": "Potvrdiť nové heslo"
 }

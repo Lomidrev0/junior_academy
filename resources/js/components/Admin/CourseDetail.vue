@@ -18,17 +18,21 @@
           </div>
         </div>
         <div class="d-flex justify-content-around file-input-wrapper">
-          <div class="imgUp shadow" v-for="(file,key) in files">
-            <label class="w-100">
-              <input :type="'file'"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key)" class="uploadFile img custom-file-input" >
-              {{ file ? file.name : i18n('Choose image') }}
-              <div  class="imagePreview d-flex align-items-center">
-                <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
-                  <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
+          <div class="imgUp" v-for="(file,key) in files">
+            <p class="text-center p-1">{{key}}</p>
+            <div class="shadow radius">
+              <label class="w-100">
+                <input :type="'file'" :id="'input-'+key"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key); resetInput(key)" class="uploadFile img custom-file-input" >
+                <span v-b-tooltip.hover :title="file ? (getFileName(file).length >= 35 ? getFileName(file) : '') : ''"> {{ file ? truncateContent(getFileName(file), 35) : i18n('Choose image') }} </span>
+                <div  class="imagePreview d-flex align-items-center">
+                  <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
+                    <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
+                  </div>
                 </div>
-              </div>
-            </label>
-            <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
+              </label>
+              <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -93,9 +97,10 @@ import Alert from "../Alert";
 import {i18n, route} from "../../app";
 import courseFormMixin from "../courseFormMixin";
 import {toast} from "../../app"
+import truncateMixin from "../truncateMixin";
 
 export default {
-  mixins:[courseFormMixin],
+  mixins:[courseFormMixin, truncateMixin],
   components: {WswgEditor,Alert},
   props: ['course','users'],
   data() {
@@ -137,8 +142,8 @@ export default {
 
         const formData = new FormData();
         formData.append('id', this.editCourse.id);
-        this.files.logo ? formData.append('logo', this.files.logo, this.files.logo.name) : null;
-        this.files.bgImg ? formData.append('bgImg', this.files.bgImg, this.files.bgImg.name) : null;
+        this.files.logo ? formData.append('logo', this.files.logo[0], this.files.logo[0].name) : null;
+        this.files.bgImg ? formData.append('bgImg', this.files.bgImg[0], this.files.bgImg[0].name) : null;
         this.editCourse.name === this.course.name ? null : formData.append('name', this.editCourse.name);
         formData.append('description', this.editCourse.description);
         formData.append('about', this.editCourse.about);

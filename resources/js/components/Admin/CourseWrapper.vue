@@ -16,17 +16,21 @@
           </div>
         </div>
         <div class="d-flex justify-content-around file-input-wrapper">
-          <div class="imgUp shadow" v-for="(file,key) in files">
-            <label class="w-100">
-              <input :type="'file'" :id="'input-'+key"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key); resetInput(key)" class="uploadFile img custom-file-input" >
-              <span>{{ file ? getFileName(file) : i18n('Choose image') }}</span>
-              <div  class="imagePreview d-flex align-items-center">
-                <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
-                  <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
+          <div class="imgUp" v-for="(file,key) in files">
+            <p class="text-center p-1">{{key}}</p>
+            <div class="shadow radius">
+              <label class="w-100">
+                <input :type="'file'" :id="'input-'+key"   accept='image/jpeg , image/jpg, image/gif, image/png' @change="files[key] = onFileSelected($event,file,key); resetInput(key)" class="uploadFile img custom-file-input" >
+                <span v-b-tooltip.hover :title="file ? (getFileName(file).length >= 35 ? getFileName(file) : '') : ''"> {{ file ? truncateContent(getFileName(file), 35) : i18n('Choose image') }} </span>
+                <div  class="imagePreview d-flex align-items-center">
+                  <div :id="'append-'+key" class="d-flex flex-column align-items-center w-100 ">
+                    <i class="bi bi-plus-circle-dotted" :id="'ico-'+key"></i>
+                  </div>
                 </div>
-              </div>
-            </label>
-            <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
+              </label>
+              <div class="clear-file" @click="files[key] = clearFile(key)">{{i18n('Remove')}}</div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -167,7 +171,7 @@ export default {
         this.error = i18n('You have not filled in all required fields');
        } else if (this.newCourse.name.length > 60){
         this.error = i18n('The name is too long!');
-      } else if (this.newCourse.description.length > 1000){
+      } else if (this.newCourse.description.length > 390){
         this.error = i18n('Description is too long!');
       } else if (_.find(this.coursesList, (course) => { return course.name === this.newCourse.name })){
         this.error = i18n('There is already course with this name');

@@ -32,7 +32,7 @@
             <search-input
                 ref="searchInput"
                 :placeholder="i18n('Click to start adding recipients')"
-                :api-url="this.route('teacher.user-search')"
+                :api-url=" auth === 1 ? this.route('teacher.user-search') : this.route('student.user-search')"
                 :take="30"
                 :skip="0"
                 :initial-search="false"
@@ -43,14 +43,18 @@
 
             ></search-input>
           </div>
-          <div class="search-buttons-wrapper">
-            <div class="only-active" @click="vals.multipleSelect.text = i18n('Course participants'); vals.multipleSelect.value = 'activeUsers'">
-              <span>{{i18n('Course participants')}}</span>
-            </div>
-            <div class="all" @click="vals.multipleSelect.text = i18n('All participants'); vals.multipleSelect.value = 'allUsers'">
-              <span>{{i18n('All participants')}}</span>
+          <div v-if="auth === 1" class="search-buttons">
+            {{i18n('For course: ')}}{{course}}
+            <div class="search-buttons-wrapper">
+              <div class="only-active" @click="vals.multipleSelect.text = i18n('Course participants'); vals.multipleSelect.value = 'activeUsers'">
+                <span>{{i18n('Course participants')}}</span>
+              </div>
+              <div class="all" @click="vals.multipleSelect.text = i18n('All participants'); vals.multipleSelect.value = 'allUsers'">
+                <span>{{i18n('All participants')}}</span>
+              </div>
             </div>
           </div>
+
           <div @click="vals.mail = !vals.mail" class="send-mail position-relative">
               <i v-b-tooltip.hover :title="i18n('Send this message also by email')" class="bi bi-envelope-at-fill"></i>
               <i  v-if="vals.mail" class="bi bi-check-circle-fill mail-check-ico"></i>
@@ -141,7 +145,7 @@ import WswgEditor from "./WswgEditor";
 export default {
   components: {WswgEditor, Alert, SearchInput, TextInput},
   mixins:[truncateMixin],
-  props: ['header','values'],
+  props: ['header','values','auth','course'],
   data(){
     return {
       searchResult: null,

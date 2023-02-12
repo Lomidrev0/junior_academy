@@ -211,6 +211,8 @@ const components = {
     'MessageModal':require('./components/MessageModal').default,
     'MessageDetail':require('./components/MessageDetail').default,
     'NoResults': require('./components/NoResults').default,
+    'InfoModal': require('./components/InfoModal').default,
+    'Home': require('./components/Home').default,
 };
 
 new Vue({
@@ -286,3 +288,18 @@ $(document).ready(function(){
         console.log(passInput);
     })
 })
+
+/*toast for reset password*/
+
+export function resetPasToast (session) {
+    if(session === 1) {
+        toast.error(i18n('New password matches old'),null);
+    }
+    else if (session === 0) {
+        toast.success(i18n('Password has been changed successfully'),null);
+    }
+    else if(session === 2) {
+        toast.error(i18n( 'Incorrect password'),null);
+    }
+}
+window.resetPasToast = resetPasToast;
