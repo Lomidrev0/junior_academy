@@ -1,6 +1,6 @@
 <ul>
     <li>
-        <a href="{{route('admin.home')}}" class="{{Str::contains(url()->current(), 'home')  ? 'active-item' : '' }}" >
+        <a href="{{route('admin.home')}}" class="{{Str::contains(url()->current(), 'home') || count(request()->segments()) === 1 ? 'active-item' : '' }}" >
             <i class="bi bi-house-fill"></i>
             <span>{{__('Home')}}</span>
         </a>

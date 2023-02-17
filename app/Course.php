@@ -41,9 +41,9 @@ class Course extends Model implements HasMedia
         return $this->belongsTo('App\User', 'user_id');
     }
 
-    public function directory()
+    public function directories()
     {
-        return $this->hasOne(Directory::class);
+        return $this->hasMany(Directory::class);
     }
 
 }

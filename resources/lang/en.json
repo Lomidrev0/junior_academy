@@ -120,5 +120,15 @@
   "New Message": "New Message",
   "For course: ": "For course: ",
   "New password": "New password",
-  "Confirm new password": "Confirm new password"
+  "Confirm new password": "Confirm new password",
+  "Good morning": "Good morning",
+  "Good afternoon": "Good afternoon",
+  "Good evening": "Good evening",
+  "Inbox": "Inbox",
+  "This is a list of courses you are registered in:": "This is a list of courses you are registered in:",
+  "Launch registration": "Launch registration",
+  "Stop registration": "Stop registration",
+  "Do you really want to launch registration for courses?": "Do you really want to launch registration for courses?",
+  "Gallery": "Gallery",
+  "Contact": "Contact"
 }

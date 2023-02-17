@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Front;
 
 use App\Article;
 use App\Course;
+use App\Directory;
 use Illuminate\Http\Request;
 
 class FrontController
@@ -34,15 +35,30 @@ class FrontController
     public function getContact(){
         return view('front/contact',[
             'courses' => Course::with(['users' => function ($query) {
-                $query->select('name','email');
+                $query->where('role', 1)->select('name','email');
                 }])->where('active',true)->get(),
         ]);
     }
     public function getDetail(Request $request){
         return view('front/detail',[
             'course' =>  json_decode(Course::with(['users' => function ($query) {
-                $query->select('name','email');
-            },'media'])->where('slug',$request->slug)->first()
+                $query->select('name','email')->where('role', 1);
+                },'media'])->where('slug',$request->slug)->first()
             )]);
+    }
+    public function getGallery() {
+        return view('front/gallery',[
+            'courses' => Course::whereHas('directories', function ($query) {
+                $query->where('active', true);
+            })->with(['directories' => function ($query) {
+                $query->where('active', true)->withCount('media');
+            }, 'directories.media'])->get(['id','name','slug']),
+        ]);
+    }
+
+    public function directory(Request $request) {
+        return view('front/directory', [
+            'dir' =>  Directory::with('media')->where('slug', $request->segment(2))->first(['id','name','description','active','slug']),
+        ]);
     }
 }

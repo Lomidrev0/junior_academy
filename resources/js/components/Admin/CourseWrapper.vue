@@ -1,9 +1,21 @@
 <template>
 <div>
-<button class="button_first" @click="show = !show">
-  <i class="bi bi-plus-lg"></i>
-  {{i18n('Add course')}}
-</button>
+  <div class="d-flex">
+    <button class="button_first" @click="show = !show">
+      <i class="bi bi-plus-lg"></i>
+      {{i18n('Add course')}}
+    </button>
+    <button class="button_first mx-3"  @click="startReristration = !startReristration">
+      <span v-if="startReristration">{{i18n('Stop registration')}}</span>
+      <span v-else>{{i18n('Launch registration')}}</span>
+    </button>
+    <div class="launch-reg" v-if="startReristration">
+      <input class="" v-model="registration" type="date">
+      <button class="button_first" @click.prevent="launchRegistration(registration)">
+        {{i18n('Save')}}
+      </button>
+    </div>
+  </div>
   <div class="mb-5" v-show="show">
     <form key="saveCourse" class="add-course-form">
       <div class="d-flex inputs-wrapper">
@@ -96,7 +108,7 @@
             <div class="course-item-head d-flex justify-content-between">
               <a :href="route('admin.detail', {slug: course.slug})">
                 <div>
-                  <strong v-b-tooltip.hover :title="course.name">{{ truncateContent(course.name, 30) }}</strong>
+                  <strong v-b-tooltip.hover  :title="course.name.length >= 30 ? course.name : ''">{{ truncateContent(course.name, 30) }}</strong>
                 </div>
               </a>
               <div>
@@ -112,7 +124,7 @@
                 <img :src="course.media[0].original_url" alt="logo">
               </div>
               <div class="course-item-footer d-flex justify-content-around">
-                <span v-b-tooltip.hover :title="course.admin.name">{{truncateContent(course.admin.name, 15)}}</span>
+                <span v-b-tooltip.hover :title="course.admin.name.length >= 15 ? course.admin.name : ''">{{truncateContent(course.admin.name, 15)}}</span>
                 <span>{{ formatDate(course.updated_at, 'H:mm - dd.MM.yyyy') }}</span>
               </div>
             </a>
@@ -152,6 +164,8 @@ export default {
       addTeacher: false,
       saving: false,
       error: '',
+      registration: null,
+      startReristration: false,
       newCourse: {
         isActive: false,
         name: '',
@@ -238,7 +252,20 @@ export default {
     },
     getActiveTeacher(id) {
       return  _.includes(this.newCourse.teachers,id)
-    }
+    },
+    launchRegistration(dateTime) {
+      if (confirm( i18n('Do you really want to launch registration for courses?'))) {
+        // axios
+        //     .post(this.route('admin.update-active'), {id: course.id, value: !course.active})
+        //     .then((response) => {
+        //       this.$set(this.coursesList, key, this.formatObjectDates(response.data));
+        //       toast.success(i18n('Course has been sucessfully updated'),null);
+        //     })
+        //     .catch((error) => {
+        //       toast.error(i18n('Error'),i18n('err'));
+        //     })
+      }
+    },
   },
 
   created() {

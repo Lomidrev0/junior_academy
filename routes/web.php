@@ -22,9 +22,11 @@ use App\Http\Controllers\Admin\AdminController;
 
 
 Route::namespace('Front')->group(function () {
-    Route::get('/', 'FrontController@index');
-    Route::get('/contact','FrontController@getContact');
+    Route::get('/', 'FrontController@index')->name('front-home');
+    Route::get('/contact','FrontController@getContact')->name('contact');
+    Route::get('/gallery','FrontController@getGallery')->name('gallery');
     Route::get('/course_detail/{slug?}','FrontController@getDetail')->name('course-detail');
+    Route::get('/gallery/{slug?}','FrontController@directory')->name('directory');
 });
 
 Route::middleware(['student'])->prefix('/student')->name('student.')->group(function () {
@@ -32,6 +34,7 @@ Route::middleware(['student'])->prefix('/student')->name('student.')->group(func
         Route::get('/','StudentController@index')->name('home');
         Route::get('/messages','StudentController@getMessages')->name('messages');
         Route::get('/user_search', 'StudentController@userSearch')->name('user-search');
+        Route::get('/reset_password','StudentController@password')->name('password');
     });
 });
 /*teacher routes*/
@@ -92,6 +95,3 @@ Route::namespace('Shared')->group(function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-//Route::get('/email', function (){
-//return new MessageMail();
-//});

@@ -14,6 +14,7 @@
                     @isset($dir)
                     :dir="{{$dir}}"
                     @endisset
+                    :editable="true"
             ></image-wrapper>
         </div>
     </div>

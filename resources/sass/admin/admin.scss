@@ -5,7 +5,7 @@
 @import 'resources/sass/teacher/teacher';
 .content {
   margin-left: 249.9px;
-  margin-top: 53px;
+  margin-top: 56px;
 }
 @media (max-width: 1000px) {
   .content {
@@ -17,14 +17,24 @@
    }
   }
 }
+.no-results {
+  img {
+    width: 18vmax;
+  }
+}
 .navbar {
-  background: $d1-blue;
+  background: $d3-green;
   color: $white;
   width: 100%;
   position: fixed;
   z-index: 6;
+  justify-content: space-around;
+  padding:  5px 0;
   i,a {
     color: $white;
+  }
+  img {
+    width: 230px;
   }
 }
 .active-item {
@@ -457,125 +467,18 @@
 /* ---------------------------------------------------
     Courses subpage styles
 ----------------------------------------------------- */
-.course-wrapper {
-  display: -ms-flexbox; /* IE10 */
+.launch-reg {
   display: flex;
-  -ms-flex-wrap: wrap; /* IE10 */
-  flex-wrap: wrap;
-  cursor: pointer;
-  padding-top: 2%;
-  padding-bottom: 2%;
-
-  a{
-    text-decoration: none;
+  input {
+    border-radius: $radius 0 0 $radius;
+    border: 1px solid $grey;
+    padding: 1vh 2vh;
+  }
+  button {
+    border-radius: 0 $radius $radius 0;
   }
 }
 
-.course-card {
-  -ms-flex: 25%; /* IE10 */
-  flex: 25%;
-  max-width: 25%;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  transition: 0.3s;
-  .img-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: $radius;
-    height: 28vh;
-
-    .image-detail {
-      display: none;
-      background-color: $d3-green;
-      color: $white;
-      text-align: center;
-      padding: 1vh;
-      width: 100%;
-      position: absolute;
-      bottom: 0;
-      z-index: 2;
-      i{
-        margin-left: 10px;
-      }
-    }
-    &:hover {
-      border: 2px solid $d3-green;
-      .image-detail {
-        display: block;
-      }
-    }
-  }
-  .active-img-item {
-    border: 2px solid $d3-green;
-    .image-detail {
-      display: block;
-    }
-  }
-  .course-item {
-    position: relative;
-    overflow: hidden;
-    border-radius: $radius;
-    .course-card-body {
-      position: relative;
-      z-index: 2;
-
-      .course-item-body {
-        display: flex;
-        justify-content: center;
-        padding-bottom: 3vh;
-        padding-top: 3vh;
-        img {
-          width:  10rem;
-          height: 10rem;
-          object-fit: cover;
-          border-radius: 50%;
-          vertical-align: middle;
-        }
-      }
-      .course-item-head {
-        background-color: $d3-green;
-        color: $white;
-        text-align: center;
-        padding: 1vh;
-        a{
-          text-decoration: none;
-          color: $white;
-        }
-        i{
-          margin-left: 10px;
-        }
-      }
-      .course-item-footer {
-        padding-top: 1vh;
-        padding-bottom: 1vh;
-        color: $white;
-        background-color: $d3-green;
-      }
-    }
-    .course-bg {
-      width: 100%;
-      height: 100%;
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      transition: all 0.5s;
-      position: absolute;
-      z-index: 1;
-      opacity: 0.9;
-    }
-    &:hover {
-      .course-bg {
-        transform: scale(1.2);
-        opacity: 0.9;
-      }
-      .course-item-head,.course-item-footer {
-        background-color: $d1-blue;
-      }
-    }
-  }
-
-}
 /* Rounded sliders */
 
 .slider.round:before {
@@ -649,4 +552,32 @@
   }
 }
 
+/* HOME SUBPAGE STYLES */
+.motd {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10vh;
+  align-items: center;
+
+  .info-ico-wr {
+    border-radius: 50%;
+    height: 44px;
+    width: 44px;
+    display: flex;
+    align-items: center;
+    background-color: $clean-white;
+    cursor: pointer;
+    i {
+      transition: 0.3;
+      font-size: 45px;
+      color: $blue;
+    }
+    &:hover {
+      i {
+        color: $d1-blue;
+      }
+    }
+  }
+}
 

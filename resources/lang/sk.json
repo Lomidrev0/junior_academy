@@ -120,5 +120,15 @@
   "New Message": "Nová správa",
   "For course: ": "Pre kurz: ",
   "New password": "Nové heslo",
-  "Confirm new password": "Potvrdiť nové heslo"
+  "Confirm new password": "Potvrdiť nové heslo",
+  "Good morning": "Dobé ráno",
+  "Good afternoon": "Dobrý deň",
+  "Good evening": "Dobrý večer",
+  "Inbox": "Schránka",
+  "This is a list of courses you are registered in:": "Toto je zoznam kurzov na ktoré ste prihlásený:",
+  "Launch registration": "Spustiť registráciu",
+  "Stop registration": "Pozastaviť registráciu",
+  "Do you really want to launch registration for courses?": "Naozaj chcete spustiť registráciu pre kurzy?",
+  "Gallery": "Galéria",
+  "Contact": "Kontakt"
 }

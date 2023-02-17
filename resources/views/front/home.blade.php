@@ -1,15 +1,15 @@
 @extends('front.main')
 @section('frontContent')
-    <header class="header">
+    <div class="header">
          <div class="overlay">
              <div class="parallax-content d-flex flex-column">
                  <h1 class="title m-auto">JUNIOR Akadémia</h1>
                  <h1 class="subtitle m-auto my-2">Urob viac pre svoju budúcnosť, nauč sa niečo zaujímavé...</h1>
-                 <a class="btn button_first marginn m-auto my-2" href="/register">Registrácia</a>
+                 <a class="btn button_first marginn m-auto my-2" href="{{route('register')}}">Registrácia</a>
              </div>
          </div>
-    </header>
-    <div class="card_second card-colorr shadow">
+    </div>
+    <div class="card_second card-colorr">
         @isset($article)
             {!! $article->content !!}
         @endisset

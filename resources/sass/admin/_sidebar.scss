@@ -7,7 +7,7 @@
   background-color: $d2-green;
   transition: $tr-short;
   height: 100%;
-  margin-top: 53px;
+  margin-top: 56px;
   position: fixed;
   z-index: 3;
   ul{
@@ -56,6 +56,13 @@
             }
           }
       }
+    }
+    .user {
+      justify-content: center;
+      position: absolute;
+      bottom: 65px;
+      color: $white;
+      width: 100%;
     }
   }
   &.active {

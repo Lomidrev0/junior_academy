@@ -1,27 +1,11 @@
 <template>
     <div>
-<!--      <div v-for="(course, index) in coursesList" :key="index">-->
-<!--        <div class="couse-list-wrapper shadow" :style="'background-image: url('+course.media[1].original_url+')'">-->
-<!--         <div class="course-wrapper-content" :class="{ 'to-right': index % 2 === 1 }">-->
-<!--           <div class="course-list-card">-->
-<!--             <div>-->
-<!--               <h3>{{course.name}}</h3>-->
-<!--               <span>{{ formatDate(course.created_at, 'dd.MMMM.yyyy') }}</span>-->
-<!--             </div>-->
-<!--             <p>{{course.description}}</p>-->
-<!--           </div>-->
-<!--           <div>-->
-<!--             <img class="avatar" :src="course.media[0].original_url" alt="">-->
-<!--           </div>-->
-<!--         </div>-->
-<!--        </div>-->
-<!--      </div>-->
       <div v-for="(course, index) in coursesList" :key="index">
         <a class="text-decoration-none" :href="route('course-detail',{slug:course.slug})">
-          <article  class="postcard light shadow" :class="{ 'flex-row-reverse': index % 2 === 1 }">
+          <article  class="postcard light shadow" :class=" index % 2 === 1 ? 'flex-row-reverse right-12': 'left-12' " >
             <div class="postcard__img":style="'background-image: url('+course.media[1].original_url+')'" />
             <div class="postcard__text t-dark">
-              <div class="random">
+              <div class="d-flex">
                 <div class="image rekt"><img class="img_up" :src="course.media[0].original_url" alt="logo"></div>
                 <div class="sicko">
                   <div class="logos rekt">

@@ -7,29 +7,30 @@
 @section('content')
     <div class="vh-mh-100">
         <nav class="navbar navbar-expand-md navbar-light z-index-4 shadow">
-            <div class="container">
-                <div>
-                    <button type="button" id="sidebarCollapse" class="btn">
-                        <i class="bi bi-list m-0"></i>
-                    </button>
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
-                    </a>
-                </div>
-                <div>
+            <div class="d-flex">
+                <button type="button" id="sidebarCollapse" class="btn">
+                    <i class="bi bi-list m-0"></i>
+                </button>
+                <a class="navbar-brand m-0" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+            </div>
+            <div class="mx-3 justify-content-center d-none d-sm-flex">
+                <div class="mx-2">
                     {{ Auth::user()->name }}
-                    @if(Auth::user()->role == 2)
-                        <i class="bi bi-shield-shaded p-3"></i>
-                    @elseif(Auth::user()->role == 1)
-                        <i class="bi bi-book-half" p-3></i>
-                    @else
-                        <i class="bi bi-person-fill p-3"></i>
-                    @endif
                 </div>
-                <div id="digital-clock">
-                    <span id="clock-time"></span>
-                    <span id="clock-date"></span>
-                </div>
+
+                @if(Auth::user()->role == 2)
+                    <i class="bi bi-shield-shaded "></i>
+                @elseif(Auth::user()->role == 1)
+                    <i class="bi bi-book-half" ></i>
+                @else
+                    <i class="bi bi-person-fill "></i>
+                @endif
+            </div>
+            <div id="digital-clock" class="d-flex flex-column align-items-center">
+                <span id="clock-time"></span>
+                <span id="clock-date"></span>
             </div>
         </nav>
         <div id="admin-container" class="d-flex vh-mh-100 flex-row">

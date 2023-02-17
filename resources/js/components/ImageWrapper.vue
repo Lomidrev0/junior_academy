@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="forms-wrapper">
+  <div class="w-100">
+    <div v-if="editable" class="forms-wrapper">
       <form key="saveAlbum" class="add-course-form">
         <h5 class="text-center mt-3">{{i18n('Edit album')+': '+directory.name}}</h5>
         <div class="d-flex inputs-wrapper">
@@ -63,9 +63,9 @@
         </div>
       </form>
     </div>
-    <alert v-if="error.length > 0" :error="error"  @close="error = ''"></alert>
+    <alert v-if="error.length > 0 && editable" :error="error"  @close="error = ''"></alert>
     <template v-if="directory.media.length > 0">
-      <div class="d-flex mt-5">
+      <div v-if="editable" class="d-flex mt-5">
         <a class="button_first" :href="route('teacher.download-album', {
         dir: {
             slug:this.directory.slug,
@@ -99,7 +99,7 @@
                 <div>
                   <strong v-b-tooltip.hover :title="image.name.length > 22 ? image.name:''">{{ truncateContent(image.name,22) }}</strong>
                 </div>
-                <div class="d-flex">
+                <div v-if="editable" class="d-flex">
                   <div class="checkbox-wrapper-31">
                     <input type="checkbox" :value="image.id" v-model="selectedImgs"/>
                     <svg viewBox="0 0 35.6 35.6">
@@ -128,15 +128,15 @@
 </template>
 
 <script>
-import courseFormMixin from "../courseFormMixin";
-import {i18n, toast} from "../../app";
-import Alert from "../Alert";
-import NoResults from "../NoResults";
-import truncateMixin from "../truncateMixin";
+import courseFormMixin from "./courseFormMixin";
+import {i18n, toast} from "../app";
+import Alert from "./Alert";
+import NoResults from "./NoResults";
+import truncateMixin from "./truncateMixin";
 export default {
   components: {NoResults, Alert},
   mixins: [courseFormMixin,truncateMixin],
-  props: ['dir'],
+  props: ['dir','editable'],
   data() {
     return {
       directory: this.dir ? _.cloneDeep(this.dir) : null,

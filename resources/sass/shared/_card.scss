@@ -13,3 +13,217 @@
     font-size: x-large;
   }
 }
+
+/*course list cards*/
+.course-wrapper-border {
+  margin: 10vh 25px;
+  border-left: 1px solid #dddddd;
+  border-bottom: 1px solid #dddddd;
+  border-right: 1px solid #dddddd;
+  border-radius: 0 0 8px 8px;
+  h2 {
+    margin: 0;
+    text-align: center;
+    padding-bottom: 10vh;
+  }
+}
+.postcard {
+  flex-wrap: wrap;
+  display: flex;
+  border-radius: $radius;
+  margin: 0 0 2rem 0;
+  overflow: hidden;
+  position: relative;
+  color: $black;
+  height: 16rem;
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  h1,	.h1 {
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .small {
+    font-size: 80%;
+  }
+
+  .postcard__title {
+    font-size: 1.75rem;
+  }
+
+  .postcard__img {
+    max-height: 250px;
+    width: 100%;
+    object-fit: cover;
+    position: relative;
+    background-position: center;
+  }
+
+  .postcard__img_link {
+    display: contents;
+  }
+
+  .postcard__bar {
+    width: 50px;
+    height: 7px;
+    margin: 10px 0;
+    border-radius: $radius;
+    background-color: #424242;
+    transition: width 0.2s ease;
+  }
+
+  .postcard__text {
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .postcard__preview-txt {
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: justify;
+    height: 100%;
+  }
+
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    // background-image: linear-gradient(-70deg, #424242, transparent 50%);
+    opacity: 1;
+    border-radius: $radius;
+  }
+
+  &:hover .postcard__bar {
+    width: 110px;
+  }
+}
+
+@media screen and (max-width: 1195px) {
+  .postcard {
+    height: auto;
+  }
+  .course-wrapper-border {
+    margin: 10vh 5px;
+  }
+  .header {
+    background-size: 150%;
+  }
+}
+@media screen and (max-width: 750px) {
+  .header {
+    background-size: 250%;
+  }
+}
+@media screen and (max-width: 450px) {
+  .header {
+    background-size: 400%;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .postcard {
+    flex-wrap: inherit;
+
+    .postcard__title {
+      font-size: 2rem;
+    }
+
+    .postcard__img {
+      max-width: 380px;
+      max-height: 100%;
+      transition: transform 0.3s ease;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: all 0.5s;
+      object-fit: cover;
+      position: relative;
+    }
+
+    .postcard__text {
+      padding: 1.5rem 3rem;
+      width: 100%;
+      color:$black;
+    }
+
+    .media.postcard__text:before {
+      content: "";
+      position: absolute;
+      display: block;
+      background: #18151f;
+      top: -20%;
+      height: 130%;
+      width: 55px;
+    }
+
+    &:hover .postcard__img {
+      transform: scale(1.1);
+    }
+
+  }
+  .left-12 {
+    .postcard__text::before {
+      left: -12px;
+    }
+  }
+  .right-12 {
+    .postcard__text::before {
+      right: -12px;
+   }
+  }
+}
+@media screen and (min-width: 1024px){
+  .postcard__text {
+    padding: 2rem 3.5rem;
+
+  }
+
+  .postcard__text:before {
+    content: "";
+    position: absolute;
+    display: block;
+
+    top: -20%;
+    height: 130%;
+    width: 55px;
+  }
+
+  .postcard.light {
+    .postcard__text:before {
+      background: $white;
+    }
+  }
+}
+.img_up{
+  width: 100px;
+  max-width: 100px;
+  height: auto;
+  float: left;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.rekt{
+  display: inline-block;
+  padding-right: 2vh;
+}
+
+.postcard{
+  margin-bottom: 10vh;
+}
+
+.article_a{
+  text-decoration: none;
+}
+

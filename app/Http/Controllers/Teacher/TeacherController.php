@@ -51,7 +51,9 @@ class TeacherController
             $query->select('id', 'name');
         }, 'course' => function ($query){
             $query->select('id','name');
-        }])->where([
+        }, 'media' => function ($query) {
+            $query->first();
+        }])->withCount('media')->where([
             ['disk', $disk],
             ['course_id', Session::get('selected-course')->id],
         ])->get();

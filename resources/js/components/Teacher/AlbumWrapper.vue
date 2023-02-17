@@ -45,11 +45,13 @@
       <template v-if="albumList.length > 0">
         <div class="course-card" v-for="(album, key) in albumList">
           <div class="course-item shadow">
+            <div v-if="album.media.length > 0" class="course-bg" :style="'background-image: url('+album.media[0].original_url+')'"></div>
+            <div v-else class="course-bg" style="background-image: url('/images/default_img.png')"></div>
             <div class="course-card-body">
               <div class="course-item-head d-flex justify-content-between">
                 <a :href="route('teacher.directory', {slug: album.slug})">
                   <div>
-                    <strong v-b-tooltip.hover :title="album.name">{{truncateContent(album.name, 30)}}</strong>
+                    <strong v-b-tooltip.hover :title="album.name.length >= 25 ? album.name : ''">{{truncateContent(album.name, 25)}}</strong>
                   </div>
                 </a>
                 <div>
@@ -61,12 +63,15 @@
                 </div>
               </div>
               <a class="disabled" :href="route('teacher.directory', {slug: album.slug})">
-                <div class="course-item-body flex-column text-center">
-                  <div v-b-tooltip.hover :title="album.description"> {{ truncateContent(album.description, 30) }}</div>
-                  <div>{{i18n('Created at')}} {{ formatDate(album.created_at, 'dd.MM.yyyy') }}</div>
+                <div class="course-item-body flex-column text-center position-relative">
+                  <div class="album-text-wrapper">
+<!--                    <div v-b-tooltip.hover :title="album.description.length >= 30 ? album.description : ''"> {{ truncateContent(album.description, 30) }}</div>-->
+                    <div>{{i18n('Created at')}} {{ formatDate(album.created_at, 'dd.MM.yyyy') }}</div>
+                    <div><i class="bi bi-image-fill px-2"></i>{{album.media_count}}</div>
+                  </div>
                 </div>
                 <div class="course-item-footer d-flex justify-content-around">
-                  <span v-b-tooltip.hover :title="album.user.name">{{ truncateContent(album.user.name, 15) }}</span>
+                  <span v-b-tooltip.hover :title="album.user.name.length >= 15 ? album.user.name : ''">{{ truncateContent(album.user.name, 15) }}</span>
                   <span>{{ formatDate(album.updated_at, 'H:mm - dd.MM.yyyy') }}</span>
                 </div>
               </a>

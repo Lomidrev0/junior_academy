@@ -1,0 +1,210 @@
+/*Loader*/
+.loader-wrapper{
+  width: 100%;
+  min-height: 100%;
+  background-color: $white;
+  position: fixed;
+  z-index: 15;
+  bottom: 0;
+  left: 0;
+  .loader {
+    margin: 0 auto;
+    width: 60px;
+    height: 50px;
+    text-align: center;
+    font-size: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translateY(-50%) translateX(-50%);
+
+    > div {
+      height: 100%;
+      width: 8px;
+      display: inline-block;
+      float: left;
+      margin-left: 2px;
+      -webkit-animation: delay 0.8s infinite ease-in-out;
+      animation: delay 0.8s infinite ease-in-out;
+    }
+
+    .bar1{
+      background-color: $d2-green ;
+    }
+    .bar2{
+      background-color: $d1-green;
+      -webkit-animation-delay: -0.7s;
+      animation-delay: -0.7s;
+    }
+    .bar3{
+      background-color: $green;
+      -webkit-animation-delay: -0.6s;
+      animation-delay: -0.6s;
+    }
+    .bar4{
+      background-color: $green;
+      -webkit-animation-delay: -0.5s;
+      animation-delay: -0.5s;
+    }
+    .bar5{
+      background-color: $d1-green;
+      -webkit-animation-delay: -0.4s;
+      animation-delay: -0.4s;
+    }
+    .bar6{
+      background-color: $d2-green;
+      -webkit-animation-delay: -0.3s;
+      animation-delay: -0.3s;
+    }
+  }
+
+
+  @-webkit-keyframes delay {
+    0%, 40%, 100% { -webkit-transform: scaleY(0.05) }
+    20% { -webkit-transform: scaleY(1.0) }
+  }
+
+  @keyframes delay {
+    0%, 40%, 100% {
+      transform: scaleY(0.05);
+      -webkit-transform: scaleY(0.05);
+    }  20% {
+         transform: scaleY(1.0);
+         -webkit-transform: scaleY(1.0);
+       }
+  }
+}
+/*Image grid*/
+.course-wrapper {
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+  cursor: pointer;
+  padding-top: 2%;
+  padding-bottom: 2%;
+  margin-top: 5vh;
+
+  a{
+    text-decoration: none;
+  }
+}
+
+.course-card {
+  -ms-flex: 25%; /* IE10 */
+  flex: 25%;
+  max-width: 25%;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s;
+  .img-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius;
+    height: 230px;
+
+    .image-detail {
+      display: none;
+      background-color: $d3-green;
+      color: $white;
+      text-align: center;
+      padding: 1vh;
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      z-index: 2;
+      i{
+        margin-left: 10px;
+      }
+    }
+    &:hover {
+      border: 2px solid $d3-green;
+      .image-detail {
+        display: block;
+      }
+    }
+  }
+  .active-img-item {
+    border: 2px solid $d3-green;
+    .image-detail {
+      display: block;
+    }
+  }
+  .course-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: $radius;
+    .course-card-body {
+      position: relative;
+      z-index: 2;
+
+      .course-item-body {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 3vh;
+        padding-top: 3vh;
+        min-height: 20vh;
+        .album-text-wrapper {
+          position: absolute;
+          background-color:rgba($gray-900,.60);
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          border-radius: $radius;
+          padding: 10px;
+          div {
+            color: $white;
+          }
+        }
+        img {
+          width:  10rem;
+          height: 10rem;
+          object-fit: cover;
+          border-radius: 50%;
+          vertical-align: middle;
+        }
+      }
+      .course-item-head {
+        background-color: $d3-green;
+        color: $white;
+        text-align: center;
+        padding: 1vh;
+        a{
+          text-decoration: none;
+          color: $white;
+        }
+        i{
+          margin-left: 10px;
+        }
+      }
+      .course-item-footer {
+        padding-top: 1vh;
+        padding-bottom: 1vh;
+        color: $white;
+        background-color: $d3-green;
+      }
+    }
+    .course-bg {
+      width: 100%;
+      height: 100%;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+      transition: all 0.5s;
+      position: absolute;
+      z-index: 1;
+      opacity: 0.9;
+    }
+    &:hover {
+      .course-bg {
+        transform: scale(1.2);
+        opacity: 0.9;
+      }
+      .course-item-head,.course-item-footer {
+        background-color: $d1-blue;
+      }
+    }
+  }
+
+}

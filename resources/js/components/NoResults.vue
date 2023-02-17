@@ -1,6 +1,6 @@
 <template>
   <div class="no-results w-100">
-    <img class="" src="/images/sad_cactus.png" alt="">
+    <img class="d-flex m-auto" src="/images/sad_cactus.png" alt="">
     <div class="text-center">
       <h3>{{header+' :('}}</h3>
       <p class="m-auto">{{body}}</p>

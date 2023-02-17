@@ -1,17 +1,20 @@
 @extends('front.main')
 @section('frontContent')
-        <header class="headerC"  style="background-image: url('{{ asset($course->media[1]->original_url)}}');">
+        <div class="header header-h-70"  style="background-image: url('{{ asset($course->media[1]->original_url)}}');">
             <div class="overlayC">
                 <h1 class="titleC">{{ $course->name }}</h1>
             </div>
-        </header>
+        </div>
              <div class="container">
                  <div class="contentC">
                      {!!$course->about !!}
+                     <div class="my-5">
                          <h5>Kontaktná osoba:</h5>
                          @foreach($course->users as $user)
-                             <strong class="nameeC">{{$user->name}}:     </strong><a class="emaill" href="mailto:{{$user->email}}">{{$user->email}}</a>
-                        @endforeach
+                             <strong>{{$user->name}}:     </strong><a class="emaill" href="mailto:{{$user->email}}">{{$user->email}}</a>
+                         @endforeach
+                     </div>
+
                  </div>
             </div>
 @endsection

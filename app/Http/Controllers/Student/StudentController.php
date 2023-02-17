@@ -17,7 +17,7 @@ class StudentController
     public function index()
     {
         return view('student/home',[
-            'user' => Auth::user()->load('courses'),
+            'user' => Auth::user()->load('courses.media'),
         ]);
     }
     public function getMessages(){
@@ -27,6 +27,10 @@ class StudentController
             'messages' => collect($this->getMsgList())->sortByDesc('created_at')->values(),
             'last_read'=> $userLR,
         ]);
+    }
+
+    public function password() {
+        return view('shared/password');
     }
 
     public function userSearch(Request $request){
