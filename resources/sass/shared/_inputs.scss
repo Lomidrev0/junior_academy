@@ -75,3 +75,11 @@ input:checked + .slider:before {
   right: 16px;
   position: absolute;
 }
+.inut-text{
+  border: 1px solid $grey;
+  padding: 0 10px;
+  border-radius: $radius 0 0 $radius;
+}
+.rigth-addition {
+  border-radius: 0 $radius $radius 0;
+}

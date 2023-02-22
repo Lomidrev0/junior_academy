@@ -1,7 +1,7 @@
 <header class="header-area">
     <div class="header-container">
         <div class="site-logo">
-            <a href="/"><img src="/images/junior_academy_logo.png" alt=""></a>
+            <a href="/"><img src="/images/ja_logo.png" alt=""></a>
         </div>
         <div class="mobile-nav">
             <i class="bi bi-list"></i>

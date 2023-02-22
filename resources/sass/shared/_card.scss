@@ -1,5 +1,4 @@
 .card-color {
-  background-color: $d3-green;
   border-radius: $radius;
   span {
     height: fit-content;
@@ -13,7 +12,12 @@
     font-size: x-large;
   }
 }
-
+.card-inf {
+  background-color: $d3-green;
+}
+.card-war {
+  background-color: $main-yellow;
+}
 /*course list cards*/
 .course-wrapper-border {
   margin: 10vh 25px;

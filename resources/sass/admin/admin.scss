@@ -11,17 +11,9 @@
   .content {
     margin-left: 0px;
   }
-  .no-results {
-   img {
-     width: 35vmax !important;
-   }
-  }
+
 }
-.no-results {
-  img {
-    width: 18vmax;
-  }
-}
+
 .navbar {
   background: $d3-green;
   color: $white;
@@ -34,7 +26,7 @@
     color: $white;
   }
   img {
-    width: 230px;
+    width: 178px;
   }
 }
 .active-item {
@@ -95,13 +87,25 @@
   table {
     margin: 0;
     width: 100%;
-    border-radius: $radius;
   }
   tbody{
     tr {
       &:hover {
         background-color: $d1-blue;
         color: $white;
+        a {
+          color: $white;
+        }
+        &:last-child {
+          td {
+            &:last-child {
+              border-radius: 0 0 $radius 0;
+            }
+            &:first-child {
+              border-radius: 0 0  0 $radius;
+            }
+          }
+        }
       }
     }
   }
@@ -133,9 +137,6 @@
       }
     }
   }
-  //.no-results {
-  //
-  //}
 }
 /* ---------------------------------------------------
     Comunication comunication subpage styles
@@ -469,13 +470,46 @@
 ----------------------------------------------------- */
 .launch-reg {
   display: flex;
-  input {
-    border-radius: $radius 0 0 $radius;
-    border: 1px solid $grey;
-    padding: 1vh 2vh;
-  }
-  button {
-    border-radius: 0 $radius $radius 0;
+  position: absolute;
+  flex-direction: column;
+  padding: 10px 0;
+  background-color: $white;
+  border: 1px solid $grey;
+  border-radius: $radius;
+  margin: 3px 0;
+  top: 39px;
+  right: 0;
+  z-index: 3;
+  user-select: none;
+  .tooltip-item {
+    height: 40px;
+    display: flex;
+    .date-item {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      input {
+        border: none;
+        padding: 1vh 2vh;
+        background-color: $white;
+      }
+      button {
+        width: 30%;
+        padding: 0;
+        text-align: center;
+      }
+    }
+    button {
+      width: 100%;
+      text-align: left;
+      padding: 0 8px;
+      background-color: $white;
+      border: none;
+      &:hover {
+        background-color: $blue;
+        color: $white;
+      }
+    }
   }
 }
 

@@ -122,3 +122,12 @@ p,h1{
 .my-10vh {
   margin: 10vh 0 !important;
 }
+.cursor-pointer {
+  cursor: pointer;
+}
+.avatar-img-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}

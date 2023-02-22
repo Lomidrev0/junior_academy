@@ -18,7 +18,7 @@
         @endif
     </li>
     <li>
-        <a href="{{route('teacher.home')}}">
+        <a href="{{route('teacher.home')}}" class="{{Str::contains(url()->current(), 'home') || count(request()->segments()) === 1 ? 'active-item' : '' }}">
             <i class="bi bi-house-fill"></i>
             <span>{{__('Home')}}</span>
         </a>
@@ -26,7 +26,7 @@
     <li>
         <a href="{{route('teacher.messages')}}" {!! (Str::contains(url()->current(), 'messages') ? 'class=active-item' : '') !!}>
             <i class="bi bi-chat-dots-fill"></i>
-            <span>{{ __('Messages')}}</span>
+            <span>{{ __('Inbox')}}</span>
         </a>
     </li>
     <li>

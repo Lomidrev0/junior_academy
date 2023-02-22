@@ -57,8 +57,12 @@ class FrontController
     }
 
     public function directory(Request $request) {
+        $dir = Directory::with('media')->where('slug', $request->segment(2))->first(['id','name','description','active','slug','created_at']);
+         if ($dir->active == 0) {
+             abort(404);
+         }
         return view('front/directory', [
-            'dir' =>  Directory::with('media')->where('slug', $request->segment(2))->first(['id','name','description','active','slug']),
+            'dir' =>  $dir,
         ]);
     }
 }

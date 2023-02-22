@@ -4,6 +4,8 @@ namespace Illuminate\Foundation\Auth;
 
 
 use App\Course;
+use App\SystemVariable;
+use Carbon\Carbon;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -20,9 +22,19 @@ trait RegistersUsers
      */
     public function showRegistrationForm()
     {
-        $courses = Course::where('active',true)->pluck('name','id')->all();
+        $isPermited = true;
+        $courses = Course::where('active',true)->with('media')->get(['id','name']);
+        $var = json_decode(SystemVariable::where('name','registration')->first()->value)->permit;
+
+        if (is_bool($var)){
+            $isPermited = $var;
+        }
+        else {
+            $isPermited = !Carbon::parse($var)->isPast();
+        }
         return view('auth.register',[
-            'courses'=>$courses
+            'courses'=>$courses,
+            'isPermited'=> $isPermited,
         ]);
     }
 

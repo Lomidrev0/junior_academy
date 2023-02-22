@@ -12,7 +12,7 @@
                     <i class="bi bi-list m-0"></i>
                 </button>
                 <a class="navbar-brand m-0" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="/images/ja_logo.png" alt="">
                 </a>
             </div>
             <div class="mx-3 justify-content-center d-none d-sm-flex">

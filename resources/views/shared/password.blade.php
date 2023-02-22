@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex flex-row mb-3 checkbox-wrapper">
-                                    <label  class="col-md-4 col-form-label text-md-end">Show Password</label>
+                                    <label  class="col-md-4 col-form-label text-md-end">{{ __('Show password') }}</label>
                                     <div class="checkbox-wrapper-31">
                                         <input type="checkbox" class="showPass"/>
                                         <svg viewBox="0 0 35.6 35.6">
@@ -60,7 +60,7 @@
                                 <div class="row mb-0">
                                     <div class="col-md-6 offset-md-4">
                                         <button type="submit" class="button_first">
-                                            {{ __('Reset Password') }}
+                                            {{ __('Reset password') }}
                                         </button>
                                         @if (Route::has('password.request'))
                                             <a class="btn btn-link" href="{{ route('password.request') }}">

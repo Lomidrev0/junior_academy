@@ -7,7 +7,7 @@
 .header-area {
     background: $d3-green;
     width: 100%;
-    padding: 3px 30px;
+    padding: 3px 25px;
     z-index: 999;
 }
 .header-container {
@@ -25,7 +25,7 @@
     font-weight: 600;
     img {
         padding: 2px 0;
-        width: 55px;
+        width: 240px;
     }
 }
 .site-logo span {
@@ -95,7 +95,7 @@
     .site-nav-menu {
         float: none;
         position: absolute;
-        background: $d1-blue;
+        background: $d3-green;
         width: 100%;
         left: 0;
         top: 65px;

@@ -230,4 +230,11 @@ return [
 
     ],
 
+
+
+    'registration' => [
+        'isPermitted' => true,
+        'validUntil' => null,
+    ],
+
 ];

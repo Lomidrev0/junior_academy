@@ -7,10 +7,14 @@ namespace App\Http\Controllers\Admin;
 use App\Article;
 use App\Course;
 use App\Mail\WelcomeMail;
+use App\SystemVariable;
 use App\User;
 use App\UserCourse;
+use Carbon\Carbon;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -20,11 +24,20 @@ use Illuminate\Support\Str;
 use Ramsey\Uuid\Type\Integer;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use function Composer\Autoload\includeFile;
+use Jenssegers\Agent\Agent;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class AdminController
 {
     public function index() {
-        return view('admin/home');
+        return view('admin/home',[
+            'courses' => Course::withCount(['users' => function ($query) {
+            $query->where('role', 0);
+        }])->with('media')->get(['id','name','active']),
+            'teachers' => User::where('role', 1)->with('courses')->get(['id','name','email']),
+            'admins' => User::where('role', 2)->get(['id','name']),
+        ]);
     }
     public function getForCoursesUI(){
         $courses = new Course();
@@ -54,7 +67,8 @@ class AdminController
     public function courses() {
         return view('admin/courses',[
             'courses' => $this->getForCoursesUI(),
-            'users' => User::where('role', 1)->get(['id','name'])
+            'users' => User::where('role', 1)->get(['id','name']),
+            'registration' => json_decode(SystemVariable::where('name','registration')->first()->value)->permit,
         ]);
     }
 
@@ -75,8 +89,8 @@ class AdminController
 
 
     public function getUsers() {
-        return view('admin/admin',[
-            'courses'=> Course::where('active', true)->get(['id','name'])
+        return view('admin/addUser',[
+            'courses'=> Course::where('active', true)->with('media')->get(['id','name'])
         ]);
     }
 
@@ -258,5 +272,13 @@ class AdminController
             'user_id' => Auth::user()->id,
         ]);
         return $newArticle;
+    }
+
+    public function updateRegistration(Request $request) {
+        $var = SystemVariable::where('name', 'registration')->first();
+        $arr = json_decode($var->value);
+        $arr->permit = $request->permit;
+        $var->update([ 'value' => collect($arr) ]);
+        return $var->value;
     }
 }

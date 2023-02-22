@@ -16,13 +16,13 @@
                   <label class="select-wrapper card-header-select">
                     <select name="id" v-model="user" class="select">
                       <option :value="2">
-                       <span>Admin</span>
+                       <span>{{ i18n('Admin')}}</span>
                       </option>
                       <option :value="1" >
-                        <span>Teacher</span>
+                        <span>{{ i18n('Teacher')}}</span>
                       </option>
                       <option :value="0">
-                        <span>Student</span>
+                        <span>{{ i18n('Student')}}</span>
                       </option>
                     </select>
                   </label>
@@ -73,23 +73,34 @@
                     </div>
                   </div>
                     <div v-if="user === 1 || user === 0" class="row mb-3">
-                      <div class="col-md-6 offset-md-4">
+                      <div class="d-flex justify-content-center">
                         <template v-if="addCourse">
-                          <div class="button_first nejde" @click="addCourse = !addCourse">{{i18n('Add course')}}<i class="bi bi-caret-up-fill arrow"></i></div>
+                          <div class="button_first" @click="addCourse = !addCourse">
+                            {{i18n('Close')}}
+                            <i class="bi bi-caret-up-fill"></i>
+                          </div>
                         </template>
                         <template v-else>
-                          <div class="button_first nejde" @click="addCourse = !addCourse">{{i18n('Add course')}}<i class="bi bi-caret-down-fill arrow"></i></div>
-                        </template>
-                        <div v-if="addCourse">
-                          <div v-for="course in courses">
-                            <input type="checkbox" id="fruit2" name="fruit-1" value="Apple" :value="course.id" v-model="newUser.course" >
-                            <label for="fruit2" >{{ course.name }}</label>
+                          <div class="button_first" @click="addCourse = !addCourse">
+                            {{i18n('Add course')}}
+                            <i class="bi bi-caret-down-fill"></i>
                           </div>
+                        </template>
+                      </div>
+                    </div>
+                    <div v-if="addCourse">
+                      <div class="d-flex flex-column register-wrapper" id="course-list">
+                        <div v-for="course in courses" class="register-item">
+                          <label :for="course.id">
+                            <img :src="course.media[0].original_url" alt="">
+                          </label>
+                          <input class="mx-2" :id="course.id" type="checkbox" :value="course.id" v-model="newUser.course">
+                          <label class="cursor-pointer" :for="course.id">{{ course.name }}</label>
                         </div>
                       </div>
                     </div>
                     <div class="row mb-0">
-                      <div class="col-md-6 offset-md-4">
+                      <div class="d-flex justify-content-center">
                         <button type="submit" class="button_first" @click.prevent="saveUser(user)" :disabled="saving">
                           {{user === 0 ? i18n('Add student') : (user === 1 ? i18n('Add teacher') : i18n('Add admin') )}}
                           <b-spinner small v-if="saving"></b-spinner>

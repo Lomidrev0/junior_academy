@@ -254,7 +254,7 @@ export default {
               this.saving = false;
               this.$emit('close',{});
               this.$emit('newMessage', response.data );
-              toast.success(i18n('Course has been sucessfully deleted'),null);
+              toast.success(i18n('Message has been sucessfully sent'),null);
             })
       }
     },

@@ -1,20 +1,40 @@
 <template>
 <div>
-  <div class="d-flex">
+  <div class="d-flex position-relative justify-content-between flex-column flex-sm-row">
     <button class="button_first" @click="show = !show">
       <i class="bi bi-plus-lg"></i>
       {{i18n('Add course')}}
     </button>
-    <button class="button_first mx-3"  @click="startReristration = !startReristration">
-      <span v-if="startReristration">{{i18n('Stop registration')}}</span>
-      <span v-else>{{i18n('Launch registration')}}</span>
-    </button>
-    <div class="launch-reg" v-if="startReristration">
-      <input class="" v-model="registration" type="date">
-      <button class="button_first" @click.prevent="launchRegistration(registration)">
-        {{i18n('Save')}}
-      </button>
+    <div ref="tooltipList" class="d-flex align-items-center position-relative pointer-event cursor-pointer user-select-none">
+      <div class="d-flex" @click="startReristration = !startReristration">
+        <h5 class="mx-2 m-none d-flex align-items-center">
+          {{i18n('Registration is:')+' '}}
+          {{permitReg === true ? i18n('Launched'): ( permitReg === false ? i18n('Prohibited') : i18n('Launched to')+' '+formatDate(permitReg, 'dd.MM.yyyy HH:mm')) }}
+        </h5>
+        <i class="bi bi-three-dots-vertical"></i>
+      </div>
+      <div class="launch-reg" v-if="startReristration">
+        <div class="tooltip-item">
+          <div class="date-item">
+            <input v-model="regUntil" type="datetime-local">
+            <button @click.prevent="launchRegistration(regUntil)">
+              {{i18n('Save')}}
+            </button>
+          </div>
+        </div>
+        <div class="tooltip-item">
+          <button @click.prevent="launchRegistration(true)">
+            {{i18n('Launch registration')}}
+          </button>
+        </div>
+        <div class="tooltip-item">
+          <button @click.prevent="launchRegistration(false)">
+            {{i18n('Stop registration')}}
+          </button>
+        </div>
+      </div>
     </div>
+
   </div>
   <div class="mb-5" v-show="show">
     <form key="saveCourse" class="add-course-form">
@@ -154,24 +174,25 @@ import Alert from "../Alert";
 import NoResults from "../NoResults";
 
 export default {
-  mixins:[courseFormMixin, formatDatesMixin, truncateMixin],
+  mixins: [courseFormMixin, formatDatesMixin, truncateMixin],
   components: {NoResults, Alert, WswgEditor},
-  props: ['courses','users'],
-  data(){
+  props: ['courses', 'users','reg'],
+  data() {
     return {
+      permitReg :this.courses ? _.cloneDeep(this.reg) : null,
       show: false,
       coursesList: this.courses ? (this.courses.length > 0 ? _.cloneDeep(this.courses) : null) : null,
       addTeacher: false,
       saving: false,
       error: '',
-      registration: null,
+      regUntil: null,
       startReristration: false,
       newCourse: {
         isActive: false,
         name: '',
         description: '',
         content: '',
-        teachers:[],
+        teachers: [],
       },
       files: {
         logo: null,
@@ -180,19 +201,21 @@ export default {
     }
   },
   methods: {
-    saveCourse(){
-      if (this.newCourse.name.length === 0 || this.newCourse.description.length === 0 || this.removeHTML(this.newCourse.content).length === 0 || this.files.logo === null || this.files.bgImg === null){
+    saveCourse() {
+      if (this.newCourse.name.length === 0 || this.newCourse.description.length === 0 || this.removeHTML(this.newCourse.content).length === 0 || this.files.logo === null || this.files.bgImg === null) {
         this.error = i18n('You have not filled in all required fields');
-       } else if (this.newCourse.name.length > 60){
+      } else if (this.newCourse.name.length > 60) {
         this.error = i18n('The name is too long!');
-      } else if (this.newCourse.description.length > 390){
+      } else if (this.newCourse.description.length > 390) {
         this.error = i18n('Description is too long!');
-      } else if (_.find(this.coursesList, (course) => { return course.name === this.newCourse.name })){
+      } else if (_.find(this.coursesList, (course) => {
+        return course.name === this.newCourse.name
+      })) {
         this.error = i18n('There is already course with this name');
       } else {
         const formData = new FormData();
-        formData.append('logo',this.files.logo[0]);
-        formData.append('bgImg',this.files.bgImg[0]);
+        formData.append('logo', this.files.logo[0]);
+        formData.append('bgImg', this.files.bgImg[0]);
         formData.append('name', this.newCourse.name);
         formData.append('description', this.newCourse.description);
         formData.append('about', this.newCourse.content);
@@ -202,45 +225,45 @@ export default {
         axios
             .post(this.route('admin.store'), formData)
             .then((response) => {
-              this.clearFile(['logo','bgImg']);
+              this.clearFile(['logo', 'bgImg']);
               this.coursesList = this.formatDates(response.data);
+              this.reset()
               this.saving = false;
-              toast.success(i18n('Course has been sucessfully created'),null);
+              toast.success(i18n('Course has been sucessfully created'), null);
             })
             .catch((error) => {
-              toast.error(i18n('Error'),error);
+              toast.error(i18n('Error'), error);
             })
       }
     },
-    deleteCourse(id,name) {
-      if (confirm(i18n('Are you sure you want to delete course: ') + ' "' + name + '"?' )) {
+    deleteCourse(id, name) {
+      if (confirm(i18n('Are you sure you want to delete course: ') + ' "' + name + '"?')) {
         axios
             .post(this.route('admin.delete'), {id: id})
             .then((response) => {
               this.coursesList = this.formatDates(response.data);
-              toast.success(i18n('Course has been sucessfully deleted'),null);
+              toast.success(i18n('Course has been sucessfully deleted'), null);
             })
             .catch((error) => {
-              toast.error(i18n('Error'),i18n('err'));
+              toast.error(i18n('Error'), i18n('err'));
             })
       }
     },
-    updateCourse(course, key, event){
-       if (confirm( i18n('Are you sure you want to change status of the course: ') + ' "' + course.name + '"?' )) {
-         axios
-             .post(this.route('admin.update-active'), {id: course.id, value: !course.active})
-             .then((response) => {
-               this.$set(this.coursesList, key, this.formatObjectDates(response.data));
-               toast.success(i18n('Course has been sucessfully updated'),null);
-             })
-         .catch((error) => {
-           toast.error(i18n('Error'),i18n('err'));
-         })
-       }
-       else {
-         event.preventDefault();
-         event.stopPropagation();
-       }
+    updateCourse(course, key, event) {
+      if (confirm(i18n('Are you sure you want to change status of the course: ') + ' "' + course.name + '"?')) {
+        axios
+            .post(this.route('admin.update-active'), {id: course.id, value: !course.active})
+            .then((response) => {
+              this.$set(this.coursesList, key, this.formatObjectDates(response.data));
+              toast.success(i18n('Course has been sucessfully updated'), null);
+            })
+            .catch((error) => {
+              toast.error(i18n('Error'), i18n('err'));
+            })
+      } else {
+        event.preventDefault();
+        event.stopPropagation();
+      }
     },
     reset() {
       this.newCourse.isActive = false;
@@ -251,33 +274,54 @@ export default {
       this.newCourse.teachers = [];
     },
     getActiveTeacher(id) {
-      return  _.includes(this.newCourse.teachers,id)
+      return _.includes(this.newCourse.teachers, id)
     },
-    launchRegistration(dateTime) {
-      if (confirm( i18n('Do you really want to launch registration for courses?'))) {
-        // axios
-        //     .post(this.route('admin.update-active'), {id: course.id, value: !course.active})
-        //     .then((response) => {
-        //       this.$set(this.coursesList, key, this.formatObjectDates(response.data));
-        //       toast.success(i18n('Course has been sucessfully updated'),null);
-        //     })
-        //     .catch((error) => {
-        //       toast.error(i18n('Error'),i18n('err'));
-        //     })
+    launchRegistration(value) {
+      if (confirm(i18n('Do you really want to launch registration for courses?'))) {
+        if (typeof value !== "boolean") {
+           value = new Date(value);
+        }
+        axios
+            .post(this.route('admin.update-registration'), {permit: value})
+            .then((response) => {
+              this.startReristration = false;
+              if (typeof response.data.permit !== 'boolean'){
+                this.permitReg = parseISO(response.data.permit);
+              }
+              else {
+                this.permitReg = response.data.permit;
+              }
+            })
+        // .catch((error) => {
+        //   toast.error(i18n('Error'),i18n('err'));
+        // })
+      }
+    },
+    handleClickOutside(event) {
+      if (!this.$refs.tooltipList.contains(event.target)) {
+        this.startReristration = false;
       }
     },
   },
-
+  mounted() {
+    document.addEventListener('click', this.handleClickOutside);
+  },
+  destroyed() {
+    document.removeEventListener('click', this.handleClickOutside);
+  },
   created() {
-    window.addEventListener( "pageshow", function ( event ) {
+    window.addEventListener("pageshow", function (event) {
       var historyTraversal = event.persisted ||
-          ( typeof window.performance != "undefined" &&
-              window.performance.navigation.type === 2 );
-      if ( historyTraversal ) {
+          (typeof window.performance != "undefined" &&
+              window.performance.navigation.type === 2);
+      if (historyTraversal) {
         window.location.reload();
       }
     });
     this.coursesList = this.formatDates(this.coursesList);
+    if (typeof this.permitReg !== 'boolean'){
+      this.permitReg = parseISO(this.permitReg);
+    }
   }
 }
 </script>

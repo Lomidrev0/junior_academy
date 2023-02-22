@@ -9,6 +9,8 @@ use App\Message;
 use App\User;
 use App\Directory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -51,13 +53,15 @@ class TeacherController
             $query->select('id', 'name');
         }, 'course' => function ($query){
             $query->select('id','name');
-        }, 'media' => function ($query) {
-            $query->first();
-        }])->withCount('media')->where([
+        }, 'media' ])->withCount('media')->where([
             ['disk', $disk],
             ['course_id', Session::get('selected-course')->id],
         ])->get();
         $dirs = $dirs->map(function($dir) {
+           if (count($dir['media']) > 0) {
+               $dir['cover'] = $dir['media'][0];
+           }
+           unset($dir['media']);
             unset($dir['course_id'], $dir['user_id'], $dir['deleted_at']);
             $dir['active'] = $dir['active'] == 1 ? true : false;
             return $dir;
@@ -66,12 +70,15 @@ class TeacherController
     }
 
     public function index() {
-        return view('teacher/home');
+        return view('teacher/home',[
+            'items' => collect(['url'=> route('teacher.home'), 'label' =>'Home']),
+        ]);
     }
 
     public function members() {
         return view('shared/members',[
-            'courses' => $this->getForCourseUserUI()
+            'courses' => $this->getForCourseUserUI(),
+             'items' => collect(['url'=> route('teacher.home'), 'label' =>'Home'],Route::getCurrentRoute()),
         ]);
     }
 

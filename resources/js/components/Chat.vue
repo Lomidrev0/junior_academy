@@ -49,7 +49,7 @@
                     <i v-if="msg.groups" class="bi bi-people-fill role-ico"></i>
                     <template v-if="msg.groups">
                       <span v-if="msg.groups.recipients === 'all'">{{i18n('All participants')}} - {{msg.groups.name}}</span>
-                      <span v-if="msg.groups.recipients === 'selected'">{{i18n('Course participants')}} - {{msg.groups.name}}</span>
+                      <span v-if="msg.groups.recipients === 'active'">{{i18n('Course participants')}} - {{msg.groups.name}}</span>
                     </template>
                     <template v-if="msg.users">
                       <span v-if="msg.groups" class="comma-span">,</span>

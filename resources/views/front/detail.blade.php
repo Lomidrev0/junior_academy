@@ -6,6 +6,14 @@
             </div>
         </div>
              <div class="container">
+                 @if( $course->active == 0)
+                     <div class="my-3">
+                         <info-card
+                                 :text="'{{ __('You are currently viewing an inactive course. It is not possible to register for this course') }}'"
+                                 :type="{{json_encode('war')}}"
+                         ></info-card>
+                     </div>
+                 @endif
                  <div class="contentC">
                      {!!$course->about !!}
                      <div class="my-5">
@@ -14,7 +22,6 @@
                              <strong>{{$user->name}}:     </strong><a class="emaill" href="mailto:{{$user->email}}">{{$user->email}}</a>
                          @endforeach
                      </div>
-
                  </div>
             </div>
 @endsection

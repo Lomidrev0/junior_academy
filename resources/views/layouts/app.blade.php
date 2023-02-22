@@ -5,15 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Shortcut icon -->
+    <link rel="shortcut icon" href="/images/spse-po.png" type="image/x-icon">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
     @yield('styles')
-    <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 
     <script>
       window.Laravel = {!! json_encode([

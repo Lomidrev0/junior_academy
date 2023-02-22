@@ -15,7 +15,7 @@
         @endisset
     </div>
     @if(count($courses) > 0)
-    <div class="course-wrapper-border">
+    <div id="course-list" class="course-wrapper-border">
         <h2>Prehľad naších kurzov:</h2>
         <div class="container">
             <course-list

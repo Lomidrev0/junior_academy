@@ -17,6 +17,9 @@
                 @isset($users)
                  :users="{{$users}}"
                 @endisset
+                @isset($registration)
+                :reg="{{json_encode($registration)}}"
+                @endisset
             ></course-wrapper>
 
         </div>

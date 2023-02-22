@@ -6,7 +6,7 @@
             <h1>spravy</h1>
             <hr>
             <info-card
-                    :text="'{{__('Welcome to JUNIOR Academy teacher panel.')}}'"
+                    :text="'{{__('You can send or view messages here.')}}'"
             ></info-card>
         </div>
         <div class="container">

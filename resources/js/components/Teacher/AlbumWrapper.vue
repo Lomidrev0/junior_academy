@@ -45,7 +45,7 @@
       <template v-if="albumList.length > 0">
         <div class="course-card" v-for="(album, key) in albumList">
           <div class="course-item shadow">
-            <div v-if="album.media.length > 0" class="course-bg" :style="'background-image: url('+album.media[0].original_url+')'"></div>
+            <div v-if="album.cover" class="course-bg" :style="'background-image: url('+album.cover.original_url+')'"></div>
             <div v-else class="course-bg" style="background-image: url('/images/default_img.png')"></div>
             <div class="course-card-body">
               <div class="course-item-head d-flex justify-content-between">
@@ -82,7 +82,7 @@
       <template v-else>
         <no-results
             :header="i18n('No albums found')"
-            :body="i18n('This course has no albums yet. Try adding some!')"
+            :body="i18n('This course has no albums yet.')"
         ></no-results>
       </template>
     </div>

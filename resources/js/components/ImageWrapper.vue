@@ -1,5 +1,12 @@
 <template>
   <div class="w-100">
+    <div>
+      <a :href="editable ? route('teacher.gallery') : route('gallery')">
+        <button class="button_first">
+          <i class="bi bi-arrow-left"></i>{{i18n('Back')}}
+        </button>
+      </a>
+    </div>
     <div v-if="editable" class="forms-wrapper">
       <form key="saveAlbum" class="add-course-form">
         <h5 class="text-center mt-3">{{i18n('Edit album')+': '+directory.name}}</h5>
@@ -121,7 +128,7 @@
     <template v-else>
       <no-results
           :header="i18n('No image found')"
-          :body="i18n('There are no images in this album yet. Try adding some!')"
+          :body="i18n('There are no images in this album yet.')"
       ></no-results>
     </template>
   </div>

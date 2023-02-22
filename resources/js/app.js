@@ -276,6 +276,7 @@ export const removeFromLS = (key) => {
  *
  */
 
+
 $(document).ready(function(){
     $('.showPass').on('click', function(){
         var passInput=$(".pass");

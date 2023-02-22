@@ -90,7 +90,8 @@
 }
 .card_second {
     background-color: $clean-white;
-    padding: 8vh 15vh;
+    padding: 8vh 12vw;
+    word-break: break-word;
     span {
         height: fit-content;
         margin: auto auto auto 0;
@@ -347,6 +348,14 @@
     //.album-hr:last-of-type {
     //   display: none;
     //}
+}
+/*album header*/
+.album-header {
+    margin: 2vh 0;
+    h3,p {
+        word-break: break-word;
+        margin-bottom: 0.5rem;
+    }
 }
 
 

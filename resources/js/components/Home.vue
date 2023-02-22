@@ -5,11 +5,11 @@
         <h3 class="my-2">{{motd}} {{separateTitle(user.name)}}</h3>
         <p class="mx-2">Vitajte späť v systéme JUNIOR Akadémia.</p>
       </div>
-      <div class="info-ico-wr shadow">
+      <div v-if="user.role === 0" class="info-ico-wr shadow">
         <i @click="openModal = true" class="bi bi-info-circle-fill"></i>
       </div>
     </div>
-    <info-modal v-if="openModal" @close="openModal = false">
+    <info-modal v-if="openModal && user.role === 0" @close="openModal = false">
               <div id="carouselExampleControlsNoTouching" class="carousel slide" data-bs-touch="false">
                 <div class="carousel-inner">
                   <div class="carousel-item active">

@@ -80,7 +80,6 @@
   display: flex;
   -ms-flex-wrap: wrap; /* IE10 */
   flex-wrap: wrap;
-  cursor: pointer;
   padding-top: 2%;
   padding-bottom: 2%;
   margin-top: 5vh;
@@ -134,6 +133,7 @@
   .course-item {
     position: relative;
     overflow: hidden;
+    cursor: pointer;
     border-radius: $radius;
     .course-card-body {
       position: relative;
@@ -207,4 +207,24 @@
     }
   }
 
+}
+/***Breadcrumns***/
+.breadcrumbs {
+  margin-top: 3rem;
+  a {
+    text-decoration: none;
+  }
+}
+/*no results*/
+@media (max-width: 1000px) {
+  .no-results {
+    img {
+      width: 35vmax !important;
+    }
+  }
+}
+.no-results {
+  img {
+    width: 18vmax;
+  }
 }

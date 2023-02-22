@@ -81,6 +81,7 @@ Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function (
         Route::post('/update_course', 'AdminController@updateCourse')->name('update');
         Route::post('/update_delete', 'AdminController@deleteCourse')->name('delete');
         Route::post('/update_active', 'AdminController@updateActive')->name('update-active');
+        Route::post('/update_registration', 'AdminController@updateRegistration')->name('update-registration');
     });
 });
 
