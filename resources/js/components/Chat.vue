@@ -1,9 +1,27 @@
 <template>
   <div>
-    <button @click="show = true" class="button_first">
-      <i class="bi bi-pen-fill"></i>
-     {{i18n('New Message')}}
-    </button>
+    <div class="filters cursor-pointer d-flex justify-content-between">
+      <div class="d-flex">
+        <div @click="filterMsg('all')" class="filter-items" :class="filter === 'all'? 'filter-active-item':''">
+          <i class="bi bi-envelope-fill"></i>
+          <span class="filter-msg">{{i18n('All')}}</span>
+        </div>
+        <div @click="filterMsg('received')" class="filter-items" :class="filter === 'received'? 'filter-active-item':''">
+          <i class="bi bi-envelope-open-fill"></i>
+          <span class="filter-msg">{{i18n('Received')}}</span>
+        </div>
+        <div @click="filterMsg('sent')" class="filter-items" :class="filter === 'sent'? 'filter-active-item':''">
+          <i class="bi bi-send-check-fill"></i>
+          <span class="filter-msg">{{i18n('Sent')}}</span>
+        </div>
+      </div>
+      <div>
+        <button @click="show = true" class="button_first">
+          <i class="bi bi-pen-fill"></i>
+          {{i18n('New Message')}}
+        </button>
+      </div>
+    </div>
     <div>
       <message-modal
         v-if="show"
@@ -11,6 +29,7 @@
         :values="values.vals ? values.vals : null"
         :auth="auth"
         :course=" course ? course.name: null"
+        :filter="filter"
         @close="closeModal"
         @newMessage="newMessage"
       ></message-modal>
@@ -29,7 +48,7 @@
           <div :class="compareDates(msg.created_at, parseLastRead) && msg.sender.name !== 'Me' && !isSeen(msg.id) ? 'new-msg' : ''" class="msg-wrapper shadow" @click="compareDates(msg.created_at, parseLastRead) && msg.sender.name !== 'Me' ? selectSeen(msg.id) : '';selectedMsg = msg.id; openDetail = true">
             <div class="msg-header">
               <i v-if="compareDates(msg.created_at, parseLastRead) && msg.sender.name !== 'Me' && !isSeen(msg.id)" class="bi bi-envelope-exclamation-fill msg-icon"></i>
-              <i v-if="msg.sender.name === 'Me'" class="bi bi-envelope-check-fill msg-icon"></i>
+              <i v-if="msg.sender.name === 'Me'" class="bi bi-send-check-fill msg-icon"></i>
               <i v-if="(compareDates(msg.created_at, parseLastRead) === false && msg.sender.name !== 'Me') || isSeen(msg.id)" class="bi bi-envelope-paper-fill msg-icon"></i>
               <div class="subject-user">
                 <div class="d-flex align-items-end position-relative from-to f-direct-c">
@@ -77,6 +96,7 @@
         ></no-results>
       </template>
     </div>
+    <div class="d-flex justify-content-center my-3" v-html="pageLinks"></div>
   </div>
 </template>
 
@@ -84,7 +104,7 @@
 import TextInput from "./TextInput";
 import SearchInput from "./SearchInput";
 import MessageModal from "./MessageModal";
-import {i18n} from "../app";
+import {i18n, toast} from "../app";
 import formatDatesMixin from "./formatDatesMixin";
 import truncateMixin from "./truncateMixin";
 import MessageDetail from "./MessageDetail";
@@ -94,7 +114,7 @@ import NoResults from "./NoResults";
 export default {
   name: 'Chat',
   mixins: [formatDatesMixin, truncateMixin],
-  props: ['messages','lastRead','auth','course'],
+  props: ['messages','lastRead','auth','course','links'],
   components: {NoResults, MessageDetail, MessageModal},
   data(){
     return {
@@ -105,6 +125,8 @@ export default {
       seen: [],
       parseLastRead: this.lastRead ? parseISO(this.lastRead) : null,
       values: {},
+      pageLinks: this.links,
+      filter: 'all',
     }
   },
   methods: {
@@ -113,8 +135,19 @@ export default {
      this.values = values;
    },
     newMessage(data) {
-      data = this.formatDates(data)
-      this.msgs = _.cloneDeep(data);
+      this.pageLinks = data.links;
+      this.msgs = _.cloneDeep(this.formatDates(data.items));
+    },
+    filterMsg(filterType) {
+     if (this.filter !== filterType){
+       this.filter = filterType;
+       axios
+           .post(this.route('get-filtered-msg'), {msgFilter: filterType})
+           .then((response) =>{
+             this.pageLinks = response.data.links;
+             this.msgs = _.cloneDeep(this.formatDates(response.data.items));
+           })
+     }
     },
    beforeWindowUnload(e) {
      if (!_.isEmpty(this.values)){

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Article;
 use App\Course;
+use App\Jobs\SendWatchDogsMails;
 use App\Mail\WelcomeMail;
 use App\SystemVariable;
 use App\User;
@@ -27,6 +28,7 @@ use function Composer\Autoload\includeFile;
 use Jenssegers\Agent\Agent;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Bus;
 
 class AdminController
 {
@@ -276,6 +278,9 @@ class AdminController
 
     public function updateRegistration(Request $request) {
         $var = SystemVariable::where('name', 'registration')->first();
+        if ($request->permit != false && json_decode($var->value)->permit == false ){
+            SendWatchDogsMails::dispatch();
+        }
         $arr = json_decode($var->value);
         $arr->permit = $request->permit;
         $var->update([ 'value' => collect($arr) ]);

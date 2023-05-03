@@ -24,7 +24,7 @@ class StudentController
         $userLR = Carbon::parse(User::where('id',Auth::user()->id)->first()->last_read)->toISOString();
         User::where('id',Auth::user()->id)->update(['last_read' => Carbon::now()]);
         return view('student/messages', [
-            'messages' => collect($this->getMsgList())->sortByDesc('created_at')->values(),
+            'messages' => $this->getMsgList(strtok(url()->current(), '?'), 'all'),
             'last_read'=> $userLR,
         ]);
     }

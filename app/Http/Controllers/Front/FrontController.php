@@ -7,7 +7,9 @@ namespace App\Http\Controllers\Front;
 use App\Article;
 use App\Course;
 use App\Directory;
+use App\WatchDog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FrontController
 {
@@ -64,5 +66,21 @@ class FrontController
         return view('front/directory', [
             'dir' =>  $dir,
         ]);
+    }
+
+    public function addWatchDog(Request $request){
+        $validator = Validator::make($request->all(), [
+            'watchDog' => ['required', 'string', 'email', 'max:255', 'unique:watch_dogs,email'],
+        ]);
+
+        if ($validator->fails()) {
+            return 'false';
+        }
+        else {
+            WatchDog::create([
+                'email' => $request->watchDog,
+            ]);
+            return 'true';
+        }
     }
 }

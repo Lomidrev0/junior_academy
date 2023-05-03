@@ -6,14 +6,14 @@
       {{i18n('Add course')}}
     </button>
     <div ref="tooltipList" class="d-flex align-items-center position-relative pointer-event cursor-pointer user-select-none">
-      <div class="d-flex" @click="startReristration = !startReristration">
+      <div class="d-flex" @click="startRegistration = !startRegistration">
         <h5 class="mx-2 m-none d-flex align-items-center">
           {{i18n('Registration is:')+' '}}
           {{permitReg === true ? i18n('Launched'): ( permitReg === false ? i18n('Prohibited') : i18n('Launched to')+' '+formatDate(permitReg, 'dd.MM.yyyy HH:mm')) }}
         </h5>
         <i class="bi bi-three-dots-vertical"></i>
       </div>
-      <div class="launch-reg" v-if="startReristration">
+      <div class="launch-reg" v-if="startRegistration">
         <div class="tooltip-item">
           <div class="date-item">
             <input v-model="regUntil" type="datetime-local">
@@ -186,7 +186,7 @@ export default {
       saving: false,
       error: '',
       regUntil: null,
-      startReristration: false,
+      startRegistration: false,
       newCourse: {
         isActive: false,
         name: '',
@@ -277,29 +277,31 @@ export default {
       return _.includes(this.newCourse.teachers, id)
     },
     launchRegistration(value) {
-      if (confirm(i18n('Do you really want to launch registration for courses?'))) {
-        if (typeof value !== "boolean") {
-           value = new Date(value);
+      if (!(this.permitReg === value && this.regUntil === null)){
+        if (confirm( value !== false ? i18n('Do you really want to launch registration for courses?') : i18n('Do you really want to disable registration for courses?'))) {
+          if (typeof value !== "boolean") {
+            value = new Date(value);
+          }
+          axios
+              .post(this.route('admin.update-registration'), {permit: value})
+              .then((response) => {
+                if (typeof response.data.permit !== 'boolean'){
+                  this.permitReg = parseISO(response.data.permit);
+                }
+                else {
+                  this.permitReg = response.data.permit;
+                }
+              })
+          // .catch((error) => {
+          //   toast.error(i18n('Error'),i18n('err'));
+          // })
         }
-        axios
-            .post(this.route('admin.update-registration'), {permit: value})
-            .then((response) => {
-              this.startReristration = false;
-              if (typeof response.data.permit !== 'boolean'){
-                this.permitReg = parseISO(response.data.permit);
-              }
-              else {
-                this.permitReg = response.data.permit;
-              }
-            })
-        // .catch((error) => {
-        //   toast.error(i18n('Error'),i18n('err'));
-        // })
       }
+      this.startRegistration = false;
     },
     handleClickOutside(event) {
       if (!this.$refs.tooltipList.contains(event.target)) {
-        this.startReristration = false;
+        this.startRegistration = false;
       }
     },
   },

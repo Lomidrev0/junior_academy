@@ -10,7 +10,6 @@
 {{--         ></info-card>--}}
       </div>
       <div class="container">
-
          <home :user="{{ Auth::user() }}"></home>
          <div>
             <h4 class="mt-4">Prehľad počtu zaregistrovaných na kurzy </h4>

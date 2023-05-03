@@ -144,6 +144,11 @@
 .modal-header {
   background-color: $d3-green;
   color: $white;
+  .bi-x-lg {
+    padding-right: 6px;
+    padding-left: 6px;
+    cursor: pointer;
+  }
   div {
     display: flex;
     h5 {
@@ -358,6 +363,37 @@
   width: 70%;
 }
 /*chat*/
+.filters {
+  top: 56.23px;
+  position: sticky;
+  z-index: 2;
+  background-color: $d3-green;
+  border-radius: $radius;
+  .filter-items {
+    background-color: $blue;
+    display: flex;
+    align-items: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    color: $white;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    i{
+      padding-right: 5px;
+    }
+    &:first-child {
+     border-radius: $radius  0  0 $radius;
+    }
+    &:hover {
+      background-color: $d1-blue;
+    }
+  }
+  .filter-active-item {
+    background-color: $d1-blue;
+  }
+}
+
 .msg-wrapper{
   border-radius: $radius;
   padding: 0.5vh 2vh;
@@ -479,7 +515,7 @@
   margin: 3px 0;
   top: 39px;
   right: 0;
-  z-index: 3;
+  z-index: 5;
   user-select: none;
   .tooltip-item {
     height: 40px;
@@ -583,6 +619,9 @@
         flex-direction: column;
       }
     }
+  }
+  .filter-msg {
+    display: none;
   }
 }
 

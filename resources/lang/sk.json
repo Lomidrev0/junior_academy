@@ -155,5 +155,15 @@
   "Forgot Your Password?": "Zabudli ste heslo?",
   "Send password reset link": "Poslať link na restovanie hesla",
   "You can send or view messages here.": "Tu môžte posielať alebo prezerať správy.",
-  "Message has been sucessfully sent": "Správa bola úspešne odoslaná"
+  "Message has been sucessfully sent": "Správa bola úspešne odoslaná",
+  "All": "Všetko",
+  "Sent": "Odoslané",
+  "Received": "Doručené",
+  "The email address has been saved": "Emailová adrsa bola uložená",
+  "After re-starting the registration, we will contact you at the entered email address": "Po opätovnom spustení registrácie Vás budeme kontaktovať na zadanej emailovej adrese",
+  "We already register the entered address in the system": "Zadanú adresu už v systéme evidujeme",
+  "Do you really want to disable registration for courses?": "Naozaj chcete vypnúť registráciu pre kurzy?",
+  "Registration for courses has been restarted!": "Registrácia na kurzy bola opätovne spustená!",
+  "Hooray, registration has started again, so do not waste any more time and run to sign up, because we are taking a limited number of students for the course": "Hurááá, prihlasovanie sa opäť spustilo, tak už nestrácaj čas a utekaj sa prihlásiť, pretože na kurzy berieme obmedzený počet študentov.",
+  "Registration is launched until:": "Registrácia je spustená do:"
 }

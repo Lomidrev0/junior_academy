@@ -27,6 +27,7 @@ Route::namespace('Front')->group(function () {
     Route::get('/gallery','FrontController@getGallery')->name('gallery');
     Route::get('/course_detail/{slug?}','FrontController@getDetail')->name('course-detail');
     Route::get('/gallery/{slug?}','FrontController@directory')->name('directory');
+    Route::post('/add_watch_dog', 'FrontController@addWatchDog')->name('add-watch-dog');
 });
 
 Route::middleware(['student'])->prefix('/student')->name('student.')->group(function () {
@@ -90,6 +91,7 @@ Route::namespace('Shared')->group(function () {
     Route::post('/change_course','CourseController@changeCourse')->name('change-course');
     Route::post('/send_msg','MessageController@sendMessage')->name('send-message');
     Route::get('/get_selected_msg','MessageController@getMessage')->name('get-message');
+    Route::post('/filter_msg','MessageController@filterMessage')->name('get-filtered-msg');
 
 });
 

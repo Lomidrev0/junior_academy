@@ -102,7 +102,7 @@ class MessageController
                 return $e;
             }
         }
-        return collect($this->getMsgList())->sortByDesc('created_at')->values();
+        return $this->getMsgList(strtok(url()->previous(), '?'),json_decode($request->data)->filter);
     }
 
     public function getMessage(Request $request) {
@@ -132,4 +132,9 @@ class MessageController
         $msg['attachments'] = $msg['attachments'] == 1 ? true : false;
         return $msg;
     }
+
+    public function filterMessage(Request $request) {
+        return $this->getMsgList(strtok(url()->previous(), '?'),$request->msgFilter);
+    }
+
 }

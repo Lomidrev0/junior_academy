@@ -129,9 +129,13 @@
                     ></no-results>
                     <div class="my-3">
                         <div class="d-flex my-3 flex-wrap justify-content-center">
-                            <p class="mx-2">{{__('In case of questions, do not hesitate to write us at this email address:')}}</p>
-                            <a class="mx-2" href="mailto:spse@spse-po.sk">spse@spse-po.sk</a>
-                            <p class="mx-2">{{__('Or see the offer of our courses')}}</p>
+                            <p class="mx-2 text-center">
+                                {{__('In case of questions, do not hesitate to write us at this email address:')}}
+                                &nbsp;
+                                <a href="mailto:spse@spse-po.sk">spse@spse-po.sk</a>
+                                <br>
+                                {{__('Or see the offer of our courses')}}:
+                            </p>
                         </div>
                         <div class="d-flex w-100 justify-content-center">
                             <a href="{{route('front-home')}}#course-list"><button class="button_first">{{__('Courses overview')}}</button></a>
@@ -139,9 +143,13 @@
                     </div>
                     <div>
                         <p class="text-center my-3">{{__('If you want to receive timely information about the resumption of registration for courses, write us your email address:')}}</p>
-                      <div class="d-flex justify-content-center">
-                          <input class="inut-text" type="text">
-                          <button class="button_first rigth-addition">{{__('Submit')}}</button>
+                      <div>
+                          <form id="watch-dog-form" class="d-flex justify-content-center" novalidate>
+                              <input class="inut-text" type="email" name="watchDog" required>
+                              <button type="submit"  class="button_first rigth-addition" onclick="addWatchDog(event)">
+                                {{__('Submit')}}
+                              </button>
+                          </form>
                       </div>
                     </div>
                 </div>

@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Course;
 use App\Providers\RouteServiceProvider;
+use App\SystemVariable;
+use App\Traits\RegisterPermitTrait;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -25,6 +28,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    use RegisterPermitTrait;
 
     /**
      * Where to redirect users after registration.
@@ -52,13 +56,21 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'school' =>['required', 'string', 'max:255'],
-            'class' =>['required', 'string', 'max:255'],
+            'school' => ['required', 'string', 'max:255'],
+            'class' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
+
+        if (!$this->permitCheck()) {
+            $validator->after(function ($validator) {
+                $validator->errors()->add('permit_check', 'Sorry, you are not allowed to register at this time. Please try again later.');
+            });
+        }
+
+        return $validator;
     }
 
     /**
@@ -69,29 +81,29 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        if ($data['school'] == null || $data['class'] == null) {
-            $student_info = null;
-        }
-        else {
-            $student_info = collect([
-                'school' => $data['school'],
-                'class' => $data['class'],
-                'active' => false,
-                'notes' => '',
+            if ($data['school'] == null || $data['class'] == null) {
+                $student_info = null;
+            }
+            else {
+                $student_info = collect([
+                    'school' => $data['school'],
+                    'class' => $data['class'],
+                    'active' => false,
+                    'notes' => '',
+                ]);
+            }
+            $user = User::create([
+                'name' => $data['name'],
+                'student_info' =>$student_info,
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
             ]);
-        }
-        $user = User::create([
-            'name' => $data['name'],
-            'student_info' =>$student_info,
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
 
-        try{
-            $user->courses()->attach($data['courses']);
-        }catch (\Throwable $exception){
-            report($exception);
-        }
-        return $user;
+            try{
+                $user->courses()->attach($data['courses']);
+            }catch (\Throwable $exception){
+                report($exception);
+            }
+            return $user;
     }
 }

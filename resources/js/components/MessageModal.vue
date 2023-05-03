@@ -145,7 +145,7 @@ import WswgEditor from "./WswgEditor";
 export default {
   components: {WswgEditor, Alert, SearchInput, TextInput},
   mixins:[truncateMixin],
-  props: ['header','values','auth','course'],
+  props: ['header','values','auth','course','filter'],
   data(){
     return {
       searchResult: null,
@@ -243,6 +243,7 @@ export default {
         data.selectedEmails = JSON.stringify(_.map(data.selected, (select)=>{return select.email}));
         data.selected = JSON.stringify(_.map(data.selected, (select)=>{return select.id}));
         data.multipleSelect = data.multipleSelect.value;
+        data.filter = this.filter;
         _.forEach(data.files, (file,key) => {return  formData.append('file'+key,file);})
         _.unset(data,'files')
         formData.append('data',JSON.stringify(data));

@@ -11,9 +11,10 @@
         </div>
         <div class="container">
             <chat
-                :messages="{{ $messages }}"
+                :messages="{{ json_encode($messages['items']) }}"
                 :last-read="{{ json_encode($last_read) }}"
                 :auth="{{Auth::user()->role}}"
+                :links="{{json_encode($messages['links'])}}"
             ></chat>
         </div>
     </div>
