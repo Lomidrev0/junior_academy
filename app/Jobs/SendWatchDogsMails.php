@@ -42,6 +42,9 @@ class SendWatchDogsMails implements ShouldQueue
             'dateTime' => is_bool($var) ? null : Carbon::parse($var),
         ]);
         $watchDogs = WatchDog::all();
-        Mail::to($watchDogs)->locale(App::getLocale())->send(new WatchDogMail($data));
+        foreach ($watchDogs as $watchDog) {
+            Mail::to($watchDog)->locale(App::getLocale())->send(new WatchDogMail($data));
+        }
+
     }
 }

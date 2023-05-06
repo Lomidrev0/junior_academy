@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Jobs\SendMessageMails;
 use App\Jobs\SendWatchDogsMails;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->job(new SendWatchDogsMails)->everyMinute();
+        $schedule->job(new SendMessageMails)->everyMinute();
         //* * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1
     }
 

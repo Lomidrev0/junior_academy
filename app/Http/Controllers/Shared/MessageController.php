@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Shared;
 
 
 use App\Course;
+use App\Jobs\SendMessageMails;
 use App\Mail\MessageMail;
 use App\Mail\WelcomeMail;
 use App\Message;
@@ -95,12 +96,20 @@ class MessageController
             report($exception);
         }
         if ($reqData->mail) {
-            try{
-                Mail::to(json_decode($mailTo))->send(new MessageMail($message,$media,Auth::user()->email));
-            } catch(\Exception $e){
-                Log::critical('Welcome email was not send: ' . $e);
-                return $e;
-            }
+            $mailData = [
+                'mailTo' => $mailTo,
+                'message' => $message,
+                'media' => $media,
+                'user' => Auth::user()->email
+            ];
+            SendMessageMails::dispatch($mailData);
+            //SendMessageMails::dispatch()->withData();
+//            try{
+//                Mail::to(json_decode($mailTo))->send(new MessageMail($message,$media,Auth::user()->email));
+//            } catch(\Exception $e){
+//                Log::critical('Welcome email was not send: ' . $e);
+//                return $e;
+//            }
         }
         return $this->getMsgList(strtok(url()->previous(), '?'),json_decode($request->data)->filter);
     }

@@ -29,6 +29,11 @@ class WatchDogMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.watchDog')->with('data', $this->data);
+        $this
+            ->markdown('emails.watchDog')
+            ->subject("registration is launched again")
+            ->with('data', $this->data);
+
+        return $this;
     }
 }
