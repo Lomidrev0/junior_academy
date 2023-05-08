@@ -29,7 +29,7 @@
     }
 
     .bar1{
-      background-color: $d2-green ;
+      background-color: $main-color-2;
     }
     .bar2{
       background-color: $d1-green;
@@ -52,7 +52,7 @@
       animation-delay: -0.4s;
     }
     .bar6{
-      background-color: $d2-green;
+      background-color: $main-color-2;
       -webkit-animation-delay: -0.3s;
       animation-delay: -0.3s;
     }
@@ -105,7 +105,7 @@
 
     .image-detail {
       display: none;
-      background-color: $d3-green;
+      background-color: $main-color-3;
       color: $white;
       text-align: center;
       padding: 1vh;
@@ -118,14 +118,14 @@
       }
     }
     &:hover {
-      border: 2px solid $d3-green;
+      border: 2px solid $main-color-3;
       .image-detail {
         display: block;
       }
     }
   }
   .active-img-item {
-    border: 2px solid $d3-green;
+    border: 2px solid $main-color-3;
     .image-detail {
       display: block;
     }
@@ -166,7 +166,7 @@
         }
       }
       .course-item-head {
-        background-color: $d3-green;
+        background-color: $main-color-3;
         color: $white;
         text-align: center;
         padding: 1vh;
@@ -182,7 +182,7 @@
         padding-top: 1vh;
         padding-bottom: 1vh;
         color: $white;
-        background-color: $d3-green;
+        background-color: $main-color-3;
       }
     }
     .course-bg {
@@ -202,7 +202,7 @@
         opacity: 0.9;
       }
       .course-item-head,.course-item-footer {
-        background-color: $d1-blue;
+        background-color: $blue;
       }
     }
   }

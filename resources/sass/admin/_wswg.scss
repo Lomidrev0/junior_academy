@@ -6,7 +6,7 @@
 .menubar {
   overflow: hidden;
   padding: 3px;
-  background: $d3-green;
+  background: $main-color-3;
   border-radius: $radius $radius 0 0;
 
   ._group {
@@ -23,7 +23,7 @@
   ._button,.color-picker {
     padding: 2px 7px;
     border: none;
-    background: $d3-green;
+    background: $main-color-3;
     min-width: 24px;
     font-size: 1.2rem;
     float: left;
@@ -35,7 +35,7 @@
     }
 
     &:hover {
-      background: $d1-blue ;
+      background: $blue;
     }
 
     &.is-active {
@@ -82,7 +82,7 @@
         font-weight: bold;
         text-align: left;
         background-color: $green;
-        color: $d2-green;
+        color: $main-color-2;
         border-color: $white;
       }
 
@@ -187,7 +187,7 @@ table tr th {
   }
 
   hr {
-    background-color: $d3-green;
+    background-color: $main-color-3;
   }
 }
 

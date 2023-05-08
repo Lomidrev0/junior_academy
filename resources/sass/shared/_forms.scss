@@ -70,7 +70,7 @@
     border: none;
     box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
     > div{
-      background-color: $d3-green;
+      background-color: $main-color-3;
       color: whitesmoke;
     }
     .custom-card-body{
@@ -176,7 +176,7 @@
     padding: 1vh 1vh;
     margin: 0.3vh 1vh;
     width: 28vh;
-    background-color: $d3-green;
+    background-color: $main-color-3;
     border-radius: $radius;
     cursor: pointer;
     user-select: none;
@@ -191,7 +191,7 @@
             padding-right: 1vh;
         }
         .check-icon {
-            color: $d3-green;
+            color: $main-color-3;
             padding-right: 1vh;
         }
     }
@@ -203,7 +203,7 @@
     background-color: $green;
     &.add-teacher-wrapper {
         span {
-            color: $d3-green;
+            color: $main-color-3;
         }
     }
 }

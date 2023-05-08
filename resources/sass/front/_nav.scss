@@ -5,10 +5,11 @@
 }
 
 .header-area {
-    background: $d3-green;
+    background: $main-color-3;
     width: 100%;
     padding: 3px 25px;
     z-index: 999;
+    position: relative;
 }
 .header-container {
     display: table;
@@ -95,7 +96,7 @@
     .site-nav-menu {
         float: none;
         position: absolute;
-        background: $d3-green;
+        background: $main-color-3;
         width: 100%;
         left: 0;
         top: 65px;

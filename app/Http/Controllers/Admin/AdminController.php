@@ -242,39 +242,35 @@ class AdminController
     }
 
     public function articles() {
-        $articles = Article::with(['user' => function ($query) {
-            $query->select('id', 'name');
-        }])->first();
-        $articles['active'] = $articles['active'] == 1 ? true : false;
-
+        $article = SystemVariable::where('name', 'article')->first();
         return view('admin/articles',[
-            'articles' => $articles,
+            'article' => $article,
             ]);
     }
     public function updateArticle(Request $request) {
-        $article =  Article::find($request->id);
+        $article =  SystemVariable::find($request->id);
+        $data = [
+            'text' => $request->article
+        ];
         $article->update([
             'user_id' => Auth::user()->id,
-            'active'=> $request->article['active'],
-            'title' => $request->article['title'],
-            'content' => $request->article['content'],
-            'slug' =>  Str::slug($request->article['title']),
+            'value' => json_encode($data),
         ]);
        return $article;
     }
 
-    public function storeArticle(Request $request) {
-        //dd($request->article['active']);
-        $newArticle = Article::create([
-            'title'=> $request->article['title'],
-            'content'=> $request->article['content'],
-            'slug'=> $request->article['title'] ? Str::slug($request->article['title']) : null,
-            'active' => $request->article['active'],
-            'type' => 'front',
-            'user_id' => Auth::user()->id,
-        ]);
-        return $newArticle;
-    }
+//    public function storeArticle(Request $request) {
+//        //dd($request->article['active']);
+//        $newArticle = Article::create([
+//            'title'=> $request->article['title'],
+//            'content'=> $request->article['content'],
+//            'slug'=> $request->article['title'] ? Str::slug($request->article['title']) : null,
+//            'active' => $request->article['active'],
+//            'type' => 'front',
+//            'user_id' => Auth::user()->id,
+//        ]);
+//        return $newArticle;
+//    }
 
     public function updateRegistration(Request $request) {
         $var = SystemVariable::where('name', 'registration')->first();
@@ -283,7 +279,10 @@ class AdminController
         }
         $arr = json_decode($var->value);
         $arr->permit = $request->permit;
-        $var->update([ 'value' => collect($arr) ]);
+        $var->update([
+            'value' => collect($arr),
+            'user_id' => Auth::user()->id,
+            ]);
         return $var->value;
     }
 }

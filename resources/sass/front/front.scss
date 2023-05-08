@@ -72,8 +72,8 @@
         background: lighten($primary, 25%) !important;
     }
 }
-.header-h-70 {
-    height: 70vh;
+.header-h-75 {
+    height: 75vh;
 }
 
 .text_db{
@@ -90,7 +90,7 @@
 }
 .card_second {
     background-color: $clean-white;
-    padding: 8vh 12vw;
+    padding: 8vh 8vw 0 8vw;
     word-break: break-word;
     span {
         height: fit-content;
@@ -239,10 +239,14 @@
     box-sizing: border-box;
     border-radius: $radius;
     position: relative;
+    height: 500px;
     .course-name {
         z-index: 1;
         top: -40px;
     }
+}
+.card-date{
+    color: $black;
 }
 
 @media screen and (max-width: 1200px) {

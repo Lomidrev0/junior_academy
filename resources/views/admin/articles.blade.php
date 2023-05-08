@@ -11,8 +11,8 @@
         </div>
         <div class="container">
             <add-article
-               @isset($articles)
-                 :articles = "{{$articles}}"
+               @isset($article)
+                 :article = "{{$article}}"
                @endisset
             ></add-article>
 

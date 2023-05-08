@@ -103,7 +103,6 @@ class MessageController
                 'user' => Auth::user()->email
             ];
             SendMessageMails::dispatch($mailData);
-            //SendMessageMails::dispatch()->withData();
 //            try{
 //                Mail::to(json_decode($mailTo))->send(new MessageMail($message,$media,Auth::user()->email));
 //            } catch(\Exception $e){
@@ -134,6 +133,7 @@ class MessageController
                     $msg['users'] = $save;
                 }
             }
+            //dd(json_decode($msg->groups));
             $msg['groups'] = json_decode($msg->groups);
             $msg->unsetRelation('users');
         }

@@ -1,16 +1,23 @@
 .footer {
     width: 100%;
-    background: $d2-green;
+    background: $mail-color-4;
     height: auto;
     padding-top: 20px;
     color:$white;
+    border-radius: $radius $radius 0 0;
     > div {
         padding: 10px;
         p {
             padding: 10px;
         }
+        a {
+            color: white;
+            &:hover {
+                color: $blue;
+            }
+        }
     }
 }
 .footer-bottom {
-    background-color: $d3-green;
+    background-color: $main-color-3;
 }

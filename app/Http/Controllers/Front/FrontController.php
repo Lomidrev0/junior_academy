@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Front;
 use App\Article;
 use App\Course;
 use App\Directory;
+use App\SystemVariable;
 use App\WatchDog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -31,7 +32,7 @@ class FrontController
     {
         return view('front/home',[
             'courses' => $this->getForCoursesUI(),
-            'article' => Article::where('type','front')->first('content'),
+            'article' => SystemVariable::where('name','article')->first('value'),
         ]);
     }
     public function getContact(){
@@ -42,11 +43,17 @@ class FrontController
         ]);
     }
     public function getDetail(Request $request){
+        $course = json_decode(Course::with(['users' => function ($query) {
+            $query->select('name','email')->where('role', 1);
+        },'media'])->where('slug',$request->slug)->first());
+
         return view('front/detail',[
-            'course' =>  json_decode(Course::with(['users' => function ($query) {
-                $query->select('name','email')->where('role', 1);
-                },'media'])->where('slug',$request->slug)->first()
-            )]);
+            'course' =>  $course,
+            'albums' => Directory::where('course_id',$course->id)
+                ->where('active', true)
+                ->withCount('media')
+                ->with('media')->get()
+        ]);
     }
     public function getGallery() {
         return view('front/gallery',[

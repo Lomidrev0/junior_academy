@@ -91,7 +91,7 @@
             <div class="msg-input-wrapper">
               <div class="w-100 m-auto msg-input">
                 <label>
-                  <textarea v-model="updateNote.note" :placeholder="i18n('Note content')" rows="12" class="w-100 mh-100"></textarea>
+                  <textarea v-model="updateNote.note" :placeholder="i18n('Note content')" rows="15" class="w-100 mh-100"></textarea>
                 </label>
               </div>
             </div>

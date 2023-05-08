@@ -28,6 +28,8 @@ html,body,#app{
   background-color: $white;
   min-height: 100vh;
   scroll-behavior: smooth;
+  max-width: 100vw;
+  overflow-x: auto ;
 }
 
 .content-margin {
@@ -130,4 +132,7 @@ p,h1{
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+}
+.d-contents {
+  display: contents;
 }

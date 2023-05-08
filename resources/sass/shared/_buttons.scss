@@ -28,12 +28,12 @@
     left: 0;
     width: 0%;
     height: 100%;
-    background-color: $d1-blue;
+    background-color: $main-color-3;
     transition: all .5s;
     z-index: -1;
   }
   &:hover {
-    color: #fff;
+    color: $white;
     &:before {
       width: 100%;
     }
