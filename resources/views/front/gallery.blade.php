@@ -14,6 +14,7 @@
                             @foreach($course->directories as $album)
                                 <gallery-card
                                         :album = "{{$album}}"
+                                        :course ="{{collect(['name'=> $course->name, 'slug' => $course->slug ])}}"
                                 ></gallery-card>
                             @endforeach
                         </div>

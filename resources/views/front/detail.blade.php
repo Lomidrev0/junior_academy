@@ -22,13 +22,17 @@
                      <div class="my-5">
                          <h5>Kontaktná osoba:</h5>
                          @foreach($course->users as $user)
-                             <strong>{{$user->name}}:     </strong><a class="emaill" href="mailto:{{$user->email}}">{{$user->email}}</a>
+                             <strong>{{$user->name}}:</strong>
+                             <a class="emaill" href="mailto:{{$user->email}}">{{$user->email}}</a>
+                             @if (!$loop->last)
+                                 ,
+                             @endif
                          @endforeach
                      </div>
                  </div>
                      @if(count($albums) != 0)
                          <div>
-                             <h3>{{ __('Gallery') }}</h3>
+                             <h3 class="text-center">{{ __('Gallery for course:') .' '.$course->name }}</h3>
                              <div class="grid-container my-10vh">
                                  @foreach($albums as $album)
                                      <gallery-card

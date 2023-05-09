@@ -46,7 +46,7 @@ input:checked + .slider:before {
   transform: translateX(21.25px);
 }
 .select-wrapper {
-  border-bottom: 1.5px solid $white;
+  //border-bottom: 1.5px solid $white;
   margin: auto;
   padding-left: 10px;
   padding-right: 10px;
@@ -54,7 +54,7 @@ input:checked + .slider:before {
 
   .select {
     background-color: transparent;
-    color: $white;
+    color: $black;
     border: none;
     padding: .20rem 0 .20rem .20rem;
     cursor: pointer;
@@ -67,7 +67,7 @@ input:checked + .slider:before {
     }
     &:hover {
       transition: 0.3s;
-      color: $grey;
+      color: $white;
     }
   }
 }

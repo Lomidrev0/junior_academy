@@ -4,13 +4,13 @@
         <div class="search-icon"> <i class="bi bi-search"></i> </div>
         <input type="text" v-model="search" placeholder="Search...">
       </div>
-      <template v-if="admin">
-        <ul>
-          <li :class=" (select === index) ? 'active-course':'unactive-course'" v-for="(course, index) in courses" @click="select = index">
-            <p>{{ course.name +' ('+course.users.length+')' }}</p>
-          </li>
-        </ul>
-      </template>
+<!--      <template v-if="admin">-->
+<!--        <ul>-->
+<!--          <li :class=" (select === index) ? 'active-course':'unactive-course'" v-for="(course, index) in courses" @click="select = index">-->
+<!--            <p>{{ course.name +' ('+course.users.length+')' }}</p>-->
+<!--          </li>-->
+<!--        </ul>-->
+<!--      </template>-->
       <div class="overflow-auto">
         <table class="table">
           <thead class="thead-dark">
@@ -33,7 +33,7 @@
               <template v-if="index === select">
                 <template v-if="computedCourses[index].users.length > 0 ">
                   <tr v-for="(user, key) in course.users">
-                    <td><p>{{user.name}}</p></td>
+                    <td><p>{{user.id}}</p></td>
                     <td><p>{{JSON.parse(user.student_info).school}}</p></td>
                     <td><p>{{ JSON.parse(user.student_info).class}}</p></td>
                     <td><p><a :href="'mailto:'+user.email">{{ user.email }}</a></p></td>
@@ -47,7 +47,7 @@
                       </td>
                       <td>
                         <div class="notify-div">
-                          <i v-b-modal.modal-scrollable class="bi bi-file-earmark-text-fill" @click="setUpdateNote(JSON.parse(user.student_info).notes, user.id, key)"></i>
+                          <i v-b-modal.modal-scrollable class="bi bi-file-earmark-text-fill" @click="setUpdateNote(JSON.parse(user.student_info).notes, user.id, index)"></i>
                           <div class="notify-dot" v-if="JSON.parse(user.student_info).notes"></div>
                         </div>
                       </td>
@@ -129,6 +129,7 @@ export default {
         note:'',
         id: null,
         key: null,
+        validateNote: '',
       },
     }
   },
@@ -185,7 +186,7 @@ export default {
             this.$set(this.dataCourses[0].users,key, data);
             setTimeout(function() {
               $('input').prop( "disabled", false);
-            }, 1000);
+            }, 100);
             toast.success(i18n('Users state has been updated'),null);
           })
 
@@ -207,24 +208,23 @@ export default {
       this.updateNote.key = key;
     },
     saveNote() {
-     if (_.find(this.dataCourses[this.updateNote.key].users, (user) => {
-       return JSON.parse(user.student_info).notes === this.updateNote.note;
-     })){
-       this.error = i18n('A change is required for save');
-     }
-     else {
+     // if (_.find(this.dataCourses[this.updateNote.key].users, (user) => {
+     //   return JSON.parse(user.student_info).notes === this.updateNote.note;
+     // })){
+     //   this.error = i18n('A change is required for save');
+     // }
+     // else {
+      var userClone = _.cloneDeep(_.find(this.dataCourses[0].users, { id: this.updateNote.id }));
        axios
            .post(this.route('teacher.set-note'), {id: this.updateNote.id, value: this.updateNote.note})
            .then((response) => {
-             let data =response.data
-             data.created_at = parseISO(data.created_at);
-             data.student_info = JSON.stringify(data.student_info);
-             this.$set(this.dataCourses[0].users,this.updateNote.key, data);
+             userClone.student_info = JSON.stringify(response.data.student_info)
+             const userIndex = _.findIndex(this.dataCourses[0].users, { id: this.updateNote.id });
+             this.$set(this.dataCourses[0].users ,userIndex,  userClone);
              this.clearNote();
              toast.success(i18n('Note has been updated'),null);
            })
-     }
-
+     // }
     },
     clearNote() {
       this.updateNote.note = '';

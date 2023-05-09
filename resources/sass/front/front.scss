@@ -263,8 +263,9 @@
     }
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 768px) {
     .grid-container {
+        margin: 0 10vw;
         justify-content: center;
         .grid-item {
             flex-basis: calc(100% - 20px); /* Set the flex-basis to one-half minus margin */
@@ -276,6 +277,11 @@
                 margin: 10px;
             }
         }
+    }
+}
+@media screen and (max-width: 480px) {
+    .grid-container {
+        margin: 0;
     }
 }
 

@@ -67,7 +67,7 @@
                   <div class="album-text-wrapper">
 <!--                    <div v-b-tooltip.hover :title="album.description.length >= 30 ? album.description : ''"> {{ truncateContent(album.description, 30) }}</div>-->
                     <div>{{i18n('Created at')}} {{ formatDate(album.created_at, 'dd.MM.yyyy') }}</div>
-                    <div><i class="bi bi-image-fill px-2"></i>{{album.media_count}}</div>
+                    <div><i class="bi bi-image-fill px-2"></i>{{album.media_count ? album.media_count : 0 }}</div>
                   </div>
                 </div>
                 <div class="course-item-footer d-flex justify-content-around">

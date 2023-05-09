@@ -6,7 +6,7 @@
         </a>
     </li>
     <li>
-        <a href="{{route('admin.courses')}}" class="{{Str::contains(url()->current(), 'courses')  ? 'active-item' : '' }}">
+        <a href="{{route('admin.courses')}}" class="{{Str::contains(url()->current(), 'courses') || Str::contains(url()->current(), 'detail')  ? 'active-item' : '' }}">
             <i class="bi bi-wrench"></i>
             <span>{{__('Course management')}}</span>
         </a>

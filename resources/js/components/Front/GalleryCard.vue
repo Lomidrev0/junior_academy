@@ -15,7 +15,7 @@
           <p class="mx-2">{{album.description.substring(0,180) + (album.description.length > 180 ? '...' : '')}}</p>
         </div>
         <div class="my-3 mx-3 album-footer">
-          <p><a :href=" route('course-detail',{'slug' : album.slug }) ">{{album.name}}</a></p>
+          <p v-if="course"><a :href=" route('course-detail',{'slug' :course.slug }) ">{{course.name}}</a></p>
           <p class="card-date">{{i18n('Created at')}}: {{ formatDate(created_at, 'd.M.yyyy - H:mm ') }}</p>
         </div>
       </div>
@@ -30,7 +30,7 @@ import {parseISO} from "date-fns";
 
 export default {
   mixins: [truncateMixin, formatDatesMixin],
-  props: ['album'],
+  props: ['album', 'course'],
   data(){
     return {
       created_at: parseISO(this.album.created_at),
@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     excute(){
-      console.log(this.album.slug)
+      console.log(this.album, this.course)
     }
   },
   mounted() {

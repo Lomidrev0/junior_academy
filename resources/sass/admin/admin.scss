@@ -40,6 +40,7 @@
 .table-wrapper {
   cursor: pointer;
   border-radius: $radius;
+  display: grid;
 
   .search-bar{
     border-radius: $radius $radius 0 0 ;

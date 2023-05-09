@@ -3,7 +3,7 @@
 @section('authContent')
     <div>
         <div class="mb-5">
-            <h1>spravy</h1>
+            <h1>{{__('Inbox')}}</h1>
             <hr>
             <info-card
                     :text="'{{__('You can send or view messages here.')}}'"

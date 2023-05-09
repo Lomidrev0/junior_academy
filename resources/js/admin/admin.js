@@ -1,4 +1,7 @@
 //admin nav acivate
+window.addEventListener('load', function() {
+   $('#sidebar').removeClass('d-none');
+});
 function transform(){
   if ($(window).width() >= 1000){
     if ( $('#sidebar').hasClass('active')) {

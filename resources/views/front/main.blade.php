@@ -3,7 +3,7 @@
     <link href="{{ asset('css/front.css') }}" rel="stylesheet">
 @endsection
 @section('content')
-    <div>
+    <div class="overflow-hidden">
         @include('front/nav')
         @yield('frontContent')
         @include('shared/footer')

@@ -39,10 +39,14 @@ class TeacherController
             $query->select('id', 'name');},
             'course'=> function ($query) {
                 $query->select('id', 'name');
-            }])->where([
+            }], 'media')->withCount('media')->where([
                 [$column,$value],
                 ['course_id', Session::get('selected-course')->id],
         ])->first();
+        if (count($dir['media']) > 0) {
+            $dir['cover'] = $dir['media'][0];
+        }
+        unset($dir['media']);
         unset($dir['course_id'], $dir['user_id'], $dir['deleted_at']);
         $dir['active'] = $dir['active'] == 1 ? true : false;
         return $dir;

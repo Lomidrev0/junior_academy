@@ -35,7 +35,7 @@
         </nav>
         <div id="admin-container" class="d-flex vh-mh-100 flex-row">
             <div>
-                <nav id="sidebar" class="shadow">
+                <nav id="sidebar" class=" d-none d-md-block shadow">
                     @if(Auth::user()->role == 2)
                         @include('admin.sidenav')
                     @elseif(Auth::user()->role == 1)
@@ -45,7 +45,7 @@
                     @endif
                 </nav>
             </div>
-            <div class="w-100 d-sm-grid content">
+            <div class="w-100 d-grid content">
                 <div class="content-margin">
                     @yield('authContent')
                 </div>

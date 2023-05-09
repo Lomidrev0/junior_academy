@@ -42,7 +42,7 @@
         </a>
     </li>
     <li>
-        <a href="{{route('teacher.password')}}">
+        <a href="{{route('teacher.password')}}" {!! (Str::contains(url()->current(), 'reset_password') ? 'class=active-item' : '') !!}>
             <i class="bi bi-lock-fill"></i>
             <span>{{__('Change password')}}</span>
         </a>

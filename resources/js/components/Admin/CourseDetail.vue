@@ -154,10 +154,10 @@ export default {
             .then((response) => {
               if (response.data.length > 1) {
                 this.editCourse = response.data[0];
-                toast.success(i18n('Course has been sucessfully updated'),null);
               } else {
                 history.replaceState(response.data, '', '/admin/detail/' + response.data.slug);
               }
+              toast.success(i18n('Course has been sucessfully updated'),null);
             })
       }
     },

@@ -34,23 +34,25 @@ export default {
       saving: false,
       error: '',
       content: JSON.parse(this.article.value).text,
+      textValidator: JSON.parse(this.article.value).text,
     }
   },
   methods: {
     updateArticle() {
-      this.saving = true;
-      axios
-          .post( route('admin.update-article'),{id: this.article.id, article: this.content})
-          .then((response) => {
-            this.article = response.data;
-            this.saving = false;
-            toast.success(i18n('Article has been sucessfully updated'),null);
-          })
-      .catch((error) => {
-        this.saving = false;
-        toast.error(i18n('Form has not been processed'),null);
-      })
-
+      if(this.textValidator !== this.content){
+        this.saving = true;
+        axios
+            .post( route('admin.update-article'),{id: this.article.id, article: this.content})
+            .then((response) => {
+              this.content,this.textValidator = JSON.parse(response.data.value).text;
+              this.saving = false;
+              toast.success(i18n('Article has been sucessfully updated'),null);
+            })
+            .catch((error) => {
+              this.saving = false;
+              toast.error(i18n('Form has not been processed'),null);
+            })
+      }
     },
   }
 }
