@@ -4,13 +4,13 @@
         <div class="search-icon"> <i class="bi bi-search"></i> </div>
         <input type="text" v-model="search" placeholder="Search...">
       </div>
-<!--      <template v-if="admin">-->
-<!--        <ul>-->
-<!--          <li :class=" (select === index) ? 'active-course':'unactive-course'" v-for="(course, index) in courses" @click="select = index">-->
-<!--            <p>{{ course.name +' ('+course.users.length+')' }}</p>-->
-<!--          </li>-->
-<!--        </ul>-->
-<!--      </template>-->
+      <template v-if="admin">
+        <ul>
+          <li :class=" (select === index) ? 'active-course':'unactive-course'" v-for="(course, index) in courses" @click="select = index">
+            <p>{{ course.name +' ('+course.users.length+')' }}</p>
+          </li>
+        </ul>
+      </template>
       <div class="overflow-auto">
         <table class="table">
           <thead class="thead-dark">
@@ -33,7 +33,7 @@
               <template v-if="index === select">
                 <template v-if="computedCourses[index].users.length > 0 ">
                   <tr v-for="(user, key) in course.users">
-                    <td><p>{{user.id}}</p></td>
+                    <td><p>{{user.name}}</p></td>
                     <td><p>{{JSON.parse(user.student_info).school}}</p></td>
                     <td><p>{{ JSON.parse(user.student_info).class}}</p></td>
                     <td><p><a :href="'mailto:'+user.email">{{ user.email }}</a></p></td>

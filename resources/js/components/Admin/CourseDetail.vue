@@ -80,7 +80,7 @@
               </div>
             </label>
           </div>
-          <button class="button_first m-auto mt-3 mb-3 px-5" type="submit" @click.prevent="update()">
+          <button :disabled="saving" class="button_first m-auto mt-3 mb-3 px-5" type="submit" @click.prevent="update()">
             {{ i18n('Save') }}
             <b-spinner small v-if="saving"></b-spinner>
           </button>
@@ -139,7 +139,7 @@ export default {
           ) {
         this.error = i18n('A change is required for save');
       } else {
-
+        this.saving = true;
         const formData = new FormData();
         formData.append('id', this.editCourse.id);
         this.files.logo ? formData.append('logo', this.files.logo[0], this.files.logo[0].name) : null;
@@ -157,6 +157,7 @@ export default {
               } else {
                 history.replaceState(response.data, '', '/admin/detail/' + response.data.slug);
               }
+              this.saving = false;
               toast.success(i18n('Course has been sucessfully updated'),null);
             })
       }
