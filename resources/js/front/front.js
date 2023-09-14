@@ -3,27 +3,78 @@ import {i18n, toast} from "../app";
 
 var lastScrollPosition = 0;
 var ticking = false;
+var e = document.querySelector(".header-area");
+var overlay = document.querySelector(".overlay")
+var currentPath = window.location.pathname;
+var isTransitionRunning = false;
+
+document.getElementById('test').addEventListener('transitionstart', function(event) {
+  isTransitionRunning = true;
+}, false);
+
+document.getElementById('test').addEventListener('transitionend', function(event) {
+  isTransitionRunning = false;
+}, false);
 
 function doParallax() {
-  var parallax = document.querySelector(".header");
+  var parallax = document.querySelector(".parallax");
   var scrollPosition = window.pageYOffset;
   parallax.style.backgroundPosition = "center " + (-(scrollPosition * 0.4)-58.5) + "px";
   lastScrollPosition = scrollPosition;
   ticking = false;
 }
+function changeNav() {
+  const scrollPosition = $(window).scrollTop();
 
-window.addEventListener("scroll", function() {
-  lastScrollPosition = window.pageYOffset;
-  if (!ticking) {
-    window.requestAnimationFrame(function() {
-      try {
-        doParallax();
-      }
-      catch (error){}
-    });
-    ticking = true;
+  if (scrollPosition <= 0) {
+    e.classList.add("header-transparent");
+    e.classList.remove("header-sticky");
+    overlay.classList.add("distance-p");
+
+  } else {
+    e.classList.add("header-sticky");
+    e.classList.remove("header-transparent");
+    overlay.classList.remove("distance-p");
+  }
+}
+$(document).ready(function(){
+  if (currentPath === '/') {
+    if (window.innerWidth > 900) {
+      addNavListener();
+      addParallaxListener();
+    }
+
+  }
+  else if(currentPath.startsWith('/course_detail/')) {
+    if (window.innerWidth > 900) {
+      addNavListener();
+    }
   }
 });
+
+function addParallaxListener() {
+  window.addEventListener("scroll", function () {
+    lastScrollPosition = window.pageYOffset;
+    if (!ticking) {
+      window.requestAnimationFrame(function () {
+        try {
+          doParallax();
+        } catch (error) {
+        }
+      });
+      ticking = true;
+    }
+  });
+}
+function addNavListener() {
+  window.addEventListener("scroll", function() {
+    window.requestAnimationFrame( function() {
+      if (isTransitionRunning === false) {
+        changeNav();
+      }
+    });
+  });
+}
 
 /*navigation*/
 $(document).ready(function(){

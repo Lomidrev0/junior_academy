@@ -20,15 +20,19 @@
 }
 /*course list cards*/
 .course-wrapper-border {
-  margin: 0 25px 25px 10vh;
-  border-left: 1px solid #dddddd;
-  border-bottom: 1px solid #dddddd;
-  border-right: 1px solid #dddddd;
-  border-radius: 0 0 8px 8px;
-  h2 {
+ // margin: 0 25px 25px 10vh;
+ // border-left: 1px solid #dddddd;
+  // // border-bottom: 1px solid #dddddd;
+  // // border-right: 1px solid #dddddd;
+  // // border-radius: 0 0 8px 8px;
+  background-image: url('/images/course_wrapper_ico.png');
+  z-index: 1;
+  position: relative;
+  >h1 {
     margin: 0;
     text-align: center;
     padding-bottom: 10vh;
+    padding-top: 10vh;
   }
 }
 .postcard {
@@ -85,6 +89,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    background-color: $white2;
   }
 
   .postcard__preview-txt {
@@ -144,10 +149,10 @@
     .postcard__img {
       max-width: 380px;
       max-height: 100%;
-      transition: transform 0.3s ease;
+      transition: transform $tr-normal ease;
       background-size: cover;
       background-repeat: no-repeat;
-      transition: all 0.5s;
+      transition: all $tr-long;
       object-fit: cover;
       position: relative;
     }
@@ -202,7 +207,7 @@
 
   .postcard.light {
     .postcard__text:before {
-      background: $white;
+      background: $white2;
     }
   }
 }

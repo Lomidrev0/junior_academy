@@ -3,13 +3,8 @@
 @import 'resources/sass/shared/card';
 
 .header {
-    position: relative;
     height: 100vh;
     background-image: url("https://juniorakademia.spse-po.sk/img/main_bg.jpg");
-    background-size: cover;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    overflow: hidden;
     background-position: center -58.5px;
     //transition: background-position 0.1s ease-out;
 
@@ -37,6 +32,12 @@
             font-size: calc(30px + (70 - 30) * ((100vw - 320px) / (1200 - 320)));
             font-weight: bold;
             margin: 1vh 0;
+        }
+    }
+    .distance-p {
+        padding-top: 111px;
+        @media (max-width:900px) {
+            padding-top: 0;
         }
     }
 
@@ -90,12 +91,14 @@
 }
 .card_second {
     background-color: $clean-white;
-    padding: 8vh 8vw 0 8vw;
+    padding: 8vh 8vw 8vh 8vw;
     word-break: break-word;
+    p {
+        min-height: 23.04px;
+    }
     span {
         height: fit-content;
         margin: auto auto auto 0;
-        padding-left: 10px;
     }
     i {
         padding-right: 10px;
@@ -132,7 +135,16 @@
     padding-bottom: 3vh;
     padding-left: 2vh;
     padding-right: 2vh;
+    p{
+        padding: 0;
+        margin-bottom: 1rem;
 
+
+    }
+    ul li p,
+    ol li p {
+        margin-bottom: 0;
+    }
 }
 
 .content_center{
@@ -367,6 +379,11 @@
         word-break: break-word;
         margin-bottom: 0.5rem;
     }
+}
+/*detail*/
+.course-header {
+    background-position: center;
+    background-size: cover;
 }
 
 

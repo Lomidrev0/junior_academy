@@ -17,7 +17,7 @@ trait MessageTrait {
                     return $query;
                 });
         }
-        elseif ($filter == 'sent'){
+        else if ($filter == 'sent'){
             $sMsgs = Message::where('sender_id', Auth::user()->id);
         }
         else {

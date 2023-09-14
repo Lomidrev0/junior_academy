@@ -1,6 +1,6 @@
 @extends('front.main')
 @section('frontContent')
-        <div class="header header-h-75 position-relative" style="background-image: url('{{ asset($course->media[1]->original_url)}}');">
+        <div class="course-header header-h-75 position-relative" style="background-image: url('{{ asset($course->media[1]->original_url)}}');">
             <div class="overlayC">
                 <h1 class="titleC">{{ $course->name }}</h1>
             </div>

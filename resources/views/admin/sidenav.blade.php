@@ -6,6 +6,12 @@
         </a>
     </li>
     <li>
+        <a href="{{route('admin.messages')}}" {!! (Str::contains(url()->current(), 'messages') ? 'class=active-item' : '') !!}>
+            <i class="bi bi-chat-dots-fill"></i>
+            <span>{{ __('Inbox')}}</span>
+        </a>
+    </li>
+    <li>
         <a href="{{route('admin.courses')}}" class="{{Str::contains(url()->current(), 'courses') || Str::contains(url()->current(), 'detail')  ? 'active-item' : '' }}">
             <i class="bi bi-wrench"></i>
             <span>{{__('Course management')}}</span>

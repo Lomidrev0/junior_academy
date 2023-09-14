@@ -305,9 +305,3 @@ export function resetPasToast (session) {
     }
 }
 window.resetPasToast = resetPasToast;
-
-/*SCROLL ANIMATION*/
-import AOS from 'aos';
-import 'aos/dist/aos.css'; // You can also use <link> for styles
-// ..
-AOS.init();

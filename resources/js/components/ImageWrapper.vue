@@ -9,7 +9,7 @@
     </div>
     <div v-if="editable" class="forms-wrapper">
       <form key="saveAlbum" class="add-course-form">
-        <h5 class="text-center mt-3">{{i18n('Edit album')+': '+directory.name}}</h5>
+        <h5 class="text-center mt-3">{{ i18n('Edit album')+': '+ truncate() }}</h5>
         <div class="d-flex inputs-wrapper">
           <div class="d-flex flex-column text-input-wrapper m-auto w-75">
             <div class="shadow">
@@ -192,7 +192,7 @@ export default {
     updateDir() {
       if (this.directory.name.length === 0){
         this.error = i18n('Name is requaired');
-      } else if (this.directory.name.length > 119){
+      } else if (this.directory.name.length > 80){
         this.error = i18n('The name is too long!');
       } else if (this.directory.description.length > 499){
         this.error = i18n('Description is too long!');
@@ -273,6 +273,9 @@ export default {
         }
       })
     },
+    truncate() {
+      return this.directory.name.length > 60 ? this.truncateContent(this.directory.name, 60) : this.directory.name
+    }
   },
 }
 </script>

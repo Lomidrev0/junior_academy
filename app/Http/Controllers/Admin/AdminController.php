@@ -9,6 +9,7 @@ use App\Course;
 use App\Jobs\SendWatchDogsMails;
 use App\Mail\WelcomeMail;
 use App\SystemVariable;
+use App\Traits\MessageTrait;
 use App\User;
 use App\UserCourse;
 use Carbon\Carbon;
@@ -32,6 +33,7 @@ use Illuminate\Support\Facades\Bus;
 
 class AdminController
 {
+    use MessageTrait;
     public function index() {
         return view('admin/home',[
             'courses' => Course::withCount(['users' => function ($query) {
@@ -285,4 +287,47 @@ class AdminController
             ]);
         return $var->value;
     }
+    public function getMessages(){
+        $userLR = Carbon::parse(User::where('id',Auth::user()->id)->first()->last_read)->toISOString();
+        User::where('id',Auth::user()->id)->update(['last_read' => Carbon::now()]);
+        return view('admin/messages', [
+            'messages' => $this->getMsgList(strtok(url()->current(), '?'), 'all'),
+            'last_read'=> $userLR,
+        ]);
+    }
+
+    public function userSearch(Request $request){
+        $val = $request->val;
+        $query = User::where('name', 'like', "%$val%");
+        $ids = $request->ids;
+        if ($ids) {
+            $query->whereIn('id', $ids);
+        } else {
+            $take = $request->take;
+
+            if ($take >= 0) {
+                $query->take($take);
+
+                $skip = $request->skip;
+                if ($skip >= 0) {
+                    $query->skip($skip);
+                }
+            }
+        }
+        $count = $query->count();
+        $users = $query->orderBy('role', 'desc')->get();
+
+        return [
+            'count' => $count,
+            'items' => $users->map(function($user) {
+                return [
+                    'id'=> $user->id,
+                    'name'=> $user->name,
+                    'role'=> $user->role,
+                    'email'=> $user->email,
+                ];
+            }),
+        ];
+    }
 }
+

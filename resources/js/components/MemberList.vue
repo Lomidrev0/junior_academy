@@ -20,11 +20,11 @@
             <th><p>{{i18n('Class')}}</p></th>
             <th><p>{{i18n('Email')}}</p></th>
             <th><p>{{i18n('Registration date')}}</p></th>
-            <template v-if="admin === false">
-              <th><p>{{i18n('Active')}}</p></th>
+<!--            <template v-if="admin === false">-->
+              <th><p>{{i18n('Edit')}}</p></th>
               <th><p>{{i18n('Notes')}}</p></th>
               <th><p>{{i18n('Delete')}}</p></th>
-            </template>
+<!--            </template>-->
           </tr>
           </thead>
           <tbody>
@@ -38,7 +38,7 @@
                     <td><p>{{ JSON.parse(user.student_info).class}}</p></td>
                     <td><p><a :href="'mailto:'+user.email">{{ user.email }}</a></p></td>
                     <td><p>{{ formatDate(user.created_at, 'H:mm - dd.MM.yyyy') }}</p></td>
-                    <template v-if="admin === false">
+<!--                    <template v-if="admin === false">-->
                       <td class="position-relative">
                         <label class="switch position-absolute">
                           <input type="checkbox" class="course-toggle" v-model="JSON.parse(user.student_info).active" @click="updateMember(user, key)">
@@ -52,7 +52,7 @@
                         </div>
                       </td>
                       <td><p><i class="bi bi-x-lg" @click=" deleteMember(user.id,user.name)"></i></p></td>
-                    </template>
+<!--                    </template>-->
                   </tr>
                 </template>
                 <template v-else>
@@ -178,7 +178,7 @@ export default {
     updateMember(user,key){
       $('input').prop( "disabled", true);
       axios
-          .post(this.route('teacher.update-active-member'), {id: user.id,value: !JSON.parse(user.student_info).active})
+          .post(this.route('update-active-member'), {id: user.id,value: !JSON.parse(user.student_info).active})
           .then((response) => {
             let data =response.data
             data.created_at = parseISO(data.created_at);
@@ -194,7 +194,7 @@ export default {
     deleteMember(id,name) {
       if (confirm(i18n('Are you sure you want to delete user: ') + ' "' + name + '"?' )) {
         axios
-            .post(this.route('teacher.delete-member'), {id: id})
+            .post(this.route('delete-member'), {id: id})
             .then((response) => {
               this.dataCourses = response.data;
               this.formatDates();
@@ -216,7 +216,7 @@ export default {
      // else {
       var userClone = _.cloneDeep(_.find(this.dataCourses[0].users, { id: this.updateNote.id }));
        axios
-           .post(this.route('teacher.set-note'), {id: this.updateNote.id, value: this.updateNote.note})
+           .post(this.route('set-note'), {id: this.updateNote.id, value: this.updateNote.note})
            .then((response) => {
              userClone.student_info = JSON.stringify(response.data.student_info)
              const userIndex = _.findIndex(this.dataCourses[0].users, { id: this.updateNote.id });

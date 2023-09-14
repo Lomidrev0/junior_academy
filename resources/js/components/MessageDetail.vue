@@ -26,7 +26,7 @@
               <i v-if="msg.sender.role === 0" class="bi bi-person-fill role-ico"></i>
               <i v-if="msg.sender.role === 1" class="bi bi-book-half role-ico"></i>
               <i v-if="msg.sender.role === 2" class="bi bi-shield-shaded role-ico"></i>
-              <span><b>{{msg.sender.name === 'Me' ? i18n(msg.sender.name): msg.sender.name }}</b></span>
+              <span><b>{{msg.sender.name === 'Me' ? i18n(msg.sender.name) : (msg.sender.role === 2 ? i18n('Admin') : msg.sender.name) }}</b></span>
               <i class="bi bi-arrow-right to-icon color-red"></i>
               <i v-if="msg.groups" class="bi bi-people-fill role-ico"></i>
               <template v-if="msg.groups">
@@ -66,7 +66,7 @@
           <div>
             <hr>
             <div class="d-flex flex-wrap">
-              <p>{{msg.sender.name}}&nbsp;-&nbsp;</p>
+              <p>{{msg.sender.role === 2 ? i18n('Admin') : msg.sender.name}}&nbsp;-&nbsp;</p>
               <a class="" :href="'mailto:'+msg.sender.email">{{msg.sender.email}}</a>
               <p v-if="msg.sender.role === 1">&nbsp;-&nbsp;{{ i18n('Instructor of course')+': '+msg.course.name }}</p>
             </div>

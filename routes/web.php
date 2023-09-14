@@ -1,6 +1,7 @@
 <?php
 
 use App\Mail\MessageMail;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\StudentController;
 use App\Http\Controllers\Teacher\TeacherController;
@@ -48,9 +49,9 @@ Route::middleware(['teacher'])->prefix('/teacher')->name('teacher.')->group(func
         Route::get('/reset_password','TeacherController@password')->name('password');
         Route::get('/gallery/{slug?}','TeacherController@directory')->name('directory');
         Route::get('/messages','TeacherController@getMessages')->name('messages');
-        Route::post('/update_active_member', 'TeacherController@updateActive')->name('update-active-member');
-        Route::post('/delete_member', 'TeacherController@deleteMember')->name('delete-member');
-        Route::post('/set_note', 'TeacherController@setNote')->name('set-note');
+       // Route::post('/update_active_member', 'TeacherController@updateActive')->name('update-active-member');
+       // Route::post('/delete_member', 'TeacherController@deleteMember')->name('delete-member');
+        //Route::post('/set_note', 'TeacherController@setNote')->name('set-note');
         Route::post('/save_album','TeacherController@saveAlbum')->name('save-album');
         Route::post('/update_active_album','TeacherController@updateActiveAlbum')->name('update-active');
         Route::post('/delete_album','TeacherController@deleteAlbum')->name('delete-album');
@@ -83,6 +84,8 @@ Route::middleware(['admin'])->prefix('/admin')->name('admin.')->group(function (
         Route::post('/update_delete', 'AdminController@deleteCourse')->name('delete');
         Route::post('/update_active', 'AdminController@updateActive')->name('update-active');
         Route::post('/update_registration', 'AdminController@updateRegistration')->name('update-registration');
+        Route::get('/messages','AdminController@getMessages')->name('messages');
+        Route::get('/user_search', 'AdminController@userSearch')->name('user-search');
     });
 });
 
@@ -94,7 +97,9 @@ Route::namespace('Shared')->group(function () {
     Route::post('/filter_msg','MessageController@filterMessage')->name('get-filtered-msg');
 
 });
-
+Route::post('/update_active_member', [TeacherController::class, 'updateActive'])->name('update-active-member');
+Route::post('/set_note', [TeacherController::class, 'setNote'])->name('set-note');
+Route::post('/delete_member', [TeacherController::class, 'deleteMember'])->name('delete-member');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

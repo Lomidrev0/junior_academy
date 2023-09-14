@@ -2,7 +2,7 @@
   display: inline-block;
   padding: 0.5rem 1.2em;
   border-radius: $radius;
-  transition: all 0.3s;
+  transition: all $tr-normal;
   position: relative;
   overflow: hidden;
   z-index: 2;
@@ -29,7 +29,7 @@
     width: 0%;
     height: 100%;
     background-color: $main-color-3;
-    transition: all .5s;
+    transition: $tr-normal;
     z-index: -1;
   }
   &:hover {

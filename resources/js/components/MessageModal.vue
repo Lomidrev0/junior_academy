@@ -32,7 +32,7 @@
             <search-input
                 ref="searchInput"
                 :placeholder="i18n('Click to start adding recipients')"
-                :api-url=" auth === 1 ? this.route('teacher.user-search') : this.route('student.user-search')"
+                :api-url=" auth === 1 ? this.route('teacher.user-search') : (auth === 0 ? this.route('student.user-search') : this.route('admin.user-search'))"
                 :take="30"
                 :skip="0"
                 :initial-search="false"

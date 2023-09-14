@@ -15,7 +15,9 @@
         <strong>Sekretariát :</strong> &nbsp;<a href="mailto:spse@spse-po.sk">spse@spse-po.sk</a>
         <h3 class="mt-5 mb-3">Kontakt na koordinátorov</h3>
          @foreach ($courses as $course)
-             <h5 class="mt-4 mb-2"><strong>{{ $course->name }}</strong></h5>
+             @if(!$course->users->isEmpty())
+                <h5 class="mt-4 mb-2"><strong>{{ $course->name }}</strong></h5>
+             @endif
              @foreach($course->users as $user)
                 <div class="px-1">
                      {{$user->name}} - <a class="emaill" href="mailto:{{$user->email}}">{{$user->email}}</a>

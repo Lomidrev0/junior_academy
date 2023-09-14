@@ -22,8 +22,8 @@ $main-color-2: #f5f5f5;
 $main-color-3:#027fa6;
 $mail-color-4: #0290bd;
 $nav:#e9e8e8;
-$white: #FAF9F6;
-$white2: #fff;
+$white: #faf9f6;
+$white2: #ffffff;
 $danger: #f7202f;
 $l1-grey: #e6e6e6;
 $grey: #cccc;
@@ -40,9 +40,9 @@ $main-blue: #0076bd !default;
 $main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
 
 //transitions time
-$tr-short: all 0.3s;
-$tr-normal: all 0.5s;
-$tr-long: all 1s;
+$tr-short: 0.15s;
+$tr-normal: 0.3s;
+$tr-long: .5s;
 
 //radius
 $radius: 0.375rem;

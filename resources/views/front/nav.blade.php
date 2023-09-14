@@ -1,4 +1,4 @@
-<header class="header-area">
+<header id="test" class="header-area {{request()->path() === '/' || Str::startsWith(request()->path(), 'course_detail/') ? 'header-transparent' : 'header-sticky' }}">
     <div class="header-container">
         <div class="site-logo">
             <a href="/"><img src="/images/ja_logo.png" alt=""></a>

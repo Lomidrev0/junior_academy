@@ -117,7 +117,7 @@ export default {
   },
   methods: {
     saveAlbum() {
-      if (this.newAlbum.name.length > 119){
+      if (this.newAlbum.name.length > 80){
         this.error = i18n('The name is too long!');
       } else if(this.newAlbum.name.length === 0){
         this.error = i18n('Name is requaired');

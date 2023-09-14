@@ -28,10 +28,14 @@ class TeacherController
     use MessageTrait;
 
     public function getForCourseUserUI() {
-        return
-            Course::with(['users' => function ($query) {
+        $course =  Course::with(['users' => function ($query) {
             $query->select('id', 'name','email','created_at','student_info')->where('role', 0);
-            }])->where('id', Session::get('selected-course')->id)->get(['id','name']);
+        }]);
+        if (Session::get('selected-course')) {
+            $course ->where('id', Session::get('selected-course')->id);
+        }
+        return $course->get(['id','name']);
+
     }
 
     public function getForDirUI($column, $value){
@@ -211,7 +215,6 @@ class TeacherController
             'messages' => $this->getMsgList(strtok(url()->current(), '?'), 'all'),
             'last_read'=> $userLR,
         ]);
-
    }
 
    public function userSearch(Request $request){

@@ -139,3 +139,10 @@ p,h1{
 .h-fit{
   height: fit-content;
 }
+.parallax {
+  position: relative;
+  background-size: cover;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
